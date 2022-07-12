@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Olga Latkina](https://up.htmlacademy.ru/react/10/user/805973).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Хабиров](https://htmlacademy.ru/profile/alex_khab).
 
 ---
 
