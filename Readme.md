@@ -1,4 +1,4 @@
-# Личный проект «Шесть городов»&bull; [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
+# Личный проект «Шесть городов» &bull; [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/) [![badge](https://img.shields.io/badge/Technologies-REACT-lightblue)](https://ru.reactjs.org/) [![badge](https://img.shields.io/badge/Technologies-REDUX-violet)](https://redux.js.org/)
 
 ![Project check](https://github.com/olgalatkina/805973-six-cities-10/actions/workflows/check.yml/badge.svg) [![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage)](https://codeclimate.com/github/codeclimate/codeclimate/test_coverage)
 
