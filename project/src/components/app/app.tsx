@@ -1,13 +1,15 @@
-import Header from "../header/header";
-import MainScreen from "../../pages/main-screen/main-screen";
+import Header from '../header/header';
+import MainScreen from '../../pages/main-screen/main-screen';
 
-const App = (): JSX.Element => {
-  return (
-    <div className="page page--gray page--main">
-      <Header/>
-      <MainScreen/>
-    </div>
-  );
+type AppProps = {
+  numberRentalOffers: number
 }
+
+const App = ({numberRentalOffers}: AppProps): JSX.Element => (
+  <div className="page page--gray page--main">
+    <Header/>
+    <MainScreen numberRentalOffers={numberRentalOffers}/>
+  </div>
+);
 
 export default App;
