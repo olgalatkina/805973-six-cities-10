@@ -1,8 +1,5 @@
-type PlaceCardProps = {
-  key: number,
-}
-const PlaceCard = ({key}: PlaceCardProps) => (
-  <article className="cities__card place-card" key={key}>
+const PlaceCard = () => (
+  <article className="cities__card place-card" >
     <div className="cities__image-wrapper place-card__image-wrapper">
       <a href="#">
         <img
