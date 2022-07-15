@@ -64,11 +64,7 @@ const MainScreen = ({numberRentalOffers}: MainScreenProps): JSX.Element => (
             </ul>
           </form>
           <div className="cities__places-list places__list tabs__content">
-            <PlaceCard/>
-            <PlaceCard/>
-            <PlaceCard/>
-            <PlaceCard/>
-            <PlaceCard/>
+            {Array.from({ length: numberRentalOffers }, (element, index) => <PlaceCard key={index} />)}
           </div>
         </section>
         <div className="cities__right-section">
