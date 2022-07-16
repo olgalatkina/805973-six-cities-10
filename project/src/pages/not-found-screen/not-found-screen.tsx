@@ -1,7 +1,9 @@
 const NotFoundScreen = () => (
   <main className="page__main">
-    <h1>404 Not Found</h1>
-    <a href="/">Home</a>
+    <div className="container">
+      <h1>404 Not Found</h1>
+      <a href="/">Home&nbsp;&rarr;</a>
+    </div>
   </main>
 );
 
