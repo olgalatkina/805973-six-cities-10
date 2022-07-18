@@ -7,16 +7,18 @@ import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 
+import type {OffersType} from '../../types/offers';
+
 type AppProps = {
-  numberRentalOffers: number
+  offers: OffersType,
 }
 
-const App = ({numberRentalOffers}: AppProps): JSX.Element => (
+const App = ({offers}: AppProps): JSX.Element => (
   <BrowserRouter>
     <Routes>
       <Route
         path={AppRoute.Root}
-        element={<MainScreen numberRentalOffers={numberRentalOffers}/>}
+        element={<MainScreen offers={offers} />}
       />
       <Route
         path={AppRoute.Login}
@@ -26,13 +28,13 @@ const App = ({numberRentalOffers}: AppProps): JSX.Element => (
         path={AppRoute.Favorites}
         element={
           <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-            <FavoritesScreen/>
+            <FavoritesScreen />
           </PrivateRoute>
         }
       />
       <Route
         path={AppRoute.Offer}
-        element={<OfferScreen/>}
+        element={<OfferScreen offers={offers} />}
       />
       <Route
         path={AppRoute.NotFound}

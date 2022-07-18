@@ -1,12 +1,13 @@
 import PlaceCard from '../../components/place-card/place-card';
 import TabItem from '../../components/tab-item/tab-item';
 import {cities} from '../../constants';
+import {OffersType} from '../../types/offers';
 
 type MainScreenProps = {
-  numberRentalOffers: number
+  offers: OffersType,
 }
 
-const MainScreen = ({numberRentalOffers}: MainScreenProps): JSX.Element => (
+const MainScreen = ({offers}: MainScreenProps): JSX.Element => (
   <main className="page__main page__main--index">
     <h1 className="visually-hidden">Cities</h1>
     <div className="tabs">
@@ -37,7 +38,7 @@ const MainScreen = ({numberRentalOffers}: MainScreenProps): JSX.Element => (
             </ul>
           </form>
           <div className="cities__places-list places__list tabs__content">
-            {Array.from({ length: numberRentalOffers }, (element, index) => <PlaceCard key={index} />)}
+            {offers.map((offer) => <PlaceCard key={offer.id} offer={offer} />)}
           </div>
         </section>
         <div className="cities__right-section">
