@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 
-const Logo = () => (
+const Logo = (): JSX.Element => (
   <Link to="/" className="header__logo-link header__logo-link--active">
     <img
       className="header__logo"

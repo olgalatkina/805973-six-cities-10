@@ -1,4 +1,4 @@
-const Footer = () => (
+const Footer = (): JSX.Element => (
   <footer className="footer container">
     <a className="footer__logo-link" href="main.html">
       <img

@@ -5,7 +5,7 @@ type TabItemProps ={
   city: string;
 }
 
-const TabItem = ({city}: TabItemProps) => {
+const TabItem = ({city}: TabItemProps): JSX.Element => {
   const [isActive, setIsActive] = useState(false);
 
   // заглушка

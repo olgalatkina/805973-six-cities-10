@@ -1,11 +1,13 @@
+import {PointerEvent} from 'react';
 import {Link} from 'react-router-dom';
 import {OfferType} from '../../types/offers';
 
-type PlaceCardProps = {
+type OfferCardProps = {
   offer: OfferType,
+  onOfferMouseOver?: (evt: PointerEvent<HTMLDivElement>) => void,
 }
 
-const PlaceCard = ({offer}: PlaceCardProps) => {
+const OfferCard = ({offer, onOfferMouseOver}: OfferCardProps): JSX.Element => {
   const {
     id,
     isFavorite,
@@ -18,7 +20,7 @@ const PlaceCard = ({offer}: PlaceCardProps) => {
   } = offer;
 
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" id={`${id}`} onPointerOver={onOfferMouseOver}>
       <div className="cities__image-wrapper place-card__image-wrapper">
         {isPremium &&
           <div className="place-card__mark">
@@ -65,4 +67,4 @@ const PlaceCard = ({offer}: PlaceCardProps) => {
   );
 };
 
-export default PlaceCard;
+export default OfferCard;

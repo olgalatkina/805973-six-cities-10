@@ -45,7 +45,7 @@ export const offers = [
         'longitude': 4.895168,
         'zoom': 10
       },
-      'name': 'Amsterdam'
+      'name': 'Cologne'
     },
     'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
     'goods': [
