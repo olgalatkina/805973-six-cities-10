@@ -32,6 +32,7 @@ const OfferScreen = ({offers, reviews}: OfferScreenProps): JSX.Element => {
     host,
     description,
   } = currentOffer;
+
   const neighbourhood = offers
     .filter((offer) => offer.city.name === currentOffer.city.name)
     .filter((offer) => offer.id !== currentOffer.id);

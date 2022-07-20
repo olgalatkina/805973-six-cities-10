@@ -1,3 +1,4 @@
+// import {useState} from 'react';
 import {cities} from '../../constants';
 import {OffersType} from '../../types/offers';
 
@@ -14,7 +15,7 @@ const MainScreen = ({offers}: MainScreenProps): JSX.Element => (
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {cities.map((city) => <TabItem city={city} key={Math.random()} />)}
+          {cities.map((city) => <TabItem city={city} key={Math.random()}/>)}
         </ul>
       </section>
     </div>
@@ -38,7 +39,7 @@ const MainScreen = ({offers}: MainScreenProps): JSX.Element => (
               <li className="places__option" tabIndex={0}>Top rated first</li>
             </ul>
           </form>
-          <OffersList offers={offers} />
+          <OffersList offers={offers}/>
         </section>
         <div className="cities__right-section">
           <section className="cities__map map"/>
