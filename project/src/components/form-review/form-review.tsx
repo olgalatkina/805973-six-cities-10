@@ -1,4 +1,4 @@
-import {useState, ChangeEvent} from 'react';
+import {useState, ChangeEvent, FormEvent} from 'react';
 import {starsValues} from '../../constants';
 import FormReviewInput from '../form-review-input/form-review-input';
 
@@ -8,9 +8,14 @@ const FormReview = (): JSX.Element => {
     review: '',
   });
 
-  const handleInputChange = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+  const handleInputChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmitForm = (evt: FormEvent<HTMLFormElement>):void => {
+    evt.preventDefault();
+    // что-то произойдёт
   };
 
   return (
@@ -18,6 +23,7 @@ const FormReview = (): JSX.Element => {
       className="reviews__form form"
       action="#"
       method="post"
+      onSubmit={handleSubmitForm}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">

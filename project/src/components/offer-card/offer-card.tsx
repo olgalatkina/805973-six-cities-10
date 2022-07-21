@@ -8,16 +8,7 @@ type OfferCardProps = {
 }
 
 const OfferCard = ({offer, onOfferMouseOver}: OfferCardProps): JSX.Element => {
-  const {
-    id,
-    isFavorite,
-    isPremium,
-    previewImage,
-    price,
-    rating,
-    title,
-    type,
-  } = offer;
+  const {id, isFavorite, isPremium, previewImage, price, rating, title, type,} = offer;
 
   return (
     <article className="cities__card place-card" id={`${id}`} onPointerOver={onOfferMouseOver}>
