@@ -25,8 +25,8 @@ const OffersList = ({offers}: OffersListProps): JSX.Element => {
         <OfferCard
           key={offer.id}
           offer={offer}
-          onOfferMouseOver={HandleOfferMouseOver}
-          onOfferMouseLeave={HandleOfferMouseLeave}
+          // onOfferMouseOver={HandleOfferMouseOver}
+          // onOfferMouseLeave={HandleOfferMouseLeave}
         />
       ))}
     </div>

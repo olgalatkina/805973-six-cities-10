@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {Link, generatePath} from 'react-router-dom';
 import {AppRoute} from '../../constants';
 import {OfferType} from '../../types/offers';
 import BtnBookmark from '../btn-bookmark/btn-bookmark';
@@ -8,7 +8,7 @@ type FavoritesCardProps = {
 }
 
 const FavoritesCard = ({offer}: FavoritesCardProps): JSX.Element => {
-  const {isPremium, isFavorite, id, previewImage, title, price, rating, type} = offer;
+  const {isPremium, id, isFavorite, previewImage, title, price, rating, type} = offer;
 
   return (
     <article className="favorites__card place-card">
@@ -17,7 +17,7 @@ const FavoritesCard = ({offer}: FavoritesCardProps): JSX.Element => {
           <span>Premium</span>
         </div>}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={AppRoute.Offer}>
+        <Link to={generatePath(AppRoute.Offer, {id: `${id}`})}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -42,7 +42,7 @@ const FavoritesCard = ({offer}: FavoritesCardProps): JSX.Element => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={AppRoute.Offer}>{title}</Link>
+          <Link to={generatePath(AppRoute.Offer, {id: `${id}`})}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

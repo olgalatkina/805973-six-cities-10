@@ -1,7 +1,7 @@
-import {Link} from 'react-router-dom';
+import {Link, generatePath} from 'react-router-dom';
 import {OfferType} from '../../types/offers';
 import BtnBookmark from '../btn-bookmark/btn-bookmark';
-import {AppRoute} from "../../constants";
+import {AppRoute} from '../../constants';
 
 type OfferCardProps = {
   offer: OfferType,
@@ -16,15 +16,15 @@ const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps)
     <article
       className="cities__card place-card"
       id={`${id}`}
-      onMouseOver={onOfferMouseOver?.(offer)}
-      onMouseLeave={onOfferMouseLeave}
+      // onMouseOver={onOfferMouseOver?.(offer)}
+      // onMouseLeave={onOfferMouseLeave}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         {isPremium &&
           <div className="place-card__mark">
             <span>Premium</span>
           </div>}
-        <Link to={AppRoute.Offer}>
+        <Link to={generatePath(AppRoute.Offer, {id: `${id}`})}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -49,7 +49,7 @@ const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps)
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={AppRoute.Offer}>{title}</Link>
+          <Link to={generatePath(AppRoute.Offer, {id: `${id}`})}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
