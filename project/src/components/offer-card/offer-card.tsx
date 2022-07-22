@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import {OfferType} from '../../types/offers';
 import BtnBookmark from '../btn-bookmark/btn-bookmark';
+import {AppRoute} from "../../constants";
 
 type OfferCardProps = {
   offer: OfferType,
@@ -23,7 +24,7 @@ const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps)
           <div className="place-card__mark">
             <span>Premium</span>
           </div>}
-        <Link to={`offer/${id}`}>
+        <Link to={AppRoute.Offer}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -48,7 +49,7 @@ const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps)
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/${id}`}>{title}</Link>
+          <Link to={AppRoute.Offer}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

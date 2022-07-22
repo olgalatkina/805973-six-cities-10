@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import {AppRoute} from '../../constants';
 import {OfferType} from '../../types/offers';
 import BtnBookmark from '../btn-bookmark/btn-bookmark';
 
@@ -16,7 +17,7 @@ const FavoritesCard = ({offer}: FavoritesCardProps): JSX.Element => {
           <span>Premium</span>
         </div>}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`offer/${id}`}>
+        <Link to={AppRoute.Offer}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -41,7 +42,7 @@ const FavoritesCard = ({offer}: FavoritesCardProps): JSX.Element => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/${id}`}>{title}</Link>
+          <Link to={AppRoute.Offer}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

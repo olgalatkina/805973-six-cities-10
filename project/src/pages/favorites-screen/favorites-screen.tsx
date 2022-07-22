@@ -29,7 +29,6 @@ const FavoritesScreen = ({offers}: FavoritesScreenProps): JSX.Element => {
   }
 
   const indexedOffers = indexOffersByCities(offers);
-  const cities = Object.keys(indexedOffers);
 
   return (
     <>
@@ -38,7 +37,7 @@ const FavoritesScreen = ({offers}: FavoritesScreenProps): JSX.Element => {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {cities.map((city) => <FavoritesItem cityName={city} localOffers={indexedOffers[city]} key={city}/>)}
+              {Object.entries(indexedOffers).map(([city, localOffers]) => <FavoritesItem cityName={city} localOffers={localOffers} key={city}/>)}
             </ul>
           </section>
         </div>
