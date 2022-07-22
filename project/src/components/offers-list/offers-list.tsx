@@ -3,6 +3,7 @@ import OfferCard from '../offer-card/offer-card';
 import {OffersType, OfferType} from '../../types/offers';
 
 // TODO: убрать data-temp
+// TODO: убрать eslint-disable-next-line
 
 type OffersListProps = {
   offers: OffersType,
@@ -11,10 +12,12 @@ type OffersListProps = {
 const OffersList = ({offers}: OffersListProps): JSX.Element => {
   const [activeOfferId, setActiveOfferId] = useState(0);
 
+  // eslint-disable-next-line
   const HandleOfferMouseOver = (offer: OfferType) => {
     setActiveOfferId(Number(offer.id));
   };
 
+  // eslint-disable-next-line
   const HandleOfferMouseLeave = () => {
     setActiveOfferId(0);
   };

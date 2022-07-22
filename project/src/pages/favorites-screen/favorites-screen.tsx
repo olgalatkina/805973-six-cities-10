@@ -1,11 +1,15 @@
 import {useState, useEffect} from 'react';
 import {OffersType} from '../../types/offers';
+import {UserType} from '../../types/user';
+import Header from '../../components/header/header';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import Footer from '../../components/footer/footer';
 import FavoritesItem from '../../components/favorites-item/favorites-item';
 
+
 type FavoritesScreenProps = {
   offers: OffersType,
+  user: UserType,
 }
 
 type OffersIndexType = {
@@ -23,7 +27,7 @@ const indexOffersByCities = (offers: OffersType): OffersIndexType => (
   }, {})
 );
 
-const FavoritesScreen = ({offers}: FavoritesScreenProps): JSX.Element => {
+const FavoritesScreen = ({offers, user}: FavoritesScreenProps): JSX.Element => {
   const [isEmpty, setIsEmpty] = useState(true);
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
 
@@ -37,6 +41,7 @@ const FavoritesScreen = ({offers}: FavoritesScreenProps): JSX.Element => {
 
   return (
     <>
+      <Header user={user} />
       <main className={`page__main page__main--favorites ${isEmpty ? 'page__main--favorites-empty' : ''}`}>
         <div className="page__favorites-container container">
           <section className={`favorites ${isEmpty ? 'favorites--empty' : ''}`}>

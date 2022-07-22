@@ -1,4 +1,4 @@
-type MeType = {
+type UserType = {
   avatarUrl: string
   email: string
   id: number
@@ -7,4 +7,4 @@ type MeType = {
   token: string
 };
 
-export type {MeType};
+export type {UserType};
