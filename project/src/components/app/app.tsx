@@ -7,8 +7,8 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 
-import type {OffersType} from '../../types/offers';
-import type {ReviewsType} from '../../types/reviews';
+import {OffersType} from '../../types/offers';
+import {ReviewsType} from '../../types/reviews';
 
 type AppProps = {
   offers: OffersType,

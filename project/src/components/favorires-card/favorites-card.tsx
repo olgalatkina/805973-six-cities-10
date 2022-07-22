@@ -7,6 +7,7 @@ type FavoritesCardProps = {
 
 const FavoritesCard = ({offer}: FavoritesCardProps): JSX.Element => {
   const {isPremium, id, previewImage, title, price, rating, type} = offer;
+
   return (
     <article className="favorites__card place-card">
       {isPremium &&

@@ -1,17 +1,22 @@
-import {PointerEvent} from 'react';
 import {Link} from 'react-router-dom';
 import {OfferType} from '../../types/offers';
 
 type OfferCardProps = {
   offer: OfferType,
-  onOfferMouseOver?: (evt: PointerEvent<HTMLDivElement>) => void,
+  onOfferMouseOver?: (offer: OfferType) => void,
+  onOfferMouseLeave?: () => void,
 }
 
-const OfferCard = ({offer, onOfferMouseOver}: OfferCardProps): JSX.Element => {
-  const {id, isFavorite, isPremium, previewImage, price, rating, title, type,} = offer;
+const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps): JSX.Element => {
+  const {id, isFavorite, isPremium, previewImage, price, rating, title, type} = offer;
 
   return (
-    <article className="cities__card place-card" id={`${id}`} onPointerOver={onOfferMouseOver}>
+    <article
+      className="cities__card place-card"
+      id={`${id}`}
+      onMouseOver={onOfferMouseOver?.(offer)}
+      onMouseLeave={onOfferMouseLeave}
+    >
       <div className="cities__image-wrapper place-card__image-wrapper">
         {isPremium &&
           <div className="place-card__mark">

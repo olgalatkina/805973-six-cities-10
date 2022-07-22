@@ -7,33 +7,25 @@ type FavoritesScreenProps = {
   offers: OffersType,
 }
 
-// на входе OffersType
-// на выходе OffersIndexType
-// ключ - имя города, значение - массив объектов
 type OffersIndexType = {
   [key: string]: OffersType,
 }
 
-const indexOffersByCities = (offers: OffersType): OffersIndexType => {
-  const result: OffersIndexType = {};
-
-  for (let i = 0; i < offers.length; i += 1) {
-    const offer = offers[i];
+const indexOffersByCities = (offers: OffersType): OffersIndexType => (
+  offers.reduce((acc: OffersIndexType, offer) => {
     const cityName = offer.city.name;
-    if (result[cityName]) {
-      result[cityName].push(offer);
-    } else {
-      result[cityName] = [offer];
+    if (!acc[cityName]) {
+      acc[cityName] = [];
     }
-  }
-
-  return result;
-};
+    acc[cityName].push(offer);
+    return acc;
+  }, {})
+);
 
 const FavoritesScreen = ({offers}: FavoritesScreenProps): JSX.Element => {
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
   if (favoritesOffers.length === 0) {
-    return <FavoritesScreenEmpty />;
+    return <FavoritesScreenEmpty/>;
   }
 
   const indexedOffers = indexOffersByCities(offers);
@@ -46,7 +38,7 @@ const FavoritesScreen = ({offers}: FavoritesScreenProps): JSX.Element => {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {cities.map((city) => <FavoritesItem cityName={city} localOffers={indexedOffers[city]} key={city} />)}
+              {cities.map((city) => <FavoritesItem cityName={city} localOffers={indexedOffers[city]} key={city}/>)}
             </ul>
           </section>
         </div>
