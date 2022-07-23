@@ -1,22 +1,28 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../constants';
+import PrivateRoute from '../private-route/private-route';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import PrivateRoute from '../private-route/private-route';
+
+import {OffersType} from '../../types/offers';
+import {ReviewsType} from '../../types/reviews';
+import {UserType} from '../../types/user';
 
 type AppProps = {
-  numberRentalOffers: number
+  offers: OffersType,
+  reviews: ReviewsType,
+  user: UserType,
 }
 
-const App = ({numberRentalOffers}: AppProps): JSX.Element => (
+const App = ({offers, reviews, user}: AppProps): JSX.Element => (
   <BrowserRouter>
     <Routes>
       <Route
         path={AppRoute.Root}
-        element={<MainScreen numberRentalOffers={numberRentalOffers}/>}
+        element={<MainScreen offers={offers} user={user} />}
       />
       <Route
         path={AppRoute.Login}
@@ -25,14 +31,14 @@ const App = ({numberRentalOffers}: AppProps): JSX.Element => (
       <Route
         path={AppRoute.Favorites}
         element={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-            <FavoritesScreen/>
+          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <FavoritesScreen offers={offers} user={user} />
           </PrivateRoute>
         }
       />
       <Route
         path={AppRoute.Offer}
-        element={<OfferScreen/>}
+        element={<OfferScreen offers={offers} reviews={reviews} user={user} />}
       />
       <Route
         path={AppRoute.NotFound}
