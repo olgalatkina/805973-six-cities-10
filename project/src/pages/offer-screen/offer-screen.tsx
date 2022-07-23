@@ -2,6 +2,7 @@ import {useParams} from 'react-router-dom';
 import {OffersType} from '../../types/offers';
 import {ReviewsType} from '../../types/reviews';
 import {UserType} from '../../types/user';
+import cn from 'classnames';
 import Header from '../../components/header/header';
 import OfferImageWrapper from '../../components/offer-image-wrapper/offer-image-wrapper';
 import OfferInsideItem from '../../components/offer-inside-item/offer-inside-item';
@@ -40,6 +41,14 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
     .filter((offer) => offer.city.name === currentOffer.city.name)
     .filter((offer) => offer.id !== currentOffer.id);
 
+  const btnBookmarkClassName = cn('property__bookmark-button button', {
+    'property__bookmark-button--active': isFavorite,
+  });
+
+  const avatarWrapperClassName = cn('property__avatar-wrapper user__avatar-wrapper', {
+    'property__avatar-wrapper--pro': host.isPro,
+  });
+
   return (
     <>
       <Header user={user} />
@@ -47,7 +56,7 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((src) => <OfferImageWrapper src={src} offer={currentOffer} key={Math.random()}/>)}
+              {images.map((src) => <OfferImageWrapper src={src} offer={currentOffer} key={src}/>)}
             </div>
           </div>
           <div className="property__container container">
@@ -61,7 +70,7 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
                   {title}
                 </h1>
                 <button
-                  className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`}
+                  className={btnBookmarkClassName}
                   type="button"
                 >
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -101,7 +110,7 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className={`property__avatar-wrapper user__avatar-wrapper ${host.isPro ? 'property__avatar-wrapper--pro' : ''}`}>
+                  <div className={avatarWrapperClassName}>
                     <img
                       className="property__avatar user__avatar"
                       src={host.avatarUrl}
