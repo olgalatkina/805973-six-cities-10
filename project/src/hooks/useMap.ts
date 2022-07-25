@@ -33,6 +33,6 @@ const useMap = (
   }, [mapRef, map, cityInfo]);
 
   return map;
-}
+};
 
 export default useMap;

@@ -5,20 +5,18 @@ import {AppRoute} from '../../constants';
 
 type OfferCardProps = {
   offer: OfferType,
-  // onOfferMouseOver?: (id: number) => void,
-  // onOfferMouseLeave?: () => void,
-  onOfferHover?: (id: number) => void,
+  onOfferMouseOver?: (id: number) => void,
+  onOfferMouseLeave?: () => void,
 }
 
-const OfferCard = ({offer, onOfferHover}: OfferCardProps): JSX.Element => {
+const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps): JSX.Element => {
   const {id, isFavorite, isPremium, previewImage, price, rating, title, type} = offer;
 
   return (
     <article
       className="cities__card place-card"
-      // onMouseOver={() => onOfferMouseOver?.(id)}
-      // onMouseLeave={() => onOfferMouseLeave?.()}
-      onMouseOver={() => onOfferHover?.(id)}
+      onMouseOver={() => onOfferMouseOver?.(id)}
+      onMouseLeave={() => onOfferMouseLeave?.()}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         {isPremium &&

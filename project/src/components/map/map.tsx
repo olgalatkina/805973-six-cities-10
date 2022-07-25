@@ -1,15 +1,9 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
-import {CityType, LocationType, OffersType, OfferType} from '../../types/offers';
+import {CityType, OffersType, OfferType} from '../../types/offers';
 import useMap from '../../hooks/useMap';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../constants';
 import 'leaflet/dist/leaflet.css';
-
-type MapProps = {
-  cityInfo: CityType;
-  points: OffersType;
-  hoveredOffer: OfferType | undefined;
-};
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -23,9 +17,13 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-// style={{height: '500px'}}
+type MapProps = {
+  cityInfo: CityType;
+  points: OffersType;
+  activeOffer: OfferType | undefined;
+};
 
-const Map = ({cityInfo, points, hoveredOffer}: MapProps): JSX.Element => {
+const Map = ({cityInfo, points, activeOffer}: MapProps): JSX.Element => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cityInfo);
 
@@ -39,14 +37,14 @@ const Map = ({cityInfo, points, hoveredOffer}: MapProps): JSX.Element => {
 
         marker
           .setIcon(
-            hoveredOffer !== undefined && point.title === hoveredOffer.title
+            activeOffer !== undefined && point.title === activeOffer.title
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(map);
       });
     }
-  }, [map, points, hoveredOffer]);
+  }, [map, points, activeOffer]);
 
   return (
     <section

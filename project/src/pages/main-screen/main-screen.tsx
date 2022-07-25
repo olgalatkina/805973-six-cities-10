@@ -19,8 +19,8 @@ const filterOffersByCity = (offers: OffersType, city: string): OffersType => (
   offers.filter((offer) => offer.city.name === city)
 );
 
-//const findCityInfo = (offers: OffersType, activeTab: string): CityType => (
-//   offers.find((offer) => offer.city.name === activeTab).city;
+// const findCityInfo = (offers: OffersType, activeTab: string): CityType => (
+//   offers.find((offer) => offer.city.name === activeTab).city
 // );
 // компилятор TS не устраивала ф-ция find, пришлось писать так
 const findCityInfo = (offers: OffersType, activeTab: string): CityType => (
@@ -30,17 +30,18 @@ const findCityInfo = (offers: OffersType, activeTab: string): CityType => (
 const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
   const [activeTab, setActiveTab] = useState('');
   const [filteredOffers, setFilteredOffers] = useState<OffersType>([]);
-  const [hoveredOffer, setHoveredOffer] = useState<OfferType | undefined>(undefined);
-
-  const handleOfferHover = (id: number) => {
-    const currentOffer = filteredOffers.find((offer) => offer.id === id);
-    setHoveredOffer(currentOffer);
-  };
+  const [activeOffer, setActiveOffer] = useState<OfferType | undefined>(undefined);
 
   useLayoutEffect(() => {
     setActiveTab('Amsterdam');
     setFilteredOffers(filterOffersByCity(offers, 'Amsterdam'));
   }, [offers]);
+
+  const handleOfferMouseOver = (id: number) => {
+    const currentOffer = filteredOffers.find((offer) => offer.id === id);
+    setActiveOffer(currentOffer);
+  };
+  const handleOfferMouseLeave = () => setActiveOffer(undefined);
 
   const handleTabClick = (city: string) => {
     setActiveTab(city);
@@ -83,14 +84,17 @@ const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{getTitle(filteredOffers.length)}</b>
                 <FormSorting/>
-                <OffersList offers={filteredOffers} onOfferHover={handleOfferHover} />
+                <OffersList
+                  offers={filteredOffers}
+                  onOfferMouseOver={handleOfferMouseOver}
+                  onOfferMouseLeave={handleOfferMouseLeave}
+                />
               </section>
               <div className="cities__right-section">
-                {/*<section className="cities__map map"/>*/}
                 <Map
                   cityInfo={findCityInfo(offers, activeTab)}
                   points={filteredOffers}
-                  hoveredOffer={hoveredOffer}
+                  activeOffer={activeOffer}
                 />
               </div>
             </div>
