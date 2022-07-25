@@ -3,6 +3,7 @@ import {OffersType} from '../../types/offers';
 import {ReviewsType} from '../../types/reviews';
 import {UserType} from '../../types/user';
 import cn from 'classnames';
+import {Screen} from '../../constants';
 import Header from '../../components/header/header';
 import OfferImageWrapper from '../../components/offer-image-wrapper/offer-image-wrapper';
 import OfferInsideItem from '../../components/offer-inside-item/offer-inside-item';
@@ -145,7 +146,7 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {neighbourhood.map((offer) => <OfferCard offer={offer} key={offer.id}/>)}
+              {neighbourhood.map((offer) => <OfferCard offer={offer} key={offer.id} screenClass={Screen.common}/>)}
             </div>
           </section>
         </div>

@@ -62,7 +62,7 @@ export const offers = [
       'img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg',
     ],
     'isFavorite': true,
-    'isPremium': false,
+    'isPremium': true,
     'location': {
       'latitude': 52.369553943508,
       'longitude': 4.85309666406198,

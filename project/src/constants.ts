@@ -12,6 +12,11 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum Screen {
+  favorites = 'favorites',
+  common = 'cities',
+}
+
 export const cities: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 export const starsValues: string[] = ['5', '4', '3', '2', '1'];
 

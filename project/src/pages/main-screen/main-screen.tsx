@@ -3,6 +3,7 @@ import {cities} from '../../constants';
 import {CityType, OffersType, OfferType} from '../../types/offers';
 import {UserType} from '../../types/user';
 import cn from 'classnames';
+import {Screen} from '../../constants';
 import Header from '../../components/header/header';
 import TabItem from '../../components/tab-item/tab-item';
 import OffersList from '../../components/offers-list/offers-list';
@@ -88,6 +89,7 @@ const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
                   offers={filteredOffers}
                   onOfferMouseOver={handleOfferMouseOver}
                   onOfferMouseLeave={handleOfferMouseLeave}
+                  screenClass={Screen.common}
                 />
               </section>
               <div className="cities__right-section">

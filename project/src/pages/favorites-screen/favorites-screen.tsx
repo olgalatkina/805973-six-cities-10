@@ -7,7 +7,6 @@ import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import Footer from '../../components/footer/footer';
 import FavoritesItem from '../../components/favorites-item/favorites-item';
 
-
 type FavoritesScreenProps = {
   offers: OffersType,
   user: UserType,
@@ -60,7 +59,10 @@ const FavoritesScreen = ({offers, user}: FavoritesScreenProps): JSX.Element => {
               ? <FavoritesEmpty />
               :
               <ul className="favorites__list">
-                {Object.entries(indexedOffers).map(([city, localOffers]) => <FavoritesItem cityName={city} localOffers={localOffers} key={city}/>)}
+                {Object.entries(indexedOffers)
+                  .map(([city, localOffers]) => (
+                    <FavoritesItem cityName={city} localOffers={localOffers} key={city}/>
+                  ))}
               </ul>}
           </section>
         </div>
