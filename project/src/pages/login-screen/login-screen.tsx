@@ -2,8 +2,6 @@ import HeaderLogin from '../../components/header-login/header-login';
 import {generatePath, Link} from 'react-router-dom';
 import {AppRoute} from '../../constants';
 
-// TODO: поправить стиль линии
-
 const LoginScreen = () => (
   <>
     <HeaderLogin />

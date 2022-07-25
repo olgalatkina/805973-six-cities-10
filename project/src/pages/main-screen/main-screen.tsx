@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react';
+import {useLayoutEffect, useState} from 'react';
 import {cities} from '../../constants';
-import {OffersType} from '../../types/offers';
+import {CityType, OffersType, OfferType} from '../../types/offers';
 import {UserType} from '../../types/user';
 import cn from 'classnames';
 import Header from '../../components/header/header';
@@ -8,6 +8,7 @@ import TabItem from '../../components/tab-item/tab-item';
 import OffersList from '../../components/offers-list/offers-list';
 import FormSorting from '../../components/form-sorting/form-sorting';
 import MainEmpty from '../../components/main-no-offers/main-empty';
+import Map from '../../components/map/map';
 
 type MainScreenProps = {
   offers: OffersType,
@@ -18,14 +19,28 @@ const filterOffersByCity = (offers: OffersType, city: string): OffersType => (
   offers.filter((offer) => offer.city.name === city)
 );
 
+//const findCityInfo = (offers: OffersType, activeTab: string): CityType => (
+//   offers.find((offer) => offer.city.name === activeTab).city;
+// );
+// компилятор TS не устраивала ф-ция find, пришлось писать так
+const findCityInfo = (offers: OffersType, activeTab: string): CityType => (
+  filterOffersByCity(offers, activeTab)[0].city
+);
+
 const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
   const [activeTab, setActiveTab] = useState('');
   const [filteredOffers, setFilteredOffers] = useState<OffersType>([]);
+  const [hoveredOffer, setHoveredOffer] = useState<OfferType | undefined>(undefined);
 
-  useEffect(() => {
+  const handleOfferHover = (id: number) => {
+    const currentOffer = filteredOffers.find((offer) => offer.id === id);
+    setHoveredOffer(currentOffer);
+  };
+
+  useLayoutEffect(() => {
     setActiveTab('Amsterdam');
     setFilteredOffers(filterOffersByCity(offers, 'Amsterdam'));
-  }, []);
+  }, [offers]);
 
   const handleTabClick = (city: string) => {
     setActiveTab(city);
@@ -68,10 +83,15 @@ const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{getTitle(filteredOffers.length)}</b>
                 <FormSorting/>
-                <OffersList offers={filteredOffers}/>
+                <OffersList offers={filteredOffers} onOfferHover={handleOfferHover} />
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"/>
+                {/*<section className="cities__map map"/>*/}
+                <Map
+                  cityInfo={findCityInfo(offers, activeTab)}
+                  points={filteredOffers}
+                  hoveredOffer={hoveredOffer}
+                />
               </div>
             </div>
         }

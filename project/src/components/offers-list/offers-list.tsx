@@ -4,13 +4,14 @@ import {OffersType} from '../../types/offers';
 
 type OffersListProps = {
   offers: OffersType,
+  onOfferHover?: (id: number) => void,
 }
 
-const OffersList = ({offers}: OffersListProps): JSX.Element => {
-  const [, setActiveOfferId] = useState(0);
-
-  const handleOfferMouseOver = (id: number) => setActiveOfferId(id);
-  const handleOfferMouseLeave = () => setActiveOfferId(0);
+const OffersList = ({offers, onOfferHover}: OffersListProps): JSX.Element => {
+  // const [, setActiveOfferId] = useState(0);
+  //
+  // const handleOfferMouseOver = (id: number) => setActiveOfferId(id);
+  // const handleOfferMouseLeave = () => setActiveOfferId(0);
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -18,8 +19,9 @@ const OffersList = ({offers}: OffersListProps): JSX.Element => {
         <OfferCard
           key={offer.id}
           offer={offer}
-          onOfferMouseOver={handleOfferMouseOver}
-          onOfferMouseLeave={handleOfferMouseLeave}
+          // onOfferMouseOver={handleOfferMouseOver}
+          // onOfferMouseLeave={handleOfferMouseLeave}
+          onOfferHover={onOfferHover}
         />
       ))}
     </div>
