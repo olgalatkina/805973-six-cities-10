@@ -14,6 +14,7 @@ export enum AuthorizationStatus {
 
 export enum Screen {
   favorites = 'favorites',
+  offer = 'property',
   common = 'cities',
 }
 

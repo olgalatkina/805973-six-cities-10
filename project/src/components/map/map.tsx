@@ -1,6 +1,8 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
 import {CityType, OffersType, OfferType} from '../../types/offers';
+import cn from 'classnames';
+import {Screen} from '../../constants';
 import useMap from '../../hooks/useMap';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../constants';
 import 'leaflet/dist/leaflet.css';
@@ -18,12 +20,13 @@ const currentCustomIcon = new Icon({
 });
 
 type MapProps = {
-  cityInfo: CityType;
-  points: OffersType;
-  activeOffer: OfferType | undefined;
+  cityInfo: CityType,
+  points: OffersType,
+  activeOffer: OfferType | undefined,
+  screenClass: string,
 };
 
-const Map = ({cityInfo, points, activeOffer}: MapProps): JSX.Element => {
+const Map = ({cityInfo, points, activeOffer, screenClass}: MapProps): JSX.Element => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cityInfo);
 
@@ -46,9 +49,14 @@ const Map = ({cityInfo, points, activeOffer}: MapProps): JSX.Element => {
     }
   }, [map, points, activeOffer]);
 
+  const mapClassName = cn('map',{
+    'cities__map': screenClass === Screen.common,
+    'property__map': screenClass === Screen.offer,
+  });
+
   return (
     <section
-      className="cities__map map"
+      className={mapClassName}
       ref={mapRef}
     />
   );

@@ -97,6 +97,7 @@ const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
                   cityInfo={findCityInfo(offers, activeTab)}
                   points={filteredOffers}
                   activeOffer={activeOffer}
+                  screenClass={Screen.common}
                 />
               </div>
             </div>

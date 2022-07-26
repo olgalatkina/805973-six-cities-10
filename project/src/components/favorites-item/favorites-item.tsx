@@ -23,6 +23,7 @@ const FavoritesItem = ({cityName, localOffers}: FavoritesItemProps): JSX.Element
       {localOffers.map((offer) => (
         <OfferCard offer={offer} key={offer.id} screenClass={Screen.favorites}/>
         // <FavoritesCard offer={offer} key={offer.id}/>
+        // FavoritesCard оставила, чтобы ты мог сравнить
       ))}
     </div>
   </li>
