@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
-import { CityType, OffersType, OfferType } from '../../types/offers';
+import { CityType, OffersType } from '../../types/offers';
 import cn from 'classnames';
 import { Screen } from '../../constants';
 import useMap from '../../hooks/useMap';
@@ -31,7 +31,7 @@ const Map = ({ cityInfo, points, activeOfferID, screenClass }: MapProps): JSX.El
 
   useEffect(() => {
     if (map) {
-      points.forEach((point) => {
+      points.slice(0, 3).forEach((point) => {
         const marker = new Marker({
           lat: point.location.latitude,
           lng: point.location.longitude

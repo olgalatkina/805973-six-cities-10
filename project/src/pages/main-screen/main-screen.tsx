@@ -1,6 +1,6 @@
 import {useLayoutEffect, useState} from 'react';
 import {CITIES} from '../../constants';
-import {CityType, OffersType, OfferType} from '../../types/offers';
+import {CityType, OffersType} from '../../types/offers';
 import {UserType} from '../../types/user';
 import cn from 'classnames';
 import {Screen} from '../../constants';
