@@ -3,23 +3,26 @@ import {useLocation} from 'react-router-dom';
 import cn from 'classnames';
 import {AppRoute} from '../../constants';
 
-const Page = (): JSX.Element => {
+type PageProps = {
+  children: JSX.Element,
+}
+
+const Page = ({children}: PageProps): JSX.Element => {
   const {pathname} = useLocation();
-  const [pageClassName, setPageClassName] = useState('');
+  const [pageClassName, setPageClassName] = useState('page');
 
   useEffect(() => {
-    setPageClassName(cn('', {
-      'page page--gray page--main': pathname === AppRoute.Root,
-      'page': pathname === AppRoute.Offer,
-      'page page--gray page--login': pathname === AppRoute.Login,
+    setPageClassName(cn('page', {
+      'page--gray page--main': pathname === AppRoute.Root,
+      'page--gray page--login': pathname === AppRoute.Login,
       'page__main page__main--favorites': pathname === AppRoute.Favorites,
-      // 'page page--favorites-empty': pathname === AppRoute.Favorites && пустой список
+      // 'page--favorites-empty': pathname === AppRoute.Favorites && isFavoritesEmpty (store?)
     }));
   }, [pathname]);
 
   return (
     <div className={pageClassName}>
-      {}
+      {children}
     </div>
   );
 };

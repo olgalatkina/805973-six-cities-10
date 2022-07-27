@@ -10,6 +10,7 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import {OffersType} from '../../types/offers';
 import {ReviewsType} from '../../types/reviews';
 import {UserType} from '../../types/user';
+import Page from '../page/page';
 
 type AppProps = {
   offers: OffersType,
@@ -17,39 +18,49 @@ type AppProps = {
   user: UserType,
 }
 
-// TODO: изменять класс обёртки в зависимости от Route (empty main)?!
-
 const App = ({offers, reviews, user}: AppProps): JSX.Element => (
   <BrowserRouter>
-    <div className="page page--gray page--main">
-      <ScrollToTop/>
-      <Routes>
-        <Route
-          path={AppRoute.Root}
-          element={<MainScreen offers={offers} user={user}/>}
-        />
-        <Route
-          path={AppRoute.Login}
-          element={<LoginScreen/>}
-        />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+    <ScrollToTop/>
+    <Routes>
+      <Route
+        path={AppRoute.Root}
+        element={
+          <Page>
+            <MainScreen offers={offers} user={user}/>
+          </Page>
+        }
+      />
+      <Route
+        path={AppRoute.Login}
+        element={
+          <Page>
+            <LoginScreen/>
+          </Page>
+        }
+      />
+      <Route
+        path={AppRoute.Favorites}
+        element={
+          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <Page>
               <FavoritesScreen offers={offers} user={user}/>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Offer}
-          element={<OfferScreen offers={offers} reviews={reviews} user={user}/>}
-        />
-        <Route
-          path={AppRoute.NotFound}
-          element={<NotFoundScreen/>}
-        />
-      </Routes>
-    </div>
+            </Page>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path={AppRoute.Offer}
+        element={
+          <Page>
+            <OfferScreen offers={offers} reviews={reviews} user={user}/>
+          </Page>
+        }
+      />
+      <Route
+        path={AppRoute.NotFound}
+        element={<NotFoundScreen/>}
+      />
+    </Routes>
   </BrowserRouter>
 );
 
