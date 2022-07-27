@@ -1,5 +1,5 @@
 import {useState, ChangeEvent, FormEvent} from 'react';
-import {starsValues} from '../../constants';
+import {STARS_VALUES} from '../../constants';
 import FormReviewInput from '../form-review-input/form-review-input';
 
 const FormReview = (): JSX.Element => {
@@ -27,7 +27,7 @@ const FormReview = (): JSX.Element => {
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {starsValues.map((value) => <FormReviewInput value={value} key={value} onChange={handleInputChange} />)}
+        {STARS_VALUES.map((value) => <FormReviewInput value={value} key={value} onChange={handleInputChange} />)}
       </div>
       <textarea
         className="reviews__textarea form__textarea"

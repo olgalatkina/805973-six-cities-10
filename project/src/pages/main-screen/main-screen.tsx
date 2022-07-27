@@ -1,5 +1,5 @@
 import {useLayoutEffect, useState} from 'react';
-import {cities} from '../../constants';
+import {CITIES} from '../../constants';
 import {CityType, OffersType, OfferType} from '../../types/offers';
 import {UserType} from '../../types/user';
 import cn from 'classnames';
@@ -54,7 +54,7 @@ const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
   );
 
   const mainClassName = cn('page__main page__main--index', {
-    'page__main--index-empty': filteredOffers.length === 0,
+    'page__main--index-empty': Boolean(filteredOffers.length),
   });
 
   return (
@@ -65,7 +65,7 @@ const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {cities.map((city) => (
+              {CITIES.map((city) => (
                 <TabItem
                   city={city}
                   key={city}
@@ -79,28 +79,29 @@ const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
           filteredOffers.length === 0
             ?
             <MainEmpty city={activeTab}/>
-            :
-            <div className="cities__places-container container">
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{getTitle(filteredOffers.length)}</b>
-                <FormSorting/>
-                <OffersList
-                  offers={filteredOffers}
-                  onOfferMouseOver={handleOfferMouseOver}
-                  onOfferMouseLeave={handleOfferMouseLeave}
-                  screenClass={Screen.common}
-                />
-              </section>
-              <div className="cities__right-section">
-                <Map
-                  cityInfo={findCityInfo(offers, activeTab)}
-                  points={filteredOffers}
-                  activeOffer={activeOffer}
-                  screenClass={Screen.common}
-                />
+            : (
+              <div className="cities__places-container container">
+                <section className="cities__places places">
+                  <h2 className="visually-hidden">Places</h2>
+                  <b className="places__found">{getTitle(filteredOffers.length)}</b>
+                  <FormSorting/>
+                  <OffersList
+                    offers={filteredOffers}
+                    onOfferMouseOver={handleOfferMouseOver}
+                    onOfferMouseLeave={handleOfferMouseLeave}
+                    screenClass={Screen.main}
+                  />
+                </section>
+                <div className="cities__right-section">
+                  <Map
+                    cityInfo={findCityInfo(offers, activeTab)}
+                    points={filteredOffers}
+                    activeOffer={activeOffer}
+                    screenClass={Screen.main}
+                  />
+                </div>
               </div>
-            </div>
+            )
         }
         </div>
       </main>

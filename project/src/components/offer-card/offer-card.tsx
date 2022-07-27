@@ -16,12 +16,12 @@ const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave, screenClass}: Of
   const {id, isFavorite, isPremium, previewImage, price, rating, title, type} = offer;
 
   const articleClassName = cn('place-card', {
-    'cities__card': screenClass === Screen.common,
+    'cities__card': screenClass === Screen.main,
     'favorites__card': screenClass === Screen.favorites,
   });
 
   const imageWrapperClassName = cn('place-card__image-wrapper', {
-    'cities__image-wrapper': screenClass === Screen.common,
+    'cities__image-wrapper': screenClass === Screen.main,
     'favorites__image-wrapper': screenClass === Screen.favorites,
   });
 

@@ -1,6 +1,5 @@
-import {useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {OffersType, OfferType} from '../../types/offers';
+import {OffersType} from '../../types/offers';
 import {ReviewsType} from '../../types/reviews';
 import {UserType} from '../../types/user';
 import cn from 'classnames';
@@ -22,7 +21,6 @@ type OfferScreenProps = {
 // TODO: style for 'property__bookmark-button--active'
 
 const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => {
-  const [activeOffer, setActiveOffer] = useState<OfferType | undefined>(undefined);
   const params = useParams();
   const offerId = Number(params.id);
   const currentOffer = offers.filter((offer) => offer.id === offerId)[0];
@@ -44,12 +42,6 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
   const neighbourhood = offers
     .filter((offer) => offer.city.name === currentOffer.city.name)
     .filter((offer) => offer.id !== currentOffer.id);
-
-  const handleOfferMouseOver = (id: number) => {
-    const hoveredOffer = neighbourhood.find((offer) => offer.id === id);
-    setActiveOffer(hoveredOffer);
-  };
-  const handleOfferMouseLeave = () => setActiveOffer(undefined);
 
   const btnBookmarkClassName = cn('property__bookmark-button button', {
     'property__bookmark-button--active': isFavorite,
@@ -152,7 +144,6 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
           <Map
             cityInfo={currentOffer.city}
             points={neighbourhood}
-            activeOffer={activeOffer}
             screenClass={Screen.offer}
           />
         </section>
@@ -164,9 +155,7 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
                 <OfferCard
                   offer={offer}
                   key={offer.id}
-                  screenClass={Screen.common}
-                  onOfferMouseOver={handleOfferMouseOver}
-                  onOfferMouseLeave={handleOfferMouseLeave}
+                  screenClass={Screen.main}
                 />
               ))}
             </div>
