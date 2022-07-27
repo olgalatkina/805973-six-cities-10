@@ -17,35 +17,39 @@ type AppProps = {
   user: UserType,
 }
 
+// TODO: изменять класс обёртки в зависимости от Route (empty main)?!
+
 const App = ({offers, reviews, user}: AppProps): JSX.Element => (
-  <BrowserRouter>
-    <Routes>
-      <Route
-        path={AppRoute.Root}
-        element={<MainScreen offers={offers} user={user} />}
-      />
-      <Route
-        path={AppRoute.Login}
-        element={<LoginScreen/>}
-      />
-      <Route
-        path={AppRoute.Favorites}
-        element={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-            <FavoritesScreen offers={offers} user={user} />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path={AppRoute.Offer}
-        element={<OfferScreen offers={offers} reviews={reviews} user={user} />}
-      />
-      <Route
-        path={AppRoute.NotFound}
-        element={<NotFoundScreen/>}
-      />
-    </Routes>
-  </BrowserRouter>
+  <div className="page page--gray page--main">
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={AppRoute.Root}
+          element={<MainScreen offers={offers} user={user}/>}
+        />
+        <Route
+          path={AppRoute.Login}
+          element={<LoginScreen/>}
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <FavoritesScreen offers={offers} user={user}/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Offer}
+          element={<OfferScreen offers={offers} reviews={reviews} user={user}/>}
+        />
+        <Route
+          path={AppRoute.NotFound}
+          element={<NotFoundScreen/>}
+        />
+      </Routes>
+    </BrowserRouter>
+  </div>
 );
 
 export default App;

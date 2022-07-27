@@ -4,7 +4,12 @@ type ReviewProps = {
   review: ReviewType,
 }
 
-// TODO: обработать дату
+const formatDate = (dateString: string): string => {
+  const date = new Date(Date.parse(dateString));
+  const month = date.toLocaleString('en-EN', { month: 'long' });
+  const year = date.getFullYear();
+  return `${month} ${year}`;
+};
 
 const Review = ({review}: ReviewProps): JSX.Element => {
   const {user, rating, comment, date} = review;
@@ -32,7 +37,7 @@ const Review = ({review}: ReviewProps): JSX.Element => {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{date}</time>
+        <time className="reviews__time" dateTime="2019-04-24">{formatDate(date)}</time>
       </div>
     </li>
   );

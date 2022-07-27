@@ -12,8 +12,7 @@ type HeaderProps = {
 // TODO: убрать eslint-disable-next-line
 
 const Header = ({user}: HeaderProps): JSX.Element => {
-  // eslint-disable-next-line
-  const [isAuth, setIsAuth] = useState(true);
+  const [isAuth,] = useState(true);
 
   return (
     <header className="header">
@@ -24,11 +23,9 @@ const Header = ({user}: HeaderProps): JSX.Element => {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {isAuth ? <UserInfo user={user}/> : null}
+              {isAuth && <UserInfo user={user}/>}
               <li className="header__nav-item">
-                {isAuth
-                  ? null
-                  : <div className="header__avatar-wrapper user__avatar-wrapper" />}
+                {!isAuth && <div className="header__avatar-wrapper user__avatar-wrapper" />}
                 <Link to={AppRoute.Login} className="header__nav-link">
                   <span className="header__signout">{isAuth ? 'Sign out' : 'Sign in'}</span>
                 </Link>

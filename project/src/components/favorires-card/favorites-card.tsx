@@ -11,12 +11,12 @@ const FavoritesCard = ({offer}: FavoritesCardProps): JSX.Element => {
   const {isPremium, id, isFavorite, previewImage, title, price, rating, type} = offer;
 
   return (
-    <article className="favorites__card place-card">
+    <article className="place-card favorites__card">
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className="favorites__image-wrapper place-card__image-wrapper">
+      <div className="place-card__image-wrapper favorites__image-wrapper">
         <Link to={generatePath(AppRoute.Offer, {id: `${id}`})}>
           <img
             className="place-card__image"
@@ -27,7 +27,7 @@ const FavoritesCard = ({offer}: FavoritesCardProps): JSX.Element => {
           />
         </Link>
       </div>
-      <div className="favorites__card-info place-card__info">
+      <div className="place-card__info favorites__card-info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>

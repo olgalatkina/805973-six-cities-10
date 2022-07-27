@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react';
 import {OffersType} from '../../types/offers';
 import {UserType} from '../../types/user';
+import cn from 'classnames';
 import Header from '../../components/header/header';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import Footer from '../../components/footer/footer';
 import FavoritesItem from '../../components/favorites-item/favorites-item';
-
 
 type FavoritesScreenProps = {
   offers: OffersType,
@@ -35,22 +35,34 @@ const FavoritesScreen = ({offers, user}: FavoritesScreenProps): JSX.Element => {
     if (favoritesOffers.length !== 0) {
       setIsEmpty(false);
     }
-  }, [isEmpty]);
+  }, [isEmpty, favoritesOffers]);
 
-  const indexedOffers = indexOffersByCities(offers);
+  const indexedOffers = indexOffersByCities(favoritesOffers);
+
+  const mainClasName = cn('page__main page__main--favorites', {
+    'page__main--favorites-empty': isEmpty,
+  });
+
+  const titleClassName = cn({
+    'visually-hidden': isEmpty,
+    'favorites__title': !isEmpty,
+  });
 
   return (
     <>
       <Header user={user} />
-      <main className={`page__main page__main--favorites ${isEmpty ? 'page__main--favorites-empty' : ''}`}>
+      <main className={mainClasName}>
         <div className="page__favorites-container container">
           <section className={`favorites ${isEmpty ? 'favorites--empty' : ''}`}>
-            <h1 className={isEmpty ? 'visually-hidden' : 'favorites__title'}>Saved listing</h1>
+            <h1 className={titleClassName}>Saved listing</h1>
             {isEmpty
               ? <FavoritesEmpty />
               :
               <ul className="favorites__list">
-                {Object.entries(indexedOffers).map(([city, localOffers]) => <FavoritesItem cityName={city} localOffers={localOffers} key={city}/>)}
+                {Object.entries(indexedOffers)
+                  .map(([city, localOffers]) => (
+                    <FavoritesItem cityName={city} localOffers={localOffers} key={city}/>
+                  ))}
               </ul>}
           </section>
         </div>

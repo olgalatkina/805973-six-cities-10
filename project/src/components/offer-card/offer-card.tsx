@@ -1,5 +1,7 @@
 import {Link, generatePath} from 'react-router-dom';
 import {OfferType} from '../../types/offers';
+import cn from 'classnames';
+import {Screen} from '../../constants';
 import BtnBookmark from '../btn-bookmark/btn-bookmark';
 import {AppRoute} from '../../constants';
 
@@ -7,22 +9,37 @@ type OfferCardProps = {
   offer: OfferType,
   onOfferMouseOver?: (id: number) => void,
   onOfferMouseLeave?: () => void,
+  screenClass: string,
 }
 
-const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps): JSX.Element => {
+const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave, screenClass}: OfferCardProps): JSX.Element => {
   const {id, isFavorite, isPremium, previewImage, price, rating, title, type} = offer;
+
+  const articleClassName = cn('place-card', {
+    'cities__card': screenClass === Screen.main,
+    'favorites__card': screenClass === Screen.favorites,
+  });
+
+  const imageWrapperClassName = cn('place-card__image-wrapper', {
+    'cities__image-wrapper': screenClass === Screen.main,
+    'favorites__image-wrapper': screenClass === Screen.favorites,
+  });
+
+  const cardInfoClassName = cn('place-card__info', {
+    'favorites__card-info': screenClass === Screen.favorites,
+  });
 
   return (
     <article
-      className="cities__card place-card"
+      className={articleClassName}
       onMouseOver={() => onOfferMouseOver?.(id)}
       onMouseLeave={() => onOfferMouseLeave?.()}
     >
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        {isPremium &&
-          <div className="place-card__mark">
-            <span>Premium</span>
-          </div>}
+      {isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>}
+      <div className={imageWrapperClassName}>
         <Link to={generatePath(AppRoute.Offer, {id: `${id}`})}>
           <img
             className="place-card__image"
@@ -33,7 +50,7 @@ const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps)
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={cardInfoClassName}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>

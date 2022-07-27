@@ -1,6 +1,6 @@
 import HeaderLogin from '../../components/header-login/header-login';
-
-// TODO: поправить стиль линии
+import {generatePath, Link} from 'react-router-dom';
+import {AppRoute} from '../../constants';
 
 const LoginScreen = () => (
   <>
@@ -44,9 +44,9 @@ const LoginScreen = () => (
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <a className="locations__item-link" href="#">
+            <Link className="locations__item-link" to={generatePath(AppRoute.Root)}>
               <span>Amsterdam</span>
-            </a>
+            </Link>
           </div>
         </section>
       </div>
