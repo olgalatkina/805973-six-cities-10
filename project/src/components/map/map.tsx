@@ -21,11 +21,11 @@ const currentCustomIcon = new Icon({
 type MapProps = {
   cityInfo: CityType,
   points: OffersType,
-  activeOffer?: OfferType | undefined,
+  activeOfferID?: number | null,
   screenClass: string,
 };
 
-const Map = ({ cityInfo, points, activeOffer, screenClass }: MapProps): JSX.Element => {
+const Map = ({ cityInfo, points, activeOfferID, screenClass }: MapProps): JSX.Element => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cityInfo);
 
@@ -39,14 +39,14 @@ const Map = ({ cityInfo, points, activeOffer, screenClass }: MapProps): JSX.Elem
 
         marker
           .setIcon(
-            activeOffer && point.id === activeOffer.id
+            activeOfferID && point.id === activeOfferID
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(map);
       });
     }
-  }, [map, points, activeOffer]);
+  }, [map, points, activeOfferID]);
 
   const mapClassName = cn('map', {
     'cities__map': screenClass === Screen.main,

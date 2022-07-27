@@ -31,18 +31,15 @@ const findCityInfo = (offers: OffersType, activeTab: string): CityType => (
 const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
   const [activeTab, setActiveTab] = useState('');
   const [filteredOffers, setFilteredOffers] = useState<OffersType>([]);
-  const [activeOffer, setActiveOffer] = useState<OfferType | undefined>(undefined);
+  const [activeOfferID, setActiveOfferID] = useState<number | null>(null);
 
   useLayoutEffect(() => {
     setActiveTab('Amsterdam');
     setFilteredOffers(filterOffersByCity(offers, 'Amsterdam'));
   }, [offers]);
 
-  const handleOfferMouseOver = (id: number) => {
-    const currentOffer = filteredOffers.find((offer) => offer.id === id);
-    setActiveOffer(currentOffer);
-  };
-  const handleOfferMouseLeave = () => setActiveOffer(undefined);
+  const handleOfferMouseOver = (id: number) => setActiveOfferID(id);
+  const handleOfferMouseLeave = () => setActiveOfferID(null);
 
   const handleTabClick = (city: string) => {
     setActiveTab(city);
@@ -96,7 +93,7 @@ const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
                   <Map
                     cityInfo={findCityInfo(offers, activeTab)}
                     points={filteredOffers}
-                    activeOffer={activeOffer}
+                    activeOfferID={activeOfferID}
                     screenClass={Screen.main}
                   />
                 </div>
