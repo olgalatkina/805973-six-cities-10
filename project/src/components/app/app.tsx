@@ -6,7 +6,7 @@ import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import {OffersType} from '../../types/offers';
 import {ReviewsType} from '../../types/reviews';
 import {UserType} from '../../types/user';
@@ -22,6 +22,7 @@ type AppProps = {
 const App = ({offers, reviews, user}: AppProps): JSX.Element => (
   <div className="page page--gray page--main">
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route
           path={AppRoute.Root}
