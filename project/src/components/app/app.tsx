@@ -20,9 +20,9 @@ type AppProps = {
 // TODO: изменять класс обёртки в зависимости от Route (empty main)?!
 
 const App = ({offers, reviews, user}: AppProps): JSX.Element => (
-  <div className="page page--gray page--main">
-    <BrowserRouter>
-      <ScrollToTop />
+  <BrowserRouter>
+    <div className="page page--gray page--main">
+      <ScrollToTop/>
       <Routes>
         <Route
           path={AppRoute.Root}
@@ -49,8 +49,8 @@ const App = ({offers, reviews, user}: AppProps): JSX.Element => (
           element={<NotFoundScreen/>}
         />
       </Routes>
-    </BrowserRouter>
-  </div>
+    </div>
+  </BrowserRouter>
 );
 
 export default App;

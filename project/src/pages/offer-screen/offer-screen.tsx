@@ -41,7 +41,8 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
 
   const neighbourhood = offers
     .filter((offer) => offer.city.name === currentOffer.city.name)
-    .filter((offer) => offer.id !== currentOffer.id);
+    .filter((offer) => offer.id !== currentOffer.id)
+    .slice(0, 3);
 
   const btnBookmarkClassName = cn('property__bookmark-button button', {
     'property__bookmark-button--active': isFavorite,

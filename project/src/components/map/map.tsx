@@ -31,7 +31,7 @@ const Map = ({ cityInfo, points, activeOfferID, screenClass }: MapProps): JSX.El
 
   useEffect(() => {
     if (map) {
-      points.slice(0, 3).forEach((point) => {
+      points.forEach((point) => {
         const marker = new Marker({
           lat: point.location.latitude,
           lng: point.location.longitude
