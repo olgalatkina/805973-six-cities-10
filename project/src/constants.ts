@@ -12,12 +12,6 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum Screen {
-  favorites = 'favorites',
-  offer = 'property',
-  main = 'cities',
-}
-
 export enum SortOption {
   Popular = 'Popular',
   LowToHigh = 'Price: low to high',

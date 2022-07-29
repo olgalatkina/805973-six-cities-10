@@ -6,6 +6,7 @@ import useMap from '../../hooks/useMap';
 import 'leaflet/dist/leaflet.css';
 import {useLocation} from 'react-router-dom';
 import {AppRoute} from '../../constants';
+import {getRoute} from '../../utils';
 
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',
@@ -24,8 +25,6 @@ type MapProps = {
   points: OffersType,
   activeOfferID?: number | null,
 };
-
-const getRoute = (pathname: string) => pathname.split('/')[1];
 
 const Map = ({cityInfo, points, activeOfferID}: MapProps): JSX.Element => {
   const {pathname} = useLocation();

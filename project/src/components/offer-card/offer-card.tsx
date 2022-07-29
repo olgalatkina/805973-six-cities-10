@@ -1,32 +1,34 @@
 import {Link, generatePath} from 'react-router-dom';
 import {OfferType} from '../../types/offers';
 import cn from 'classnames';
-import {Screen} from '../../constants';
 import BtnBookmark from '../btn-bookmark/btn-bookmark';
 import {AppRoute} from '../../constants';
+import {useLocation} from 'react-router-dom';
+import {getRoute} from '../../utils';
 
 type OfferCardProps = {
   offer: OfferType,
   onOfferMouseOver?: (id: number) => void,
   onOfferMouseLeave?: () => void,
-  screenClass: string,
 }
 
-const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave, screenClass}: OfferCardProps): JSX.Element => {
+const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps): JSX.Element => {
   const {id, isFavorite, isPremium, previewImage, price, rating, title, type} = offer;
+  const {pathname} = useLocation();
+  const route = getRoute(pathname);
 
   const articleClassName = cn('place-card', {
-    'cities__card': screenClass === Screen.main,
-    'favorites__card': screenClass === Screen.favorites,
+    'cities__card': pathname === AppRoute.Root || route === getRoute(AppRoute.Offer),
+    'favorites__card': pathname === AppRoute.Favorites,
   });
 
   const imageWrapperClassName = cn('place-card__image-wrapper', {
-    'cities__image-wrapper': screenClass === Screen.main,
-    'favorites__image-wrapper': screenClass === Screen.favorites,
+    'cities__image-wrapper': pathname === AppRoute.Root || route === getRoute(AppRoute.Offer),
+    'favorites__image-wrapper': pathname === AppRoute.Favorites,
   });
 
   const cardInfoClassName = cn('place-card__info', {
-    'favorites__card-info': screenClass === Screen.favorites,
+    'favorites__card-info': pathname === AppRoute.Favorites,
   });
 
   return (

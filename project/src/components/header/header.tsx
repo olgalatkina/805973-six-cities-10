@@ -9,8 +9,6 @@ type HeaderProps = {
   user: UserType,
 }
 
-// TODO: убрать eslint-disable-next-line
-
 const Header = ({user}: HeaderProps): JSX.Element => {
   const [isAuth,] = useState(true);
 

@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {CITIES, SortOption} from '../../constants';
 import cn from 'classnames';
-import {Screen} from '../../constants';
 import Header from '../../components/header/header';
 import TabsList from '../../components/tabs-list/tabs-list';
 import OffersList from '../../components/offers-list/offers-list';
@@ -70,7 +69,6 @@ const MainScreen = (): JSX.Element => {
                     offers={sortByOption(filteredOffers, activeOption)}
                     onOfferMouseOver={handleOfferMouseOver}
                     onOfferMouseLeave={handleOfferMouseLeave}
-                    screenClass={Screen.main}
                   />
                 </section>
                 <div className="cities__right-section">

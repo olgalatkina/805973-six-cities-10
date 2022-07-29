@@ -1,6 +1,5 @@
 import {useParams} from 'react-router-dom';
 import cn from 'classnames';
-import {Screen} from '../../constants';
 import Header from '../../components/header/header';
 import OfferImageWrapper from '../../components/offer-image-wrapper/offer-image-wrapper';
 import OfferInsideItem from '../../components/offer-inside-item/offer-inside-item';
@@ -144,13 +143,7 @@ const OfferScreen = (): JSX.Element => {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {neighbourhood.map((offer) => (
-                <OfferCard
-                  offer={offer}
-                  key={offer.id}
-                  screenClass={Screen.main}
-                />
-              ))}
+              {neighbourhood.map((offer) => <OfferCard offer={offer} key={offer.id} />)}
             </div>
           </section>
         </div>
