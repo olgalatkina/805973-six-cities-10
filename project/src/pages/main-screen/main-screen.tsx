@@ -3,7 +3,7 @@ import {CITIES} from '../../constants';
 import cn from 'classnames';
 import {Screen} from '../../constants';
 import Header from '../../components/header/header';
-import TabItem from '../../components/tab-item/tab-item';
+import TabsList from '../../components/tabs-list/tabs-list';
 import OffersList from '../../components/offers-list/offers-list';
 import FormSorting from '../../components/form-sorting/form-sorting';
 import MainEmpty from '../../components/main-no-offers/main-empty';
@@ -36,13 +36,7 @@ const MainScreen = (): JSX.Element => {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {CITIES.map((city) => (
-                <TabItem
-                  city={city}
-                  key={city}
-                />))}
-            </ul>
+            <TabsList cities={CITIES} />
           </section>
         </div>
         <div className="cities">{
