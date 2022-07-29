@@ -1,7 +1,4 @@
 import {useParams} from 'react-router-dom';
-import {OffersType} from '../../types/offers';
-import {ReviewsType} from '../../types/reviews';
-import {UserType} from '../../types/user';
 import cn from 'classnames';
 import {Screen} from '../../constants';
 import Header from '../../components/header/header';
@@ -11,16 +8,15 @@ import OfferCard from '../../components/offer-card/offer-card';
 import Review from '../../components/review/review';
 import FormReview from '../../components/form-review/form-review';
 import Map from '../../components/map/map';
-
-type OfferScreenProps = {
-  offers: OffersType,
-  reviews: ReviewsType,
-  user: UserType,
-}
+import {useAppSelector} from '../../hooks';
 
 // TODO: style for 'property__bookmark-button--active'
 
-const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => {
+const OfferScreen = (): JSX.Element => {
+  const offers = useAppSelector((state) => state.offers);
+  const reviews = useAppSelector((state) => state.reviews);
+  const user = useAppSelector((state) => state.user);
+
   const params = useParams();
   const offerId = Number(params.id);
   const currentOffer = offers.filter((offer) => offer.id === offerId)[0];

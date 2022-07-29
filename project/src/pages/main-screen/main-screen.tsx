@@ -1,7 +1,5 @@
-import {useLayoutEffect, useState} from 'react';
+import {useState} from 'react';
 import {CITIES} from '../../constants';
-import {CityType, OffersType} from '../../types/offers';
-import {UserType} from '../../types/user';
 import cn from 'classnames';
 import {Screen} from '../../constants';
 import Header from '../../components/header/header';
@@ -10,41 +8,18 @@ import OffersList from '../../components/offers-list/offers-list';
 import FormSorting from '../../components/form-sorting/form-sorting';
 import MainEmpty from '../../components/main-no-offers/main-empty';
 import Map from '../../components/map/map';
+import {useAppSelector} from '../../hooks';
 
-type MainScreenProps = {
-  offers: OffersType,
-  user: UserType,
-}
-
-const filterOffersByCity = (offers: OffersType, city: string): OffersType => (
-  offers.filter((offer) => offer.city.name === city)
-);
-
-// const findCityInfo = (offers: OffersType, activeTab: string): CityType => (
-//   offers.find((offer) => offer.city.name === activeTab).city
-// );
-// компилятор TS не устраивала ф-ция find, пришлось писать так
-const findCityInfo = (offers: OffersType, activeTab: string): CityType => (
-  filterOffersByCity(offers, activeTab)[0].city
-);
-
-const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
-  const [activeTab, setActiveTab] = useState('');
-  const [filteredOffers, setFilteredOffers] = useState<OffersType>([]);
+const MainScreen = (): JSX.Element => {
   const [activeOfferID, setActiveOfferID] = useState<number | null>(null);
 
-  useLayoutEffect(() => {
-    setActiveTab('Amsterdam');
-    setFilteredOffers(filterOffersByCity(offers, 'Amsterdam'));
-  }, [offers]);
+  const offers = useAppSelector((state) => state.offers);
+  const activeTab = useAppSelector((state) => state.activeTab);
+  const filteredOffers = offers.filter((offer) => offer.city.name === activeTab);
+  const user = useAppSelector((state) => state.user);
 
   const handleOfferMouseOver = (id: number) => setActiveOfferID(id);
   const handleOfferMouseLeave = () => setActiveOfferID(null);
-
-  const handleTabClick = (city: string) => {
-    setActiveTab(city);
-    setFilteredOffers(filterOffersByCity(offers, city));
-  };
 
   const getTitle = (numberOfOffers: number) => (
     `${numberOfOffers} ${numberOfOffers === 1 ? 'place' : 'places'} to stay in ${activeTab}`
@@ -66,8 +41,6 @@ const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
                 <TabItem
                   city={city}
                   key={city}
-                  onTabClick={handleTabClick}
-                  activeTab={activeTab}
                 />))}
             </ul>
           </section>
@@ -91,7 +64,7 @@ const MainScreen = ({offers, user}: MainScreenProps): JSX.Element => {
                 </section>
                 <div className="cities__right-section">
                   <Map
-                    cityInfo={findCityInfo(offers, activeTab)}
+                    cityInfo={filteredOffers[0].city}
                     points={filteredOffers}
                     activeOfferID={activeOfferID}
                     screenClass={Screen.main}
