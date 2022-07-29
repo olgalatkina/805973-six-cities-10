@@ -46,8 +46,8 @@ const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps)
           <img
             className="place-card__image"
             src={previewImage}
-            width="260"
-            height="200"
+            width={pathname === AppRoute.Favorites ? '150' : '260'}
+            height={pathname === AppRoute.Favorites ? '110' : '200'}
             alt={title}
           />
         </Link>
