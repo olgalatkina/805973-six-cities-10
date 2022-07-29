@@ -78,7 +78,6 @@ const MainScreen = (): JSX.Element => {
                     cityInfo={filteredOffers[0].city}
                     points={filteredOffers}
                     activeOfferID={activeOfferID}
-                    screenClass={Screen.main}
                   />
                 </div>
               </div>

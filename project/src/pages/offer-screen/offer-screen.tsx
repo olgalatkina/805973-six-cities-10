@@ -138,11 +138,7 @@ const OfferScreen = (): JSX.Element => {
               </section>
             </div>
           </div>
-          <Map
-            cityInfo={currentOffer.city}
-            points={neighbourhood}
-            screenClass={Screen.offer}
-          />
+          <Map cityInfo={currentOffer.city} points={neighbourhood} />
         </section>
         <div className="container">
           <section className="near-places places">
