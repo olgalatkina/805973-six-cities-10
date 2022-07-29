@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {CITIES} from '../../constants';
+import {CITIES, SortOption} from '../../constants';
 import cn from 'classnames';
 import {Screen} from '../../constants';
 import Header from '../../components/header/header';
@@ -9,6 +9,22 @@ import FormSorting from '../../components/form-sorting/form-sorting';
 import MainEmpty from '../../components/main-no-offers/main-empty';
 import Map from '../../components/map/map';
 import {useAppSelector} from '../../hooks';
+import {OffersType} from '../../types/offers';
+
+const sortByOption = (offers: OffersType, activeOption: string) => {
+  switch (activeOption) {
+    case SortOption.Popular:
+      return offers;
+    case SortOption.LowToHigh:
+      return offers.sort((offerA, offerB) => offerA.price - offerB.price);
+    case SortOption.HighToLow:
+      return offers.sort((offerA, offerB) => offerB.price - offerA.price);
+    case SortOption.TopRatedFirst:
+      return offers.sort((offerA, offerB) => offerB.rating - offerA.rating);
+    default:
+      return offers;
+  }
+};
 
 const MainScreen = (): JSX.Element => {
   const [activeOfferID, setActiveOfferID] = useState<number | null>(null);
@@ -16,6 +32,7 @@ const MainScreen = (): JSX.Element => {
   const offers = useAppSelector((state) => state.offers);
   const activeTab = useAppSelector((state) => state.activeTab);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeTab);
+  const activeOption = useAppSelector((state) => state.activeOption);
   const user = useAppSelector((state) => state.user);
 
   const handleOfferMouseOver = (id: number) => setActiveOfferID(id);
@@ -36,7 +53,7 @@ const MainScreen = (): JSX.Element => {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <TabsList cities={CITIES} />
+            <TabsList cities={CITIES}/>
           </section>
         </div>
         <div className="cities">{
@@ -50,7 +67,7 @@ const MainScreen = (): JSX.Element => {
                   <b className="places__found">{getTitle(filteredOffers.length)}</b>
                   <FormSorting/>
                   <OffersList
-                    offers={filteredOffers}
+                    offers={sortByOption(filteredOffers, activeOption)}
                     onOfferMouseOver={handleOfferMouseOver}
                     onOfferMouseLeave={handleOfferMouseLeave}
                     screenClass={Screen.main}

@@ -4,6 +4,10 @@ export const setActiveTab = createAction('setActiveTab', (city) => ({
   payload: city
 }));
 
+export const setActiveOption = createAction('setActiveOption', (option) => ({
+  payload: option
+}));
+
 export const getOffers = createAction('getOffers', (offers) => ({
   payload: offers
 }));
