@@ -8,16 +8,17 @@ import Review from '../../components/review/review';
 import FormReview from '../../components/form-review/form-review';
 import Map from '../../components/map/map';
 import {useAppSelector} from '../../hooks';
+import {NUMBER_OF_NEIGHBOURHOOD} from '../../constants';
 
 // TODO: style for 'property__bookmark-button--active'
 
 const OfferScreen = (): JSX.Element => {
   const offers = useAppSelector((state) => state.offers);
   const reviews = useAppSelector((state) => state.reviews);
-  const user = useAppSelector((state) => state.user);
 
   const params = useParams();
   const offerId = Number(params.id);
+
   const currentOffer = offers.filter((offer) => offer.id === offerId)[0];
   const {
     images,
@@ -37,7 +38,7 @@ const OfferScreen = (): JSX.Element => {
   const neighbourhood = offers
     .filter((offer) => offer.city.name === currentOffer.city.name)
     .filter((offer) => offer.id !== currentOffer.id)
-    .slice(0, 3);
+    .slice(0, NUMBER_OF_NEIGHBOURHOOD);
 
   const btnBookmarkClassName = cn('property__bookmark-button button', {
     'property__bookmark-button--active': isFavorite,
@@ -49,7 +50,7 @@ const OfferScreen = (): JSX.Element => {
 
   return (
     <>
-      <Header user={user} />
+      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">

@@ -1,13 +1,13 @@
 import cn from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks/';
-import {setActiveTab} from '../../store/action';
+import {changeActiveCity} from '../../store/action';
 
 type TabItemProps = {
   city: string;
 }
 
 const TabItem = ({city}: TabItemProps): JSX.Element => {
-  const activeTab = useAppSelector((state) => state.activeTab);
+  const activeTab = useAppSelector((state) => state.activeCity);
   const dispatch = useAppDispatch();
 
   const linkClassName = cn('locations__item-link tabs__item', {
@@ -15,10 +15,10 @@ const TabItem = ({city}: TabItemProps): JSX.Element => {
   });
 
   return (
-    <li className="locations__item" onClick={() => dispatch(setActiveTab({city: city}))}>
-      <div className={linkClassName} style={{'cursor': 'pointer'}}>
+    <li className="locations__item" onClick={() => dispatch(changeActiveCity({city: city}))}>
+      <a className={linkClassName} href="#">
         <span>{city}</span>
-      </div>
+      </a>
     </li>
   );
 };

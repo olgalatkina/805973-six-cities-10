@@ -24,7 +24,6 @@ const indexOffersByCities = (offers: OffersType): OffersIndexType => (
 
 const FavoritesScreen = (): JSX.Element => {
   const offers = useAppSelector((state) => state.offers);
-  const user = useAppSelector((state) => state.user);
 
   const [isEmpty, setIsEmpty] = useState(true);
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
@@ -48,7 +47,7 @@ const FavoritesScreen = (): JSX.Element => {
 
   return (
     <>
-      <Header user={user} />
+      <Header />
       <main className={mainClasName}>
         <div className="page__favorites-container container">
           <section className={`favorites ${isEmpty ? 'favorites--empty' : ''}`}>

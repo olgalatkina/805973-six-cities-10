@@ -29,25 +29,25 @@ const MainScreen = (): JSX.Element => {
   const [activeOfferID, setActiveOfferID] = useState<number | null>(null);
 
   const offers = useAppSelector((state) => state.offers);
-  const activeTab = useAppSelector((state) => state.activeTab);
-  const filteredOffers = offers.filter((offer) => offer.city.name === activeTab);
+  const activeCity = useAppSelector((state) => state.activeCity);
   const activeSortType = useAppSelector((state) => state.activeSortType);
-  const user = useAppSelector((state) => state.user);
+  const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
+  const currentOffers = sortByOption(filteredOffers, activeSortType);
 
   const handleOfferMouseOver = (id: number) => setActiveOfferID(id);
   const handleOfferMouseLeave = () => setActiveOfferID(null);
 
   const getTitle = (numberOfOffers: number) => (
-    `${numberOfOffers} ${numberOfOffers === 1 ? 'place' : 'places'} to stay in ${activeTab}`
+    `${numberOfOffers} ${numberOfOffers === 1 ? 'place' : 'places'} to stay in ${activeCity}`
   );
 
   const mainClassName = cn('page__main page__main--index', {
-    'page__main--index-empty': Boolean(filteredOffers.length),
+    'page__main--index-empty': Boolean(currentOffers.length),
   });
 
   return (
     <>
-      <Header user={user}/>
+      <Header />
       <main className={mainClassName}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -56,25 +56,25 @@ const MainScreen = (): JSX.Element => {
           </section>
         </div>
         <div className="cities">{
-          filteredOffers.length === 0
+          currentOffers.length === 0
             ?
-            <MainEmpty city={activeTab}/>
+            <MainEmpty city={activeCity}/>
             : (
               <div className="cities__places-container container">
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Places</h2>
-                  <b className="places__found">{getTitle(filteredOffers.length)}</b>
+                  <b className="places__found">{getTitle(currentOffers.length)}</b>
                   <FormSorting/>
                   <OffersList
-                    offers={sortByOption(filteredOffers, activeSortType)}
+                    offers={currentOffers}
                     onOfferMouseOver={handleOfferMouseOver}
                     onOfferMouseLeave={handleOfferMouseLeave}
                   />
                 </section>
                 <div className="cities__right-section">
                   <Map
-                    cityInfo={filteredOffers[0].city}
-                    points={filteredOffers}
+                    cityInfo={currentOffers[0].city}
+                    points={currentOffers}
                     activeOfferID={activeOfferID}
                   />
                 </div>

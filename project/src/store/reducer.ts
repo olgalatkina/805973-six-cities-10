@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {setActiveTab, getOffers, getReviews, getUser, setActiveSortType} from './action';
+import {changeActiveCity, getOffers, getReviews, getUser, setActiveSortType} from './action';
 import {CITIES, SortOption} from '../constants';
 import {offers} from '../mocks/offers';
 import {reviews} from '../mocks/reviews';
@@ -7,7 +7,7 @@ import {user} from '../mocks/user';
 
 
 const initialState = {
-  activeTab: CITIES[0],
+  activeCity: CITIES[0],
   activeSortType: SortOption.Popular,
   offers: offers,
   reviews: reviews,
@@ -16,8 +16,8 @@ const initialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(setActiveTab, (state, action) => {
-      state.activeTab = action.payload.city;
+    .addCase(changeActiveCity, (state, action) => {
+      state.activeCity = action.payload.city;
     })
     .addCase(setActiveSortType, (state, action) => {
       state.activeSortType = action.payload.option;

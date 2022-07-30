@@ -1,6 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
 
-export const setActiveTab = createAction('setActiveTab', (city) => ({
+export const changeActiveCity = createAction('changeActiveCity', (city) => ({
   payload: city
 }));
 
