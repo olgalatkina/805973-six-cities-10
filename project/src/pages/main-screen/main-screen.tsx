@@ -10,8 +10,8 @@ import Map from '../../components/map/map';
 import {useAppSelector} from '../../hooks';
 import {OffersType} from '../../types/offers';
 
-const sortByOption = (offers: OffersType, activeOption: string) => {
-  switch (activeOption) {
+const sortByOption = (offers: OffersType, activeSortType: string) => {
+  switch (activeSortType) {
     case SortOption.Popular:
       return offers;
     case SortOption.LowToHigh:
@@ -31,7 +31,7 @@ const MainScreen = (): JSX.Element => {
   const offers = useAppSelector((state) => state.offers);
   const activeTab = useAppSelector((state) => state.activeTab);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeTab);
-  const activeOption = useAppSelector((state) => state.activeOption);
+  const activeSortType = useAppSelector((state) => state.activeSortType);
   const user = useAppSelector((state) => state.user);
 
   const handleOfferMouseOver = (id: number) => setActiveOfferID(id);
@@ -66,7 +66,7 @@ const MainScreen = (): JSX.Element => {
                   <b className="places__found">{getTitle(filteredOffers.length)}</b>
                   <FormSorting/>
                   <OffersList
-                    offers={sortByOption(filteredOffers, activeOption)}
+                    offers={sortByOption(filteredOffers, activeSortType)}
                     onOfferMouseOver={handleOfferMouseOver}
                     onOfferMouseLeave={handleOfferMouseLeave}
                   />

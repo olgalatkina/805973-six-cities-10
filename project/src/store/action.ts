@@ -4,7 +4,7 @@ export const setActiveTab = createAction('setActiveTab', (city) => ({
   payload: city
 }));
 
-export const setActiveOption = createAction('setActiveOption', (option) => ({
+export const setActiveSortType = createAction('setActiveSortType', (option) => ({
   payload: option
 }));
 

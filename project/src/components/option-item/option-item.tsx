@@ -1,27 +1,20 @@
 import cn from 'classnames';
-import {useAppDispatch, useAppSelector} from '../../hooks/';
-import {setActiveOption} from '../../store/action';
 
 type OptionProps = {
   option: string,
   onOptionClick: () => void,
+  isActive: boolean,
 }
-const OptionItem = ({option, onOptionClick}: OptionProps): JSX.Element => {
-  const activeOption = useAppSelector((state) => state.activeOption);
-  const dispatch = useAppDispatch();
-
+const OptionItem = ({option, onOptionClick, isActive}: OptionProps): JSX.Element => {
   const optionClassName = cn('places__option', {
-    'places__option--active': option === activeOption,
+    'places__option--active': isActive,
   });
 
   return (
     <li
       className={optionClassName}
       tabIndex={0}
-      onClick={() => {
-        dispatch(setActiveOption({option: option}));
-        onOptionClick();
-      }}
+      onClick={() => onOptionClick()}
     >
       {option}
     </li>
