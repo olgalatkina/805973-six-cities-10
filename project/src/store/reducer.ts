@@ -9,9 +9,9 @@ import {user} from '../mocks/user';
 const initialState = {
   activeCity: CITIES[0],
   activeSortType: SortOption.Popular,
-  offers: offers,
-  reviews: reviews,
-  user: user,
+  offers,
+  reviews,
+  user,
 };
 
 const reducer = createReducer(initialState, (builder) => {
