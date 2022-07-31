@@ -1,17 +1,12 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {UserType} from '../../types/user';
 import {AppRoute} from '../../constants';
 import Logo from '../logo/logo';
 import UserInfo from '../user-info/user-info';
+import {useAppSelector} from '../../hooks';
 
-type HeaderProps = {
-  user: UserType,
-}
-
-// TODO: убрать eslint-disable-next-line
-
-const Header = ({user}: HeaderProps): JSX.Element => {
+const Header = (): JSX.Element => {
+  const user = useAppSelector((state) => state.user);
   const [isAuth,] = useState(true);
 
   return (

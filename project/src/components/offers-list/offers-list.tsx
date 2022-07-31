@@ -5,10 +5,9 @@ type OffersListProps = {
   offers: OffersType,
   onOfferMouseOver?: (id: number) => void,
   onOfferMouseLeave?: () => void,
-  screenClass: string,
 }
 
-const OffersList = ({offers, onOfferMouseOver, onOfferMouseLeave, screenClass}: OffersListProps): JSX.Element => (
+const OffersList = ({offers, onOfferMouseOver, onOfferMouseLeave}: OffersListProps): JSX.Element => (
   <div className="cities__places-list places__list tabs__content">
     {offers.map((offer) => (
       <OfferCard
@@ -16,7 +15,6 @@ const OffersList = ({offers, onOfferMouseOver, onOfferMouseLeave, screenClass}: 
         offer={offer}
         onOfferMouseOver={onOfferMouseOver}
         onOfferMouseLeave={onOfferMouseLeave}
-        screenClass={screenClass}
       />
     ))}
   </div>

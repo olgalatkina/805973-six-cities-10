@@ -12,11 +12,13 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum Screen {
-  favorites = 'favorites',
-  offer = 'property',
-  main = 'cities',
+export enum SortOption {
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first',
 }
 
-export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
-export const STARS_VALUES: string[] = ['5', '4', '3', '2', '1'];
+export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const STARS_VALUES = ['5', '4', '3', '2', '1'];
+export const NUMBER_OF_NEIGHBOURHOOD = 3;

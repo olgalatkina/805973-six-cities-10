@@ -6,50 +6,53 @@ import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
+import Page from '../page/page';
 
-import {OffersType} from '../../types/offers';
-import {ReviewsType} from '../../types/reviews';
-import {UserType} from '../../types/user';
-
-type AppProps = {
-  offers: OffersType,
-  reviews: ReviewsType,
-  user: UserType,
-}
-
-// TODO: изменять класс обёртки в зависимости от Route (empty main)?!
-
-const App = ({offers, reviews, user}: AppProps): JSX.Element => (
-  <div className="page page--gray page--main">
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path={AppRoute.Root}
-          element={<MainScreen offers={offers} user={user}/>}
-        />
-        <Route
-          path={AppRoute.Login}
-          element={<LoginScreen/>}
-        />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <FavoritesScreen offers={offers} user={user}/>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Offer}
-          element={<OfferScreen offers={offers} reviews={reviews} user={user}/>}
-        />
-        <Route
-          path={AppRoute.NotFound}
-          element={<NotFoundScreen/>}
-        />
-      </Routes>
-    </BrowserRouter>
-  </div>
+const App = (): JSX.Element => (
+  <BrowserRouter>
+    <ScrollToTop/>
+    <Routes>
+      <Route
+        path={AppRoute.Root}
+        element={
+          <Page>
+            <MainScreen />
+          </Page>
+        }
+      />
+      <Route
+        path={AppRoute.Login}
+        element={
+          <Page>
+            <LoginScreen/>
+          </Page>
+        }
+      />
+      <Route
+        path={AppRoute.Favorites}
+        element={
+          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <Page>
+              <FavoritesScreen />
+            </Page>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path={AppRoute.Offer}
+        element={
+          <Page>
+            <OfferScreen />
+          </Page>
+        }
+      />
+      <Route
+        path={AppRoute.NotFound}
+        element={<NotFoundScreen/>}
+      />
+    </Routes>
+  </BrowserRouter>
 );
 
 export default App;

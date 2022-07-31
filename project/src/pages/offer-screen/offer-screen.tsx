@@ -1,9 +1,5 @@
 import {useParams} from 'react-router-dom';
-import {OffersType} from '../../types/offers';
-import {ReviewsType} from '../../types/reviews';
-import {UserType} from '../../types/user';
 import cn from 'classnames';
-import {Screen} from '../../constants';
 import Header from '../../components/header/header';
 import OfferImageWrapper from '../../components/offer-image-wrapper/offer-image-wrapper';
 import OfferInsideItem from '../../components/offer-inside-item/offer-inside-item';
@@ -11,18 +7,18 @@ import OfferCard from '../../components/offer-card/offer-card';
 import Review from '../../components/review/review';
 import FormReview from '../../components/form-review/form-review';
 import Map from '../../components/map/map';
-
-type OfferScreenProps = {
-  offers: OffersType,
-  reviews: ReviewsType,
-  user: UserType,
-}
+import {useAppSelector} from '../../hooks';
+import {NUMBER_OF_NEIGHBOURHOOD} from '../../constants';
 
 // TODO: style for 'property__bookmark-button--active'
 
-const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => {
+const OfferScreen = (): JSX.Element => {
+  const offers = useAppSelector((state) => state.offers);
+  const reviews = useAppSelector((state) => state.reviews);
+
   const params = useParams();
   const offerId = Number(params.id);
+
   const currentOffer = offers.filter((offer) => offer.id === offerId)[0];
   const {
     images,
@@ -41,7 +37,8 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
 
   const neighbourhood = offers
     .filter((offer) => offer.city.name === currentOffer.city.name)
-    .filter((offer) => offer.id !== currentOffer.id);
+    .filter((offer) => offer.id !== currentOffer.id)
+    .slice(0, NUMBER_OF_NEIGHBOURHOOD);
 
   const btnBookmarkClassName = cn('property__bookmark-button button', {
     'property__bookmark-button--active': isFavorite,
@@ -53,7 +50,7 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
 
   return (
     <>
-      <Header user={user} />
+      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -141,23 +138,13 @@ const OfferScreen = ({offers, reviews, user}: OfferScreenProps): JSX.Element => 
               </section>
             </div>
           </div>
-          <Map
-            cityInfo={currentOffer.city}
-            points={neighbourhood}
-            screenClass={Screen.offer}
-          />
+          <Map cityInfo={currentOffer.city} points={neighbourhood} />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {neighbourhood.map((offer) => (
-                <OfferCard
-                  offer={offer}
-                  key={offer.id}
-                  screenClass={Screen.main}
-                />
-              ))}
+              {neighbourhood.map((offer) => <OfferCard offer={offer} key={offer.id} />)}
             </div>
           </section>
         </div>
