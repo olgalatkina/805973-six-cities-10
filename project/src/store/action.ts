@@ -13,9 +13,11 @@ export const setActiveSortType = createAction('setActiveSortType', (option) => (
 
 export const loadOffers = createAction<OffersType>('loadOffers');
 
-export const loadReviews = createAction<ReviewsType>('loadReviews');
+export const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
 
-export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+export const setError = createAction<string | null>('setError');
+
+export const loadReviews = createAction<ReviewsType>('loadReviews');
 
 // ----------
 
