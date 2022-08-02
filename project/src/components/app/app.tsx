@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppSelector} from '../../hooks';
 import PrivateRoute from '../private-route/private-route';
@@ -10,6 +10,8 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import Page from '../page/page';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 const isCheckedAuth = (authorizationStatus: string): boolean => authorizationStatus === AuthorizationStatus.Unknown;
 
@@ -23,7 +25,7 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <ScrollToTop/>
       <Routes>
         <Route
@@ -65,7 +67,7 @@ const App = (): JSX.Element => {
           element={<NotFoundScreen/>}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 };
 

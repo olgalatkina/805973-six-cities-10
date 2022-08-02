@@ -2,14 +2,14 @@ import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import Logo from '../logo/logo';
 import UserInfo from '../user-info/user-info';
-import {useAppSelector} from '../../hooks';
+import {useAppSelector, useAppDispatch} from '../../hooks';
+import {logoutAction} from '../../store/api-actions';
 
 const Header = (): JSX.Element => {
   const user = useAppSelector((state) => state.user);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
-
+  const dispatch = useAppDispatch();
 
   return (
     <header className="header">
@@ -23,9 +23,33 @@ const Header = (): JSX.Element => {
               {isAuth && <UserInfo user={user}/>}
               <li className="header__nav-item">
                 {!isAuth && <div className="header__avatar-wrapper user__avatar-wrapper" />}
-                <Link to={AppRoute.Login} className="header__nav-link">
-                  <span className="header__signout">{isAuth ? 'Sign out' : 'Sign in'}</span>
-                </Link>
+                {!isAuth
+                  ?
+                  <Link to={AppRoute.Login} className="header__nav-link" >
+                    <span className="header__signout">Sign in</span>
+                  </Link>
+                  :
+                  <Link
+                    to={AppRoute.Login}
+                    className="header__nav-link"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      dispatch(logoutAction());
+                    }}
+                  >
+                    <span className="header__signout">Sign out</span>
+                  </Link>
+                }
+                {/*<Link*/}
+                {/*  onClick={(evt) => {*/}
+                {/*    evt.preventDefault();*/}
+                {/*    dispatch(logoutAction());*/}
+                {/*  }}*/}
+                {/*  to={AppRoute.Login}*/}
+                {/*  className="header__nav-link"*/}
+                {/*>*/}
+                {/*  <span className="header__signout">{isAuth ? 'Sign out' : 'Sign in'}</span>*/}
+                {/*</Link>*/}
               </li>
             </ul>
           </nav>
