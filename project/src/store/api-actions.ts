@@ -3,7 +3,15 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatchType, StateType} from '../types/state.js';
 import {OffersType} from '../types/offers';
 import {AuthDataType, UserType} from '../types/user';
-import {loadOffers, requireAuthorization, setError, setDataLoadedStatus, setUser, redirectToRoute} from './action';
+import {
+  loadOffers,
+  requireAuthorization,
+  setError,
+  setDataLoadedStatus,
+  setUser,
+  redirectToRoute,
+  loadFavorites,
+} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, AppRoute, TIMEOUT_SHOW_ERROR} from '../constants';
 import {store} from './';
@@ -28,6 +36,20 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
     const {data} = await api.get<OffersType>(APIRoute.Offers);
     dispatch(setDataLoadedStatus(true));
     dispatch(loadOffers(data));
+    dispatch(setDataLoadedStatus(false));
+  },
+);
+
+export const fetchFavoritesAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/fetchFavorites',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<OffersType>(APIRoute.Favorites);
+    dispatch(setDataLoadedStatus(true));
+    dispatch(loadFavorites(data));
     dispatch(setDataLoadedStatus(false));
   },
 );

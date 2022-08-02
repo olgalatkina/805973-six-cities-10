@@ -6,7 +6,6 @@ import {useAppSelector, useAppDispatch} from '../../hooks';
 import {logoutAction} from '../../store/api-actions';
 
 const Header = (): JSX.Element => {
-  const user = useAppSelector((state) => state.user);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
@@ -20,7 +19,7 @@ const Header = (): JSX.Element => {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {isAuth && <UserInfo user={user}/>}
+              {isAuth && <UserInfo />}
               <li className="header__nav-item">
                 {!isAuth && <div className="header__avatar-wrapper user__avatar-wrapper" />}
                 {!isAuth

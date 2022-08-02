@@ -25,3 +25,5 @@ export const setUser = createAction<UserType | null>('setUser');
 export const loadReviews = createAction<ReviewsType>('loadReviews');
 
 export const redirectToRoute = createAction<AppRoute>('redirectToRoute');
+
+export const loadFavorites = createAction<OffersType>('loadFavorites');

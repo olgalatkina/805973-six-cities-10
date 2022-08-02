@@ -23,6 +23,7 @@ type initialStateType = {
   error: string | null,
   reviews: ReviewsType,
   user: UserType | null,
+  favorites: OffersType,
 }
 
 const initialState: initialStateType = {
@@ -34,6 +35,7 @@ const initialState: initialStateType = {
   isDataLoaded: false,
   error: null,
   user: null,
+  favorites: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
