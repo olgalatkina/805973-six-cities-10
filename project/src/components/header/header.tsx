@@ -38,18 +38,7 @@ const Header = (): JSX.Element => {
                     }}
                   >
                     <span className="header__signout">Sign out</span>
-                  </Link>
-                }
-                {/*<Link*/}
-                {/*  onClick={(evt) => {*/}
-                {/*    evt.preventDefault();*/}
-                {/*    dispatch(logoutAction());*/}
-                {/*  }}*/}
-                {/*  to={AppRoute.Login}*/}
-                {/*  className="header__nav-link"*/}
-                {/*>*/}
-                {/*  <span className="header__signout">{isAuth ? 'Sign out' : 'Sign in'}</span>*/}
-                {/*</Link>*/}
+                  </Link>}
               </li>
             </ul>
           </nav>

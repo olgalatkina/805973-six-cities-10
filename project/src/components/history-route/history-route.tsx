@@ -26,6 +26,6 @@ const HistoryRouter = ({basename, children, history}: HistoryRouterProps) => {
       {children}
     </Router>
   );
-}
+};
 
 export default HistoryRouter;

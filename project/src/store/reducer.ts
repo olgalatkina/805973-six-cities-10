@@ -14,8 +14,6 @@ import {OffersType} from '../types/offers';
 import {ReviewsType} from '../types/reviews';
 import {UserType} from '../types/user';
 
-import {user} from '../mocks/user';
-
 type initialStateType = {
   activeCity: string,
   activeSortType: string,
