@@ -1,13 +1,15 @@
-import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../constants';
+import {AppRoute, AuthorizationStatus} from '../../constants';
 import Logo from '../logo/logo';
 import UserInfo from '../user-info/user-info';
 import {useAppSelector} from '../../hooks';
 
 const Header = (): JSX.Element => {
   const user = useAppSelector((state) => state.user);
-  const [isAuth,] = useState(true);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+
 
   return (
     <header className="header">

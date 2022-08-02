@@ -2,6 +2,7 @@ import {createAction} from '@reduxjs/toolkit';
 import {OffersType} from '../types/offers';
 import {ReviewsType} from '../types/reviews';
 import {AuthorizationStatus} from '../constants';
+import {UserType} from '../types/user';
 
 export const changeActiveCity = createAction('changeActiveCity', (city) => ({
   payload: city
@@ -18,6 +19,8 @@ export const requireAuthorization = createAction<AuthorizationStatus>('requireAu
 export const setError = createAction<string | null>('setError');
 
 export const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
+
+export const setUser = createAction<UserType | null>('setUser');
 
 export const loadReviews = createAction<ReviewsType>('loadReviews');
 

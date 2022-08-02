@@ -21,6 +21,7 @@ const App = (): JSX.Element => {
       <LoadingScreen />
     );
   }
+
   return (
     <BrowserRouter>
       <ScrollToTop/>

@@ -11,9 +11,3 @@ export type AuthDataType = {
   login: string;
   password: string;
 };
-
-export type UserDataType = {
-  id: number;
-  email: string;
-  token: string;
-};

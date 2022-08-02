@@ -7,6 +7,7 @@ import {
   requireAuthorization,
   setError,
   setDataLoadedStatus,
+  setUser,
 } from './action';
 import {CITIES, SortOption, AuthorizationStatus} from '../constants';
 import {OffersType} from '../types/offers';
@@ -23,7 +24,7 @@ type initialStateType = {
   isDataLoaded: boolean,
   error: string | null,
   reviews: ReviewsType,
-  user: UserType,
+  user: UserType | null,
 }
 
 const initialState: initialStateType = {
@@ -33,8 +34,8 @@ const initialState: initialStateType = {
   reviews: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
-  user,
   error: null,
+  user: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -59,6 +60,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(setUser, (state, action) => {
+      state.user = action.payload;
     });
 });
 
