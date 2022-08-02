@@ -3,7 +3,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatchType, StateType} from '../types/state.js';
 import {OffersType} from '../types/offers';
 import {AuthDataType, UserDataType} from '../types/user';
-import {loadOffers, requireAuthorization, setError} from './action';
+import {loadOffers, requireAuthorization, setError, setDataLoadedStatus} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../constants';
 import {store} from './';
@@ -26,7 +26,9 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<OffersType>(APIRoute.Offers);
+    dispatch(setDataLoadedStatus(true));
     dispatch(loadOffers(data));
+    dispatch(setDataLoadedStatus(false));
   },
 );
 
