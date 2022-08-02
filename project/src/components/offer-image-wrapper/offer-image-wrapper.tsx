@@ -2,12 +2,12 @@ import {OfferType} from '../../types/offers';
 
 type OfferImageWrapperProps = {
   src: string,
-  offer: OfferType,
+  offer: OfferType | null,
 }
 
 const OfferImageWrapper = ({src, offer}: OfferImageWrapperProps): JSX.Element => (
   <div className="property__image-wrapper">
-    <img className="property__image" src={src} alt={offer.title}/>
+    <img className="property__image" src={src} alt={offer?.title}/>
   </div>
 );
 

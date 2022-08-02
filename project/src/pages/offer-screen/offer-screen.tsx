@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import cn from 'classnames';
 import Header from '../../components/header/header';
@@ -7,19 +8,46 @@ import OfferCard from '../../components/offer-card/offer-card';
 import Review from '../../components/review/review';
 import FormReview from '../../components/form-review/form-review';
 import Map from '../../components/map/map';
-import {useAppSelector} from '../../hooks';
+import LoadingScreen from '../loading-screen/loading-screen';
 import {NUMBER_OF_NEIGHBOURHOOD} from '../../constants';
+
+import {useAppSelector, useAppDispatch} from '../../hooks';
+import {
+  fetchActiveOfferAction,
+  fetchReviewsAction,
+  fetchNeighbourhoodAction,
+} from '../../store/api-actions';
 
 // TODO: style for 'property__bookmark-button--active'
 
 const OfferScreen = (): JSX.Element => {
-  const offers = useAppSelector((state) => state.offers);
-  const reviews = useAppSelector((state) => state.reviews);
-
   const params = useParams();
-  const offerId = Number(params.id);
+  const offerID = Number(params.id);
+  const dispatch = useAppDispatch();
 
-  const currentOffer = offers.filter((offer) => offer.id === offerId)[0];
+  useEffect(() => {
+    dispatch(fetchActiveOfferAction(offerID));
+    dispatch(fetchNeighbourhoodAction(offerID));
+    dispatch(fetchReviewsAction(offerID));
+  }, [offerID, dispatch]);
+
+  // eslint-disable-next-line
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOfferLoaded = useAppSelector((state) => state.isOfferLoaded);
+  const currentOffer = useAppSelector((state) => state.activeOffer);
+  const reviews = useAppSelector((state) => state.reviews);
+  const neighbourhood = useAppSelector((state) => state.neighbourhood).slice(0, NUMBER_OF_NEIGHBOURHOOD);
+
+  // console.log('currentOffer: ', currentOffer);
+  // console.log('reviews: ', reviews);
+  // console.log('neighbourhood: ', neighbourhood);
+
+  if (currentOffer === null || isOfferLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   const {
     images,
     title,
@@ -34,11 +62,6 @@ const OfferScreen = (): JSX.Element => {
     host,
     description,
   } = currentOffer;
-
-  const neighbourhood = offers
-    .filter((offer) => offer.city.name === currentOffer.city.name)
-    .filter((offer) => offer.id !== currentOffer.id)
-    .slice(0, NUMBER_OF_NEIGHBOURHOOD);
 
   const btnBookmarkClassName = cn('property__bookmark-button button', {
     'property__bookmark-button--active': isFavorite,

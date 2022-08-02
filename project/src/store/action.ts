@@ -14,15 +14,17 @@ export const setActiveSortType = createAction('setActiveSortType', (option) => (
 
 export const loadOffers = createAction<OffersType>('loadOffers');
 
+export const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
+
 export const loadActiveOffer = createAction<OfferType>('loadOffer');
+
+export const setOfferLoadedStatus = createAction<boolean>('setOfferLoadedStatus');
 
 export const loadReviews = createAction<ReviewsType>('loadReviews');
 
-export const sendReview = createAction<ReviewsType>('sendReview'); // ?! тип
+export const sendReview = createAction<ReviewsType>('sendReview');
 
 export const loadNeighbourhood = createAction<OffersType>('loadNeighbourhood');
-
-export const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
 

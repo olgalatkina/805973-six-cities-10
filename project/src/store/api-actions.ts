@@ -6,11 +6,12 @@ import {AuthDataType, UserType} from '../types/user';
 import {ReviewsType} from '../types/reviews';
 import {
   loadOffers,
+  setDataLoadedStatus,
   loadActiveOffer,
+  setOfferLoadedStatus,
   loadReviews,
   sendReview, // eslint-disable-line
   loadNeighbourhood,
-  setDataLoadedStatus,
   requireAuthorization,
   setError,
   setUser,
@@ -46,7 +47,7 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const fetchActiveOfferAction = createAsyncThunk<void, undefined, {
+export const fetchActiveOfferAction = createAsyncThunk<void, number, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
@@ -54,11 +55,13 @@ export const fetchActiveOfferAction = createAsyncThunk<void, undefined, {
   'data/fetchActiveOffer',
   async (offerID, {dispatch, extra: api}) => {
     const {data} = await api.get<OfferType>(`${APIRoute.Offers}/${offerID}`);
+    dispatch(setOfferLoadedStatus(true));
     dispatch(loadActiveOffer(data));
+    dispatch(setOfferLoadedStatus(false));
   },
 );
 
-export const fetchReviewsAction = createAsyncThunk<void, undefined, {
+export const fetchReviewsAction = createAsyncThunk<void, number, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
@@ -85,7 +88,7 @@ export const postReviewAction = createAsyncThunk<void, undefined, {
 );
  */
 
-export const fetchNeighbourhoodAction = createAsyncThunk<void, undefined, {
+export const fetchNeighbourhoodAction = createAsyncThunk<void, number, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance

@@ -3,10 +3,11 @@ import {
   changeActiveCity,
   setActiveSortType,
   loadOffers,
+  setDataLoadedStatus,
   loadActiveOffer,
+  setOfferLoadedStatus,
   loadReviews,
   loadNeighbourhood,
-  setDataLoadedStatus,
   requireAuthorization,
   setError,
   setUser,
@@ -21,10 +22,11 @@ type initialStateType = {
   activeCity: string,
   activeSortType: string,
   offers: OffersType,
+  isDataLoaded: boolean,
   activeOffer: OfferType | null,
+  isOfferLoaded: boolean,
   reviews: ReviewsType,
   neighbourhood: OffersType,
-  isDataLoaded: boolean,
   authorizationStatus: string,
   error: string | null,
   user: UserType | null,
@@ -35,10 +37,11 @@ const initialState: initialStateType = {
   activeCity: CITIES[0],
   activeSortType: SortOption.Popular,
   offers: [],
+  isDataLoaded: false,
   activeOffer: null,
+  isOfferLoaded: false,
   reviews: [],
   neighbourhood: [],
-  isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   user: null,
@@ -56,14 +59,20 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
     })
+    .addCase(setDataLoadedStatus, (state, action) => {
+      state.isDataLoaded = action.payload;
+    })
+    .addCase(loadActiveOffer, (state, action) => {
+      state.activeOffer = action.payload;
+    })
+    .addCase(setOfferLoadedStatus, (state, action) => {
+      state.isOfferLoaded = action.payload;
+    })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
     })
     .addCase(loadNeighbourhood, (state, action) => {
       state.neighbourhood = action.payload;
-    })
-    .addCase(setDataLoadedStatus, (state, action) => {
-      state.isDataLoaded = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
@@ -76,9 +85,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFavorites, (state, action) => {
       state.favorites = action.payload;
-    })
-    .addCase(loadActiveOffer, (state, action) => {
-      state.activeOffer = action.payload;
     });
 });
 
