@@ -3,14 +3,17 @@ import {
   changeActiveCity,
   setActiveSortType,
   loadOffers,
+  loadActiveOffer,
   loadReviews,
+  loadNeighbourhood,
+  setDataLoadedStatus,
   requireAuthorization,
   setError,
-  setDataLoadedStatus,
   setUser,
+  loadFavorites,
 } from './action';
 import {CITIES, SortOption, AuthorizationStatus} from '../constants';
-import {OffersType} from '../types/offers';
+import {OffersType, OfferType} from '../types/offers';
 import {ReviewsType} from '../types/reviews';
 import {UserType} from '../types/user';
 
@@ -18,10 +21,12 @@ type initialStateType = {
   activeCity: string,
   activeSortType: string,
   offers: OffersType,
-  authorizationStatus: string,
-  isDataLoaded: boolean,
-  error: string | null,
+  activeOffer: OfferType | null,
   reviews: ReviewsType,
+  neighbourhood: OffersType,
+  isDataLoaded: boolean,
+  authorizationStatus: string,
+  error: string | null,
   user: UserType | null,
   favorites: OffersType,
 }
@@ -30,9 +35,11 @@ const initialState: initialStateType = {
   activeCity: CITIES[0],
   activeSortType: SortOption.Popular,
   offers: [],
+  activeOffer: null,
   reviews: [],
-  authorizationStatus: AuthorizationStatus.Unknown,
+  neighbourhood: [],
   isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   user: null,
   favorites: [],
@@ -52,6 +59,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
     })
+    .addCase(loadNeighbourhood, (state, action) => {
+      state.neighbourhood = action.payload;
+    })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;
     })
@@ -63,6 +73,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUser, (state, action) => {
       state.user = action.payload;
+    })
+    .addCase(loadFavorites, (state, action) => {
+      state.favorites = action.payload;
+    })
+    .addCase(loadActiveOffer, (state, action) => {
+      state.activeOffer = action.payload;
     });
 });
 
