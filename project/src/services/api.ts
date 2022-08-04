@@ -3,6 +3,9 @@ import {StatusCodes} from 'http-status-codes';
 import {getToken} from './token';
 import {toast} from 'react-toastify';
 
+const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
+const REQUEST_TIMEOUT = 5000;
+
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
   [StatusCodes.UNAUTHORIZED]: true,
@@ -10,9 +13,6 @@ const StatusCodeMapping: Record<number, boolean> = {
 };
 
 const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
-
-const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
-const REQUEST_TIMEOUT = 5000;
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({

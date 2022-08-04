@@ -1,11 +1,13 @@
 import styles from './loading.module.css';
 
-// флаг isButton
+type LoadingProps = {
+  isButton?: true;
+}
 
-const Loading = (): JSX.Element => (
+const Loading = ({isButton}: LoadingProps): JSX.Element => (
   <div className={styles.container}>
-    <div className={styles.loading}>
-      <h2 className={styles.title}>LOADING</h2>
+    <div className={`${styles.loading} ${isButton ? styles.loading_btn : ''}`}>
+      {!isButton && <h2 className={styles.title}>LOADING</h2>}
       <span className={styles.dot}/>
       <span className={styles.dot}/>
       <span className={styles.dot}/>

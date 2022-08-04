@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {AuthorizationStatus, CITIES, SortOption} from '../../constants';
+import {CITIES, SortOption} from '../../constants';
 import cn from 'classnames';
 import Header from '../../components/header/header';
 import TabsList from '../../components/tabs-list/tabs-list';
@@ -26,19 +26,17 @@ const sortByOption = (offers: OffersType, activeSortType: string) => {
   }
 };
 
-const isCheckedAuth = (authorizationStatus: string): boolean => authorizationStatus === AuthorizationStatus.Unknown;
-
 const MainScreen = (): JSX.Element => {
   const [activeOfferID, setActiveOfferID] = useState<number | null>(null);
 
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
+  const {isDataLoaded} = useAppSelector((state) => state);
   const offers = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.activeCity);
   const activeSortType = useAppSelector((state) => state.activeSortType);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const currentOffers = sortByOption(filteredOffers, activeSortType);
 
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  if (isDataLoaded) {
     return (
       <Loading />
     );
