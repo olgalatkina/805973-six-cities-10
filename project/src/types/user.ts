@@ -1,4 +1,4 @@
-type UserType = {
+export type UserType = {
   avatarUrl: string
   email: string
   id: number
@@ -7,4 +7,13 @@ type UserType = {
   token: string
 };
 
-export type {UserType};
+export type AuthDataType = {
+  login: string;
+  password: string;
+};
+
+export type UserDataType = {
+  id: number;
+  email: string;
+  token: string;
+};

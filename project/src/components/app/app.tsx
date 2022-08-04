@@ -1,5 +1,5 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../constants';
+import {AppRoute} from '../../constants';
 import PrivateRoute from '../private-route/private-route';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -17,7 +17,7 @@ const App = (): JSX.Element => (
         path={AppRoute.Root}
         element={
           <Page>
-            <MainScreen />
+            <MainScreen/>
           </Page>
         }
       />
@@ -32,9 +32,9 @@ const App = (): JSX.Element => (
       <Route
         path={AppRoute.Favorites}
         element={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+          <PrivateRoute>
             <Page>
-              <FavoritesScreen />
+              <FavoritesScreen/>
             </Page>
           </PrivateRoute>
         }
@@ -43,7 +43,7 @@ const App = (): JSX.Element => (
         path={AppRoute.Offer}
         element={
           <Page>
-            <OfferScreen />
+            <OfferScreen/>
           </Page>
         }
       />

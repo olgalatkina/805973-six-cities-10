@@ -6,6 +6,14 @@ export enum AppRoute {
   NotFound = '*',
 }
 
+export enum APIRoute {
+  Offers = '/hotels',
+  Favorites = '/favorite',
+  Reviews = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
@@ -17,6 +25,13 @@ export enum SortOption {
   LowToHigh = 'Price: low to high',
   HighToLow = 'Price: high to low',
   TopRatedFirst = 'Top rated first',
+}
+
+export enum OffersStatus {
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error',
 }
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

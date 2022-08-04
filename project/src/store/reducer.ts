@@ -1,17 +1,37 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeActiveCity, getOffers, getReviews, getUser, setActiveSortType} from './action';
-import {CITIES, SortOption} from '../constants';
-import {offers} from '../mocks/offers';
-import {reviews} from '../mocks/reviews';
+import {
+  changeActiveCity,
+  setActiveSortType,
+  loadOffers,
+  loadReviews,
+  requireAuthorization,
+  setDataLoadedStatus,
+} from './action';
+import {CITIES, SortOption, AuthorizationStatus} from '../constants';
+import {OffersType} from '../types/offers';
+import {ReviewsType} from '../types/reviews';
+import {UserType} from '../types/user';
+
 import {user} from '../mocks/user';
 
+type initialStateType = {
+  activeCity: string,
+  activeSortType: string,
+  offers: OffersType,
+  authorizationStatus: string,
+  isDataLoaded: boolean,
+  reviews: ReviewsType,
+  user: UserType,
+}
 
-const initialState = {
+const initialState: initialStateType = {
   activeCity: CITIES[0],
   activeSortType: SortOption.Popular,
-  offers: offers,
-  reviews: reviews,
-  user: user,
+  offers: [],
+  reviews: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isDataLoaded: false,
+  user,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -22,14 +42,17 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setActiveSortType, (state, action) => {
       state.activeSortType = action.payload.option;
     })
-    .addCase(getOffers, (state, action) => {
-      state.offers = action.payload.offers;
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
     })
-    .addCase(getReviews, (state, action) => {
-      state.reviews = action.payload.reviews;
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
     })
-    .addCase(getUser, (state, action) => {
-      state.user = action.payload.user;
+    .addCase(setDataLoadedStatus, (state, action) => {
+      state.isDataLoaded = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
 
