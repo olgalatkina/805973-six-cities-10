@@ -20,7 +20,6 @@ type initialStateType = {
   offers: OffersType,
   authorizationStatus: string,
   isDataLoaded: boolean,
-  error: string | null,
   reviews: ReviewsType,
   user: UserType,
 }
@@ -33,7 +32,6 @@ const initialState: initialStateType = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   user,
-  error: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
