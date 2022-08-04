@@ -5,7 +5,6 @@ import {
   loadOffers,
   loadReviews,
   requireAuthorization,
-  setError,
   setDataLoadedStatus,
 } from './action';
 import {CITIES, SortOption, AuthorizationStatus} from '../constants';
@@ -56,9 +55,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
-    })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
     });
 });
 

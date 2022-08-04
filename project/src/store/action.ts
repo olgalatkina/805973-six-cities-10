@@ -15,8 +15,6 @@ export const loadOffers = createAction<OffersType>('loadOffers');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
 
-export const setError = createAction<string | null>('setError');
-
 export const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
 
 export const loadReviews = createAction<ReviewsType>('loadReviews');

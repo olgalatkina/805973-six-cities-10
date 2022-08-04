@@ -30,4 +30,3 @@ export enum SortOption {
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 export const STARS_VALUES = ['5', '4', '3', '2', '1'];
 export const NUMBER_OF_NEIGHBOURHOOD = 3;
-export const TIMEOUT_SHOW_ERROR = 5000;
