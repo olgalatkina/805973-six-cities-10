@@ -1,5 +1,5 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../constants';
+import {AppRoute} from '../../constants';
 import {useAppSelector} from '../../hooks';
 import PrivateRoute from '../private-route/private-route';
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -7,20 +7,12 @@ import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import Loading from '../loading/loading';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import Page from '../page/page';
 
-const isCheckedAuth = (authorizationStatus: string): boolean => authorizationStatus === AuthorizationStatus.Unknown;
-
 const App = (): JSX.Element => {
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector((state) => state);
 
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
-    return (
-      <Loading />
-    );
-  }
   return (
     <BrowserRouter>
       <ScrollToTop/>
