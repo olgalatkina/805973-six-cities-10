@@ -7,7 +7,7 @@ import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import Loading from '../loading/loading';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import Page from '../page/page';
 
@@ -18,7 +18,7 @@ const App = (): JSX.Element => {
 
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
     return (
-      <LoadingScreen />
+      <Loading />
     );
   }
   return (
