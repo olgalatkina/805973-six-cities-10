@@ -1,12 +1,28 @@
-import {generatePath, Link} from 'react-router-dom';
-import {AppRoute} from '../../constants';
+import {generatePath, Link, Navigate } from 'react-router-dom';
+import {AppRoute, AuthorizationStatus, CITIES} from '../../constants';
 import HeaderLogin from '../../components/header-login/header-login';
 import FormLogin from '../../components/form-login/form-login';
-import {CITIES} from '../../constants';
 import {changeActiveCity} from '../../store/action';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import Loading from '../../components/loading/loading';
+
+const isCheckedAuth = (authorizationStatus: string): boolean => authorizationStatus === AuthorizationStatus.Unknown;
 
 const LoginScreen = () => {
+  const {authorizationStatus} = useAppSelector((state) => state);
+
+  if (isCheckedAuth(authorizationStatus)) {
+    return (
+      <Loading />
+    );
+  }
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return (
+      <Navigate to={AppRoute.Root} />
+    );
+  }
+
   const randomCity = CITIES[Math.floor(Math.random() * CITIES.length)];
   const dispatch = useAppDispatch();
 
