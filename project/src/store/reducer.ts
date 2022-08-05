@@ -5,7 +5,6 @@ import {
   loadOffers,
   loadReviews,
   requireAuthorization,
-  setError,
   setDataLoadedStatus,
   setUser,
 } from './action';
@@ -20,7 +19,6 @@ type initialStateType = {
   offers: OffersType,
   authorizationStatus: string,
   isDataLoaded: boolean,
-  error: string | null,
   reviews: ReviewsType,
   user: UserType | null,
 }
@@ -32,7 +30,6 @@ const initialState: initialStateType = {
   reviews: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
-  error: null,
   user: null,
 };
 
@@ -55,9 +52,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
-    })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
     })
     .addCase(setUser, (state, action) => {
       state.user = action.payload;

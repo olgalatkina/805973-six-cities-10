@@ -2,21 +2,11 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatchType, StateType} from '../types/state.js';
 import {OffersType} from '../types/offers';
-import {AuthDataType, UserType} from '../types/user';
-import {loadOffers, requireAuthorization, setError, setDataLoadedStatus, setUser, redirectToRoute} from './action';
-import {saveToken, dropToken} from '../services/token';
-import {APIRoute, AuthorizationStatus, AppRoute, TIMEOUT_SHOW_ERROR} from '../constants';
-import {store} from './';
 
-export const clearErrorAction = createAsyncThunk(
-  'clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
+import {AuthDataType, UserType} from '../types/user';
+import {loadOffers, requireAuthorization, setDataLoadedStatus, setUser, redirectToRoute} from './action';
+import {saveToken, dropToken} from '../services/token';
+import {APIRoute, AuthorizationStatus, AppRoute} from '../constants';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatchType,

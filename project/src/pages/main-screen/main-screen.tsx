@@ -9,6 +9,7 @@ import MainEmpty from '../../components/main-no-offers/main-empty';
 import Map from '../../components/map/map';
 import {useAppSelector} from '../../hooks';
 import {OffersType} from '../../types/offers';
+import Loading from '../../components/loading/loading';
 
 const sortByOption = (offers: OffersType, activeSortType: string) => {
   switch (activeSortType) {
@@ -28,11 +29,30 @@ const sortByOption = (offers: OffersType, activeSortType: string) => {
 const MainScreen = (): JSX.Element => {
   const [activeOfferID, setActiveOfferID] = useState<number | null>(null);
 
+  const {isDataLoaded} = useAppSelector((state) => state);
   const offers = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.activeCity);
   const activeSortType = useAppSelector((state) => state.activeSortType);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const currentOffers = sortByOption(filteredOffers, activeSortType);
+
+  if (isDataLoaded) {
+    return (
+      <Loading />
+    );
+  }
+
+  // if (status === OffersStatus.Loading || status === OffersStatus.Idle) {
+  //   return (
+  //     <Loading />
+  //   );
+  // }
+  //
+  // if (status === OffersStatus.Error) {
+  //   return (
+  //     <SomethingWrong />
+  //   );
+  // }
 
   const handleOfferMouseOver = (id: number) => setActiveOfferID(id);
   const handleOfferMouseLeave = () => setActiveOfferID(null);
