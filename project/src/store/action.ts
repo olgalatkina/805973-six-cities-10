@@ -28,8 +28,6 @@ export const loadNeighbourhood = createAction<OffersType>('loadNeighbourhood');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
 
-export const setError = createAction<string | null>('setError');
-
 export const setUser = createAction<UserType | null>('setUser');
 
 export const loadFavorites = createAction<OffersType>('loadFavorites');

@@ -13,25 +13,13 @@ import {
   sendReview, // eslint-disable-line
   loadNeighbourhood,
   requireAuthorization,
-  setError,
   setUser,
   loadFavorites,
   changeFavoriteStatus, // eslint-disable-line
   redirectToRoute,
 } from './action';
 import {saveToken, dropToken} from '../services/token';
-import {APIRoute, AuthorizationStatus, AppRoute, TIMEOUT_SHOW_ERROR} from '../constants';
-import {store} from './';
-
-export const clearErrorAction = createAsyncThunk(
-  'clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
+import {APIRoute, AuthorizationStatus, AppRoute} from '../constants';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatchType,

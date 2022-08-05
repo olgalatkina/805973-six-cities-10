@@ -9,7 +9,6 @@ import {
   loadReviews,
   loadNeighbourhood,
   requireAuthorization,
-  setError,
   setUser,
   loadFavorites,
 } from './action';
@@ -28,7 +27,6 @@ type initialStateType = {
   reviews: ReviewsType,
   neighbourhood: OffersType,
   authorizationStatus: string,
-  error: string | null,
   user: UserType | null,
   favorites: OffersType,
 }
@@ -43,7 +41,6 @@ const initialState: initialStateType = {
   reviews: [],
   neighbourhood: [],
   authorizationStatus: AuthorizationStatus.Unknown,
-  error: null,
   user: null,
   favorites: [],
 };
@@ -76,9 +73,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
-    })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
     })
     .addCase(setUser, (state, action) => {
       state.user = action.payload;
