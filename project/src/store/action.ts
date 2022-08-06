@@ -1,11 +1,10 @@
 import {createAction} from '@reduxjs/toolkit';
 import {OffersType} from '../types/offers';
 import {ReviewsType} from '../types/reviews';
-import {AuthorizationStatus} from '../constants';
+import {AppRoute, AuthorizationStatus} from '../constants';
+import {UserType} from '../types/user';
 
-export const changeActiveCity = createAction('changeActiveCity', (city) => ({
-  payload: city
-}));
+export const changeActiveCity = createAction<string>('changeActiveCity');
 
 export const setActiveSortType = createAction('setActiveSortType', (option) => ({
   payload: option
@@ -17,18 +16,8 @@ export const requireAuthorization = createAction<AuthorizationStatus>('requireAu
 
 export const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
 
+export const setUser = createAction<UserType | null>('setUser');
+
 export const loadReviews = createAction<ReviewsType>('loadReviews');
 
-// ----------
-
-export const getOffers = createAction('getOffers', (offers) => ({
-  payload: offers
-}));
-
-export const getReviews = createAction('getReviews', (reviews) => ({
-  payload: reviews
-}));
-
-export const getUser = createAction('getUser', (user) => ({
-  payload: user
-}));
+export const redirectToRoute = createAction<AppRoute>('redirectToRoute');

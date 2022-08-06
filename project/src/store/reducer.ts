@@ -6,13 +6,12 @@ import {
   loadReviews,
   requireAuthorization,
   setDataLoadedStatus,
+  setUser,
 } from './action';
 import {CITIES, SortOption, AuthorizationStatus} from '../constants';
 import {OffersType} from '../types/offers';
 import {ReviewsType} from '../types/reviews';
 import {UserType} from '../types/user';
-
-import {user} from '../mocks/user';
 
 type initialStateType = {
   activeCity: string,
@@ -21,7 +20,7 @@ type initialStateType = {
   authorizationStatus: string,
   isDataLoaded: boolean,
   reviews: ReviewsType,
-  user: UserType,
+  user: UserType | null,
 }
 
 const initialState: initialStateType = {
@@ -31,13 +30,13 @@ const initialState: initialStateType = {
   reviews: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
-  user,
+  user: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeActiveCity, (state, action) => {
-      state.activeCity = action.payload.city;
+      state.activeCity = action.payload;
     })
     .addCase(setActiveSortType, (state, action) => {
       state.activeSortType = action.payload.option;
@@ -53,6 +52,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setUser, (state, action) => {
+      state.user = action.payload;
     });
 });
 
