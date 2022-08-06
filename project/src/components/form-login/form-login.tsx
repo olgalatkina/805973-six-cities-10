@@ -11,7 +11,7 @@ import styles from './form-login.module.css';
 const formFields = {
   email: 'E-mail',
   password: 'Password'
-}
+};
 
 type FieldProps = {
   value: string,
@@ -25,8 +25,6 @@ type FormStateProps = {
   [key: string]: FieldProps,
 }
 
-// длинная регулярка для почты: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-
 const FormLogin = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -38,7 +36,7 @@ const FormLogin = (): JSX.Element => {
       hasValue: false,
       isValid: false,
       errorText: 'please enter a real email address',
-      regex: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
+      regex: /^([A-Za-z0-9_\-])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/, // eslint-disable-line
     },
     password: {
       value: '',
@@ -47,7 +45,7 @@ const FormLogin = (): JSX.Element => {
       errorText: 'at least 1 letter and 1 number',
       regex: /\d+[a-zA-Z]+|[a-zA-Z]+\d+/,
     }
-  })
+  });
 
   const onSubmit = (authData: AuthDataType) => {
     dispatch(loginAction(authData));
@@ -80,8 +78,8 @@ const FormLogin = (): JSX.Element => {
         isValid,
         hasValue,
       }
-    }))
-  }
+    }));
+  };
 
   return (
     <form
@@ -108,7 +106,7 @@ const FormLogin = (): JSX.Element => {
             />
             {!formState[name].isValid && formState[name].hasValue && <p className={styles.text}>{formState[name].errorText}</p>}
           </div>
-        )
+        );
       })}
       <button
         className="login__submit form__submit button"
@@ -116,7 +114,7 @@ const FormLogin = (): JSX.Element => {
         disabled={!(formState.email.isValid && formState.password.isValid)}
       >
         {authorizationStatus === AuthorizationStatus.Unknown
-          ? <Loading isButton={true} />
+          ? <Loading isButton />
           : 'Sign in'}
       </button>
     </form>

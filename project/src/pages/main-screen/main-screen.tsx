@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {CITIES, SortOption} from '../../constants';
 import cn from 'classnames';
 import Header from '../../components/header/header';
@@ -9,7 +9,7 @@ import MainEmpty from '../../components/main-no-offers/main-empty';
 import Map from '../../components/map/map';
 import {useAppSelector} from '../../hooks';
 import {OffersType} from '../../types/offers';
-import Loading from '../../components/loading/loading';
+// import Loading from '../../components/loading/loading';
 
 const sortByOption = (offers: OffersType, activeSortType: string) => {
   switch (activeSortType) {
@@ -29,7 +29,7 @@ const sortByOption = (offers: OffersType, activeSortType: string) => {
 const MainScreen = (): JSX.Element => {
   const [activeOfferID, setActiveOfferID] = useState<number | null>(null);
 
-  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
+  // const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
   const offers = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.activeCity);
   const activeSortType = useAppSelector((state) => state.activeSortType);
