@@ -9,7 +9,7 @@ import Review from '../../components/review/review';
 import FormReview from '../../components/form-review/form-review';
 import Map from '../../components/map/map';
 import Loading from '../../components/loading/loading';
-import {NUMBER_OF_NEIGHBOURHOOD} from '../../constants';
+import {NUMBER_OF_NEIGHBOURHOOD, NUMBER_OF_IMAGES} from '../../constants';
 
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {
@@ -78,7 +78,7 @@ const OfferScreen = (): JSX.Element => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((src) => <OfferImageWrapper src={src} offer={currentOffer} key={src}/>)}
+              {images.slice(0, NUMBER_OF_IMAGES).map((src) => <OfferImageWrapper src={src} offer={currentOffer} key={src}/>)}
             </div>
           </div>
           <div className="property__container container">
@@ -161,7 +161,7 @@ const OfferScreen = (): JSX.Element => {
               </section>
             </div>
           </div>
-          <Map cityInfo={currentOffer.city} points={neighbourhood} />
+          <Map cityInfo={currentOffer.city} points={[currentOffer, ...neighbourhood]} activeOfferID={offerID} />
         </section>
         <div className="container">
           <section className="near-places places">
