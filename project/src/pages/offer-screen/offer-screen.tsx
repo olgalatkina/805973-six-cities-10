@@ -8,7 +8,7 @@ import OfferCard from '../../components/offer-card/offer-card';
 import Review from '../../components/review/review';
 import FormReview from '../../components/form-review/form-review';
 import Map from '../../components/map/map';
-import LoadingScreen from '../loading-screen/loading-screen';
+import Loading from '../../components/loading/loading';
 import {NUMBER_OF_NEIGHBOURHOOD} from '../../constants';
 
 import {useAppSelector, useAppDispatch} from '../../hooks';
@@ -44,7 +44,7 @@ const OfferScreen = (): JSX.Element => {
 
   if (currentOffer === null || isOfferLoaded) {
     return (
-      <LoadingScreen />
+      <Loading />
     );
   }
 
