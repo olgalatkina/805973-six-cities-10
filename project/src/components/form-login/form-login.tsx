@@ -1,10 +1,10 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import cn from 'classnames';
 import {AuthDataType} from '../../types/user';
 import {loginAction} from '../../store/api-actions';
-import {AppRoute} from '../../constants';
+import {AppRoute, AuthorizationStatus} from '../../constants';
 import Loading from '../../components/loading/loading';
 import styles from './form-login.module.css';
 
@@ -30,6 +30,7 @@ type FormStateProps = {
 const FormLogin = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const {authorizationStatus} = useAppSelector((state) => state);
 
   const [formState, setFormState] = useState<FormStateProps>({
     email: {
@@ -50,7 +51,10 @@ const FormLogin = (): JSX.Element => {
 
   const onSubmit = (authData: AuthDataType) => {
     dispatch(loginAction(authData));
-    navigate(AppRoute.Root);
+
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Root);
+    }
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -111,7 +115,9 @@ const FormLogin = (): JSX.Element => {
         type="submit"
         disabled={!(formState.email.isValid && formState.password.isValid)}
       >
-        Sign in
+        {authorizationStatus === AuthorizationStatus.Unknown
+          ? <Loading isButton={true} />
+          : 'Sign in'}
       </button>
     </form>
   );
