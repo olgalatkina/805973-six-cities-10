@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import cn from 'classnames';
 import Header from '../../components/header/header';
+import HeaderNav from '../../components/header-nav/header-nav';
 import OfferImageWrapper from '../../components/offer-image-wrapper/offer-image-wrapper';
 import OfferInsideItem from '../../components/offer-inside-item/offer-inside-item';
 import OfferCard from '../../components/offer-card/offer-card';
@@ -73,7 +74,9 @@ const OfferScreen = (): JSX.Element => {
 
   return (
     <>
-      <Header />
+      <Header>
+        <HeaderNav />
+      </Header>
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">

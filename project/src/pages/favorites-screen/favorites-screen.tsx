@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import {OffersType} from '../../types/offers';
 import cn from 'classnames';
 import Header from '../../components/header/header';
+import HeaderNav from '../../components/header-nav/header-nav';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import Footer from '../../components/footer/footer';
 import FavoritesItem from '../../components/favorites-item/favorites-item';
@@ -51,7 +52,9 @@ const FavoritesScreen = (): JSX.Element => {
 
   return (
     <>
-      <Header />
+      <Header>
+        <HeaderNav />
+      </Header>
       <main className={mainClasName}>
         <div className="page__favorites-container container">
           <section className={`favorites ${isEmpty ? 'favorites--empty' : ''}`}>

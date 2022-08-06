@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {CITIES, SortOption} from '../../constants';
 import cn from 'classnames';
 import Header from '../../components/header/header';
+import HeaderNav from '../../components/header-nav/header-nav';
 import TabsList from '../../components/tabs-list/tabs-list';
 import OffersList from '../../components/offers-list/offers-list';
 import FormSorting from '../../components/form-sorting/form-sorting';
@@ -67,7 +68,9 @@ const MainScreen = (): JSX.Element => {
 
   return (
     <>
-      <Header/>
+      <Header>
+        <HeaderNav />
+      </Header>
       <main className={mainClassName}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">

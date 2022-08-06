@@ -2,7 +2,7 @@ import {generatePath, Link, Navigate } from 'react-router-dom';
 import {changeActiveCity} from '../../store/action';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {AppRoute, AuthorizationStatus, CITIES} from '../../constants';
-import HeaderLogin from '../../components/header-login/header-login';
+import Header from '../../components/header/header';
 import FormLogin from '../../components/form-login/form-login';
 
 const LoginScreen = () => {
@@ -19,7 +19,7 @@ const LoginScreen = () => {
 
   return (
     <>
-      <HeaderLogin/>
+      <Header />
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
