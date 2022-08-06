@@ -4,9 +4,7 @@ import {ReviewsType} from '../types/reviews';
 import {AppRoute, AuthorizationStatus} from '../constants';
 import {UserType} from '../types/user';
 
-export const changeActiveCity = createAction('changeActiveCity', (city) => ({
-  payload: city
-}));
+export const changeActiveCity = createAction<string>('changeActiveCity');
 
 export const setActiveSortType = createAction('setActiveSortType', (option) => ({
   payload: option

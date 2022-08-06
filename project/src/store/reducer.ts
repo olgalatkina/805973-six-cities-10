@@ -48,7 +48,7 @@ const initialState: initialStateType = {
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeActiveCity, (state, action) => {
-      state.activeCity = action.payload.city;
+      state.activeCity = action.payload;
     })
     .addCase(setActiveSortType, (state, action) => {
       state.activeSortType = action.payload.option;

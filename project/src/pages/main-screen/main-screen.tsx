@@ -9,7 +9,7 @@ import MainEmpty from '../../components/main-no-offers/main-empty';
 import Map from '../../components/map/map';
 import {useAppSelector} from '../../hooks';
 import {OffersType} from '../../types/offers';
-import Loading from '../../components/loading/loading';
+// import Loading from '../../components/loading/loading';
 
 const sortByOption = (offers: OffersType, activeSortType: string) => {
   switch (activeSortType) {
@@ -29,18 +29,18 @@ const sortByOption = (offers: OffersType, activeSortType: string) => {
 const MainScreen = (): JSX.Element => {
   const [activeOfferID, setActiveOfferID] = useState<number | null>(null);
 
-  const {isDataLoaded} = useAppSelector((state) => state);
+  // const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
   const offers = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.activeCity);
   const activeSortType = useAppSelector((state) => state.activeSortType);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const currentOffers = sortByOption(filteredOffers, activeSortType);
 
-  if (isDataLoaded) {
-    return (
-      <Loading />
-    );
-  }
+  // if (!isDataLoaded) {
+  //   return (
+  //     <Loading />
+  //   );
+  // }
 
   // if (status === OffersStatus.Loading || status === OffersStatus.Idle) {
   //   return (
@@ -67,7 +67,7 @@ const MainScreen = (): JSX.Element => {
 
   return (
     <>
-      <Header />
+      <Header/>
       <main className={mainClassName}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">

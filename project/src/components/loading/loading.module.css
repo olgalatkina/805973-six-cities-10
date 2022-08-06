@@ -3,6 +3,10 @@
   padding: 20%;
 }
 
+.container_btn {
+  padding: 0;
+}
+
 .title {
   color: #4481c3;
 }
