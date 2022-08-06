@@ -35,6 +35,13 @@ export enum OffersStatus {
   Error = 'error',
 }
 
+export enum Type {
+  apartment = 'Apartment',
+  room = 'Private Room',
+  house = 'House',
+  hotel = 'Hotel',
+}
+
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 export const STARS_VALUES = ['5', '4', '3', '2', '1'];
 export const NUMBER_OF_NEIGHBOURHOOD = 3;

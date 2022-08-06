@@ -10,7 +10,7 @@ import Review from '../../components/review/review';
 import FormReview from '../../components/form-review/form-review';
 import Map from '../../components/map/map';
 import Loading from '../../components/loading/loading';
-import {NUMBER_OF_NEIGHBOURHOOD, NUMBER_OF_IMAGES} from '../../constants';
+import {NUMBER_OF_NEIGHBOURHOOD, NUMBER_OF_IMAGES, Type} from '../../constants';
 
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {
@@ -113,7 +113,7 @@ const OfferScreen = (): JSX.Element => {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {Type[type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} Bedrooms

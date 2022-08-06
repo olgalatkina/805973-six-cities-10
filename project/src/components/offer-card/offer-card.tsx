@@ -2,7 +2,7 @@ import {Link, generatePath} from 'react-router-dom';
 import {OfferType} from '../../types/offers';
 import cn from 'classnames';
 import BtnBookmark from '../btn-bookmark/btn-bookmark';
-import {AppRoute} from '../../constants';
+import {AppRoute, Type} from '../../constants';
 import {useLocation} from 'react-router-dom';
 import {getRoute} from '../../utils';
 
@@ -69,7 +69,7 @@ const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps)
         <h2 className="place-card__name">
           <Link to={generatePath(AppRoute.Offer, {id: `${id}`})}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{Type[type]}</p>
       </div>
     </article>
   );
