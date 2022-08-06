@@ -1,16 +1,52 @@
-import {FormEvent, useRef} from 'react';
-import {useAppDispatch} from '../../hooks';
+import {ChangeEvent, FormEvent, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {useAppDispatch} from '../../hooks';
+import cn from 'classnames';
 import {AuthDataType} from '../../types/user';
 import {loginAction} from '../../store/api-actions';
 import {AppRoute} from '../../constants';
+import Loading from '../../components/loading/loading';
+import styles from './form-login.module.css';
+
+const formFields = {
+  email: 'E-mail',
+  password: 'Password'
+}
+
+type FieldProps = {
+  value: string,
+  hasValue: boolean,
+  isValid: boolean,
+  errorText: string,
+  regex: RegExp,
+}
+
+type FormStateProps = {
+  [key: string]: FieldProps,
+}
+
+// длинная регулярка для почты: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 
 const FormLogin = (): JSX.Element => {
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const [formState, setFormState] = useState<FormStateProps>({
+    email: {
+      value: '',
+      hasValue: false,
+      isValid: false,
+      errorText: 'please enter a real email address',
+      regex: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
+    },
+    password: {
+      value: '',
+      hasValue: false,
+      isValid: false,
+      errorText: 'at least 1 letter and 1 number',
+      regex: /\d+[a-zA-Z]+|[a-zA-Z]+\d+/,
+    }
+  })
 
   const onSubmit = (authData: AuthDataType) => {
     dispatch(loginAction(authData));
@@ -20,13 +56,28 @@ const FormLogin = (): JSX.Element => {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
-    }
+    onSubmit({
+      login: formState.email.value,
+      password: formState.password.value,
+    });
   };
+
+  const handleChange = ({target}: ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = target;
+    const rule = formState[name].regex;
+    const isValid = rule.test(value);
+    const hasValue = !!value.trim();
+
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: {
+        ...prevState[name],
+        value,
+        isValid,
+        hasValue,
+      }
+    }))
+  }
 
   return (
     <form
@@ -35,31 +86,30 @@ const FormLogin = (): JSX.Element => {
       method=""
       onSubmit={handleSubmit}
     >
-      <div className="login__input-wrapper form__input-wrapper">
-        <label className="visually-hidden">E-mail</label>
-        <input
-          className="login__input form__input"
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-          ref={loginRef}
-        />
-      </div>
-      <div className="login__input-wrapper form__input-wrapper">
-        <label className="visually-hidden">Password</label>
-        <input
-          className="login__input form__input"
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-          ref={passwordRef}
-        />
-      </div>
+      {Object.entries(formFields).map(([name, label]) => {
+        const wrapperClass = cn('login__input-wrapper form__input-wrapper', {[styles.wrapper]: true});
+        const inputClass = cn('login__input form__input', {[styles.error]: !formState[name].isValid && formState[name].hasValue});
+
+        return (
+          <div className={wrapperClass} key={name}>
+            <label className="visually-hidden">{label}</label>
+            <input
+              className={inputClass}
+              type={name}
+              name={name}
+              placeholder={label}
+              required
+              value={formState[name].value}
+              onChange={handleChange}
+            />
+            {!formState[name].isValid && formState[name].hasValue && <p className={styles.text}>{formState[name].errorText}</p>}
+          </div>
+        )
+      })}
       <button
         className="login__submit form__submit button"
         type="submit"
+        disabled={!(formState.email.isValid && formState.password.isValid)}
       >
         Sign in
       </button>
