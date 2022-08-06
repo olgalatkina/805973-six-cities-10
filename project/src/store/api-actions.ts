@@ -3,14 +3,13 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatchType, StateType} from '../types/state.js';
 import {OffersType, OfferType} from '../types/offers';
 import {AuthDataType, UserType} from '../types/user';
-import {ReviewsType} from '../types/reviews';
+import {ReviewsType, ReviewDataType} from '../types/reviews';
 import {
   loadOffers,
   setDataLoadedStatus,
   loadActiveOffer,
   setOfferLoadedStatus,
   loadReviews,
-  sendReview, // eslint-disable-line
   loadNeighbourhood,
   requireAuthorization,
   setUser,
@@ -61,20 +60,17 @@ export const fetchReviewsAction = createAsyncThunk<void, number, {
   }
 );
 
-// POST /comments/{hotelId}
-/*
-export const postReviewAction = createAsyncThunk<void, undefined, {
+export const postReviewAction = createAsyncThunk<void, ReviewDataType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
 }>(
   'data/postReview',
-  async ({id, rating, comment}: newReview, {dispatch, extra: api}) => {
-    const {data} = await api.post<>(`${APIRoute.Comments}/${id}`, {comment, rating});
-    store.dispatch(sendReview(data));
+  async ({id, rating, comment}, {dispatch, extra: api}) => {
+    const {data} = await api.post<ReviewsType>(`${APIRoute.Reviews}/${id}`, {comment, rating});
+    dispatch(loadReviews(data));
   },
 );
- */
 
 export const fetchNeighbourhoodAction = createAsyncThunk<void, number, {
   dispatch: AppDispatchType,

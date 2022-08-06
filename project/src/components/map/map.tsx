@@ -32,7 +32,7 @@ const Map = ({cityInfo, points, activeOfferID}: MapProps): JSX.Element => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cityInfo);
   // eslint-disable-next-line
-  console.log('cityInfo from map', cityInfo.name);
+  // console.log('cityInfo from map', cityInfo.name);
 
   useEffect(() => {
     if (map) {

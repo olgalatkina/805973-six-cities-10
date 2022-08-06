@@ -10,16 +10,31 @@ import Review from '../../components/review/review';
 import FormReview from '../../components/form-review/form-review';
 import Map from '../../components/map/map';
 import Loading from '../../components/loading/loading';
-import {NUMBER_OF_NEIGHBOURHOOD, NUMBER_OF_IMAGES, Type} from '../../constants';
-
+import {
+  NUMBER_OF_NEIGHBOURHOOD,
+  NUMBER_OF_IMAGES,
+  NUMBER_OF_REVIEWS,
+  Type,
+  AuthorizationStatus,
+} from '../../constants';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {
   fetchActiveOfferAction,
   fetchReviewsAction,
   fetchNeighbourhoodAction,
 } from '../../store/api-actions';
+import {ReviewsType} from '../../types/reviews';
 
 // TODO: style for 'property__bookmark-button--active'
+
+const prepareReviews = (reviews: ReviewsType) => {
+  if (reviews.length <= 1) {
+    return reviews;
+  }
+  return [...reviews]
+    .sort((reviewA, reviewB) => Date.parse(reviewB.date) - Date.parse(reviewA.date))
+    .slice(0, NUMBER_OF_REVIEWS);
+};
 
 const OfferScreen = (): JSX.Element => {
   const params = useParams();
@@ -32,22 +47,19 @@ const OfferScreen = (): JSX.Element => {
     dispatch(fetchReviewsAction(offerID));
   }, [offerID, dispatch]);
 
-  // eslint-disable-next-line
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isOfferLoaded = useAppSelector((state) => state.isOfferLoaded);
   const currentOffer = useAppSelector((state) => state.activeOffer);
   const reviews = useAppSelector((state) => state.reviews);
   const neighbourhood = useAppSelector((state) => state.neighbourhood).slice(0, NUMBER_OF_NEIGHBOURHOOD);
 
-  // console.log('currentOffer: ', currentOffer);
-  // console.log('reviews: ', reviews);
-  // console.log('neighbourhood: ', neighbourhood);
-
   if (currentOffer === null || isOfferLoaded) {
     return (
       <Loading />
     );
   }
+
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
   const {
     images,
@@ -81,7 +93,9 @@ const OfferScreen = (): JSX.Element => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.slice(0, NUMBER_OF_IMAGES).map((src) => <OfferImageWrapper src={src} offer={currentOffer} key={src}/>)}
+              {images.slice(0, NUMBER_OF_IMAGES).map((src) => (
+                <OfferImageWrapper src={src} offer={currentOffer} key={src}/>
+              ))}
             </div>
           </div>
           <div className="property__container container">
@@ -158,9 +172,9 @@ const OfferScreen = (): JSX.Element => {
                   <span className="reviews__amount">{reviews.length}</span>
                 </h2>
                 <ul className="reviews__list">
-                  {reviews.map((review) => <Review review={review} key={review.id}/>)}
+                  {prepareReviews(reviews).map((review) => <Review review={review} key={review.id}/>)}
                 </ul>
-                <FormReview/>
+                {isAuth && <FormReview offerID={offerID}/>}
               </section>
             </div>
           </div>

@@ -20,8 +20,6 @@ export const setOfferLoadedStatus = createAction<boolean>('setOfferLoadedStatus'
 
 export const loadReviews = createAction<ReviewsType>('loadReviews');
 
-export const sendReview = createAction<ReviewsType>('sendReview');
-
 export const loadNeighbourhood = createAction<OffersType>('loadNeighbourhood');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
