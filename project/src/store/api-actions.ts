@@ -1,10 +1,22 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatchType, StateType} from '../types/state.js';
-import {OffersType} from '../types/offers';
-
+import {OffersType, OfferType} from '../types/offers';
 import {AuthDataType, UserType} from '../types/user';
-import {loadOffers, requireAuthorization, setDataLoadedStatus, setUser, redirectToRoute} from './action';
+import {ReviewsType, ReviewDataType} from '../types/reviews';
+import {
+  loadOffers,
+  setDataLoadedStatus,
+  loadActiveOffer,
+  setOfferLoadedStatus,
+  loadReviews,
+  loadNeighbourhood,
+  requireAuthorization,
+  setUser,
+  loadFavorites,
+  changeFavoriteStatus, // eslint-disable-line
+  redirectToRoute,
+} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, AppRoute} from '../constants';
 
@@ -21,6 +33,87 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
     dispatch(setDataLoadedStatus(false));
   },
 );
+
+export const fetchActiveOfferAction = createAsyncThunk<void, number, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/fetchActiveOffer',
+  async (offerID, {dispatch, extra: api}) => {
+    const {data} = await api.get<OfferType>(`${APIRoute.Offers}/${offerID}`);
+    dispatch(setOfferLoadedStatus(true));
+    dispatch(loadActiveOffer(data));
+    dispatch(setOfferLoadedStatus(false));
+  },
+);
+
+export const fetchReviewsAction = createAsyncThunk<void, number, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/fetchReviews',
+  async (offerID, {dispatch, extra: api}) => {
+    const {data} = await api.get<ReviewsType>(`${APIRoute.Reviews}/${offerID}`);
+    dispatch(loadReviews(data));
+  }
+);
+
+export const postReviewAction = createAsyncThunk<void, ReviewDataType, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/postReview',
+  async ({id, rating, comment}, {dispatch, extra: api}) => {
+    const {data} = await api.post<ReviewsType>(`${APIRoute.Reviews}/${id}`, {comment, rating});
+    dispatch(loadReviews(data));
+  },
+);
+
+export const fetchNeighbourhoodAction = createAsyncThunk<void, number, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/fetchNeighbourhood',
+  async (offerID, {dispatch, extra: api}) => {
+    const {data} = await api.get<OffersType>(`${APIRoute.Offers}/${offerID}${APIRoute.Nearby}`);
+    dispatch(loadNeighbourhood(data));
+  }
+);
+
+export const fetchFavoritesAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/fetchFavorites',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<OffersType>(APIRoute.Favorites);
+    dispatch(setDataLoadedStatus(true));
+    dispatch(loadFavorites(data));
+    dispatch(setDataLoadedStatus(false));
+  },
+);
+
+// POST /favorite/{hotelId}/{status}
+/*
+export const postNewFavoriteStatusAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatchType,
+  state: StateType,
+  extra: AxiosInstance
+}>(
+  'data/postFavorite',
+  async ({offerID, status}: mutableOffer, {dispatch, extra: api}) => {
+    const {data} = await api.post<>(`${APIRoute.Favorites}/${offerID}/${!status}`);
+    // eslint-disable-next-line
+    console.log(data);
+    dispatch(changeFavoriteStatus(data));
+  }
+)
+*/
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatchType,

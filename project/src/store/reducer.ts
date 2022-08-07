@@ -3,13 +3,17 @@ import {
   changeActiveCity,
   setActiveSortType,
   loadOffers,
-  loadReviews,
-  requireAuthorization,
   setDataLoadedStatus,
+  loadActiveOffer,
+  setOfferLoadedStatus,
+  loadReviews,
+  loadNeighbourhood,
+  requireAuthorization,
   setUser,
+  loadFavorites,
 } from './action';
 import {CITIES, SortOption, AuthorizationStatus} from '../constants';
-import {OffersType} from '../types/offers';
+import {OffersType, OfferType} from '../types/offers';
 import {ReviewsType} from '../types/reviews';
 import {UserType} from '../types/user';
 
@@ -17,20 +21,28 @@ type initialStateType = {
   activeCity: string,
   activeSortType: string,
   offers: OffersType,
-  authorizationStatus: string,
   isDataLoaded: boolean,
+  activeOffer: OfferType | null,
+  isOfferLoaded: boolean,
   reviews: ReviewsType,
+  neighbourhood: OffersType,
+  authorizationStatus: string,
   user: UserType | null,
+  favorites: OffersType,
 }
 
 const initialState: initialStateType = {
   activeCity: CITIES[0],
   activeSortType: SortOption.Popular,
   offers: [],
-  reviews: [],
-  authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
+  activeOffer: null,
+  isOfferLoaded: false,
+  reviews: [],
+  neighbourhood: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
   user: null,
+  favorites: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -44,17 +56,29 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
     })
+    .addCase(setDataLoadedStatus, (state, action) => {
+      state.isDataLoaded = action.payload;
+    })
+    .addCase(loadActiveOffer, (state, action) => {
+      state.activeOffer = action.payload;
+    })
+    .addCase(setOfferLoadedStatus, (state, action) => {
+      state.isOfferLoaded = action.payload;
+    })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
     })
-    .addCase(setDataLoadedStatus, (state, action) => {
-      state.isDataLoaded = action.payload;
+    .addCase(loadNeighbourhood, (state, action) => {
+      state.neighbourhood = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
     .addCase(setUser, (state, action) => {
       state.user = action.payload;
+    })
+    .addCase(loadFavorites, (state, action) => {
+      state.favorites = action.payload;
     });
 });
 

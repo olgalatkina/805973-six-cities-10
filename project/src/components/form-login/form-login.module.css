@@ -4,10 +4,11 @@
 
 .wrapper input {
   margin-bottom: 38px;
+  outline: none;
 }
 
 .error {
-  border: 1px solid red;
+  border: 1px solid firebrick;
 }
 
 .text {
@@ -17,4 +18,5 @@
   font-weight: 300;
   font-style: italic;
   font-size: 14px;
+  color: firebrick;
 }

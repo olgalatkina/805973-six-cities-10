@@ -1,25 +1,66 @@
+import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import cn from 'classnames';
 import Header from '../../components/header/header';
+import HeaderNav from '../../components/header-nav/header-nav';
 import OfferImageWrapper from '../../components/offer-image-wrapper/offer-image-wrapper';
 import OfferInsideItem from '../../components/offer-inside-item/offer-inside-item';
 import OfferCard from '../../components/offer-card/offer-card';
 import Review from '../../components/review/review';
 import FormReview from '../../components/form-review/form-review';
 import Map from '../../components/map/map';
-import {useAppSelector} from '../../hooks';
-import {NUMBER_OF_NEIGHBOURHOOD} from '../../constants';
+import Loading from '../../components/loading/loading';
+import {
+  NUMBER_OF_NEIGHBOURHOOD,
+  NUMBER_OF_IMAGES,
+  NUMBER_OF_REVIEWS,
+  Type,
+  AuthorizationStatus,
+} from '../../constants';
+import {useAppSelector, useAppDispatch} from '../../hooks';
+import {
+  fetchActiveOfferAction,
+  fetchReviewsAction,
+  fetchNeighbourhoodAction,
+} from '../../store/api-actions';
+import {ReviewsType} from '../../types/reviews';
 
 // TODO: style for 'property__bookmark-button--active'
 
+const prepareReviews = (reviews: ReviewsType) => {
+  if (reviews.length <= 1) {
+    return reviews;
+  }
+  return [...reviews]
+    .sort((reviewA, reviewB) => Date.parse(reviewB.date) - Date.parse(reviewA.date))
+    .slice(0, NUMBER_OF_REVIEWS);
+};
+
 const OfferScreen = (): JSX.Element => {
-  const offers = useAppSelector((state) => state.offers);
-  const reviews = useAppSelector((state) => state.reviews);
-
   const params = useParams();
-  const offerId = Number(params.id);
+  const offerID = Number(params.id);
+  const dispatch = useAppDispatch();
 
-  const currentOffer = offers.filter((offer) => offer.id === offerId)[0];
+  useEffect(() => {
+    dispatch(fetchActiveOfferAction(offerID));
+    dispatch(fetchNeighbourhoodAction(offerID));
+    dispatch(fetchReviewsAction(offerID));
+  }, [offerID, dispatch]);
+
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOfferLoaded = useAppSelector((state) => state.isOfferLoaded);
+  const currentOffer = useAppSelector((state) => state.activeOffer);
+  const reviews = useAppSelector((state) => state.reviews);
+  const neighbourhood = useAppSelector((state) => state.neighbourhood).slice(0, NUMBER_OF_NEIGHBOURHOOD);
+
+  if (currentOffer === null || isOfferLoaded) {
+    return (
+      <Loading />
+    );
+  }
+
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+
   const {
     images,
     title,
@@ -35,11 +76,6 @@ const OfferScreen = (): JSX.Element => {
     description,
   } = currentOffer;
 
-  const neighbourhood = offers
-    .filter((offer) => offer.city.name === currentOffer.city.name)
-    .filter((offer) => offer.id !== currentOffer.id)
-    .slice(0, NUMBER_OF_NEIGHBOURHOOD);
-
   const btnBookmarkClassName = cn('property__bookmark-button button', {
     'property__bookmark-button--active': isFavorite,
   });
@@ -50,12 +86,16 @@ const OfferScreen = (): JSX.Element => {
 
   return (
     <>
-      <Header />
+      <Header>
+        <HeaderNav />
+      </Header>
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((src) => <OfferImageWrapper src={src} offer={currentOffer} key={src}/>)}
+              {images.slice(0, NUMBER_OF_IMAGES).map((src) => (
+                <OfferImageWrapper src={src} offer={currentOffer} key={src}/>
+              ))}
             </div>
           </div>
           <div className="property__container container">
@@ -87,7 +127,7 @@ const OfferScreen = (): JSX.Element => {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {Type[type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} Bedrooms
@@ -132,13 +172,13 @@ const OfferScreen = (): JSX.Element => {
                   <span className="reviews__amount">{reviews.length}</span>
                 </h2>
                 <ul className="reviews__list">
-                  {reviews.map((review) => <Review review={review} key={review.id}/>)}
+                  {prepareReviews(reviews).map((review) => <Review review={review} key={review.id}/>)}
                 </ul>
-                <FormReview/>
+                {isAuth && <FormReview offerID={offerID}/>}
               </section>
             </div>
           </div>
-          <Map cityInfo={currentOffer.city} points={neighbourhood} />
+          <Map cityInfo={currentOffer.city} points={[currentOffer, ...neighbourhood]} activeOfferID={offerID} />
         </section>
         <div className="container">
           <section className="near-places places">

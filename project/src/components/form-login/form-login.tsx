@@ -1,10 +1,9 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import cn from 'classnames';
 import {AuthDataType} from '../../types/user';
 import {loginAction} from '../../store/api-actions';
-import {AppRoute, AuthorizationStatus} from '../../constants';
+import {AuthorizationStatus} from '../../constants';
 import Loading from '../../components/loading/loading';
 import styles from './form-login.module.css';
 
@@ -27,7 +26,6 @@ type FormStateProps = {
 
 const FormLogin = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const {authorizationStatus} = useAppSelector((state) => state);
 
   const [formState, setFormState] = useState<FormStateProps>({
@@ -36,7 +34,7 @@ const FormLogin = (): JSX.Element => {
       hasValue: false,
       isValid: false,
       errorText: 'please enter a real email address',
-      regex: /^([A-Za-z0-9_\-])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/, // eslint-disable-line
+      regex: /^([A-Za-z0-9_-])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/,
     },
     password: {
       value: '',
@@ -49,10 +47,6 @@ const FormLogin = (): JSX.Element => {
 
   const onSubmit = (authData: AuthDataType) => {
     dispatch(loginAction(authData));
-
-    if (authorizationStatus === AuthorizationStatus.Auth) {
-      navigate(AppRoute.Root);
-    }
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -89,8 +83,10 @@ const FormLogin = (): JSX.Element => {
       onSubmit={handleSubmit}
     >
       {Object.entries(formFields).map(([name, label]) => {
-        const wrapperClass = cn('login__input-wrapper form__input-wrapper', {[styles.wrapper]: true});
-        const inputClass = cn('login__input form__input', {[styles.error]: !formState[name].isValid && formState[name].hasValue});
+        const wrapperClass = cn('login__input-wrapper form__input-wrapper', styles.wrapper);
+        const inputClass = cn('login__input form__input', {
+          [styles.error]: !formState[name].isValid && formState[name].hasValue
+        });
 
         return (
           <div className={wrapperClass} key={name}>
@@ -104,7 +100,9 @@ const FormLogin = (): JSX.Element => {
               value={formState[name].value}
               onChange={handleChange}
             />
-            {!formState[name].isValid && formState[name].hasValue && <p className={styles.text}>{formState[name].errorText}</p>}
+            {!formState[name].isValid && formState[name].hasValue && (
+              <p className={styles.text}>{formState[name].errorText}</p>
+            )}
           </div>
         );
       })}
