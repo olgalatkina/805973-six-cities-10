@@ -11,12 +11,13 @@ const useMap = (
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
+      const {latitude, longitude, zoom} = cityInfo.location;
       const instance = new Map(mapRef.current, {
         center: {
-          lat: cityInfo.location.latitude,
-          lng: cityInfo.location.longitude,
+          lat: latitude,
+          lng: longitude,
         },
-        zoom: cityInfo.location.zoom,
+        zoom,
       });
 
       const layer = new TileLayer(
@@ -29,6 +30,15 @@ const useMap = (
       instance.addLayer(layer);
       setMap(instance);
       isRenderedRef.current = true;
+    } else {
+      const {latitude, longitude, zoom} = cityInfo.location;
+      map?.flyTo(
+        {
+          lat: latitude,
+          lng: longitude,
+        },
+        zoom
+      );
     }
   }, [mapRef, map, cityInfo]);
 
