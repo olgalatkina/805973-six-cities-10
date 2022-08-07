@@ -37,7 +37,7 @@ export enum OffersStatus {
 
 export enum Type {
   apartment = 'Apartment',
-  room = 'Private Room',
+  room = 'Private room',
   house = 'House',
   hotel = 'Hotel',
 }
