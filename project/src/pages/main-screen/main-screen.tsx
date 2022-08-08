@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {CITIES, SortOption} from '../../constants';
+import {SortOption} from '../../constants';
 import cn from 'classnames';
 import Header from '../../components/header/header';
 import HeaderNav from '../../components/header-nav/header-nav';
@@ -75,7 +75,7 @@ const MainScreen = (): JSX.Element => {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <TabsList cities={CITIES}/>
+            <TabsList />
           </section>
         </div>
         <div className="cities">{
