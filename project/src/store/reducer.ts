@@ -11,6 +11,7 @@ import {
   requireAuthorization,
   setUser,
   loadFavorites,
+  // changeFavoriteStatus,
 } from './action';
 import {CITIES, SortOption, AuthorizationStatus} from '../constants';
 import {OffersType, OfferType} from '../types/offers';
@@ -79,7 +80,10 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFavorites, (state, action) => {
       state.favorites = action.payload;
-    });
+    })
+    // .addCase(changeFavoriteStatus, (state, action) => {
+    //   state.favorites = action.payload;
+    // });
 });
 
 export {reducer};

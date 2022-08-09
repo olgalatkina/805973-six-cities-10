@@ -19,6 +19,6 @@ export const requireAuthorization = createAction<AuthorizationStatus>('requireAu
 export const setUser = createAction<UserType | null>('setUser');
 
 export const loadFavorites = createAction<OffersType>('loadFavorites');
-export const changeFavoriteStatus = createAction<boolean>('changeFavoriteStatus');
+// export const changeFavoriteStatus = createAction<OfferType>('changeFavoriteStatus');
 
 export const redirectToRoute = createAction<AppRoute>('redirectToRoute');

@@ -24,6 +24,7 @@ import {
   fetchNeighbourhoodAction,
 } from '../../store/api-actions';
 import {ReviewsType} from '../../types/reviews';
+import BtnBookmark from "../../components/btn-bookmark/btn-bookmark";
 
 // TODO: style for 'property__bookmark-button--active'
 
@@ -62,6 +63,7 @@ const OfferScreen = (): JSX.Element => {
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
   const {
+    id,
     images,
     title,
     isPremium,
@@ -108,15 +110,7 @@ const OfferScreen = (): JSX.Element => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button
-                  className={btnBookmarkClassName}
-                  type="button"
-                >
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"/>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <BtnBookmark isFavorite={isFavorite} offerID={id} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">

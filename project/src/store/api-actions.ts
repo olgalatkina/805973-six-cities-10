@@ -1,7 +1,7 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatchType, StateType} from '../types/state.js';
-import {OffersType, OfferType} from '../types/offers';
+import {OffersType, OfferType, FavoriteDataType} from '../types/offers';
 import {AuthDataType, UserType} from '../types/user';
 import {ReviewsType, ReviewDataType} from '../types/reviews';
 import {
@@ -14,7 +14,7 @@ import {
   requireAuthorization,
   setUser,
   loadFavorites,
-  changeFavoriteStatus, // eslint-disable-line
+  // changeFavoriteStatus, // eslint-disable-line
   redirectToRoute,
 } from './action';
 import {saveToken, dropToken} from '../services/token';
@@ -92,28 +92,27 @@ export const fetchFavoritesAction = createAsyncThunk<void, undefined, {
   'data/fetchFavorites',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<OffersType>(APIRoute.Favorites);
-    dispatch(setDataLoadedStatus(true));
     dispatch(loadFavorites(data));
-    dispatch(setDataLoadedStatus(false));
   },
 );
 
 // POST /favorite/{hotelId}/{status}
 /*
-export const postNewFavoriteStatusAction = createAsyncThunk<void, undefined, {
+export const changeFavoriteStatusAction = createAsyncThunk<void, FavoriteDataType, {
   dispatch: AppDispatchType,
   state: StateType,
   extra: AxiosInstance
 }>(
   'data/postFavorite',
-  async ({offerID, status}: mutableOffer, {dispatch, extra: api}) => {
-    const {data} = await api.post<>(`${APIRoute.Favorites}/${offerID}/${!status}`);
+  async ({id, status}, {dispatch, extra: api}) => {
+    const {data} = await api.post<OfferType>(`${APIRoute.Favorites}/${id}/${status}`);
     // eslint-disable-next-line
     console.log(data);
+    //  обновить общий список оферов? получить новый список оферов?
     dispatch(changeFavoriteStatus(data));
   }
 )
-*/
+ */
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatchType,
