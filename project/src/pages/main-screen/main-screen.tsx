@@ -4,9 +4,8 @@ import cn from 'classnames';
 import Header from '../../components/header/header';
 import HeaderNav from '../../components/header-nav/header-nav';
 import TabsList from '../../components/tabs-list/tabs-list';
-import OffersList from '../../components/offers-list/offers-list';
-import FormSorting from '../../components/form-sorting/form-sorting';
 import MainEmpty from '../../components/main-no-offers/main-empty';
+import Places from '../../components/places/places';
 import Map from '../../components/map/map';
 import {useAppSelector} from '../../hooks';
 import {OffersType} from '../../types/offers';
@@ -58,10 +57,6 @@ const MainScreen = (): JSX.Element => {
   const handleOfferMouseOver = (id: number) => setActiveOfferID(id);
   const handleOfferMouseLeave = () => setActiveOfferID(null);
 
-  const getTitle = (numberOfOffers: number) => (
-    `${numberOfOffers} ${numberOfOffers === 1 ? 'place' : 'places'} to stay in ${activeCity}`
-  );
-
   const mainClassName = cn('page__main page__main--index', {
     'page__main--index-empty': Boolean(currentOffers.length),
   });
@@ -84,16 +79,12 @@ const MainScreen = (): JSX.Element => {
             <MainEmpty city={activeCity}/>
             : (
               <div className="cities__places-container container">
-                <section className="cities__places places">
-                  <h2 className="visually-hidden">Places</h2>
-                  <b className="places__found">{getTitle(currentOffers.length)}</b>
-                  <FormSorting/>
-                  <OffersList
-                    offers={currentOffers}
-                    onOfferMouseOver={handleOfferMouseOver}
-                    onOfferMouseLeave={handleOfferMouseLeave}
-                  />
-                </section>
+                <Places
+                  activeCity={activeCity}
+                  currentOffers={currentOffers}
+                  handleOfferMouseOver={handleOfferMouseOver}
+                  handleOfferMouseLeave={handleOfferMouseLeave}
+                />
                 <div className="cities__right-section">
                   <Map
                     cityInfo={currentOffers[0].city}
