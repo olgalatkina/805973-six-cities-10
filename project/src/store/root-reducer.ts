@@ -4,7 +4,7 @@ import {appProcess} from './app-process/app-process';
 import {favoritesData} from './favorites-data/favorites-data';
 import {offersData} from './offers-data/offers-data';
 import {reviewsData} from './reviews-data/reviews-data';
-import {userProcess} from './user-process/user-pcess';
+import {userProcess} from './user-process/user-process';
 
 export const rootReducer = combineReducers({
   [NameSpace.App]: appProcess.reducer,

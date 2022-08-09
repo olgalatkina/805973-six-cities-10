@@ -4,11 +4,11 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {AppRoute, AuthorizationStatus, CITIES} from '../../constants';
 import Header from '../../components/header/header';
 import FormLogin from '../../components/form-login/form-login';
-import {getAuthStatus} from "../../store/user-process/selectors";
+import {getAuthStatus} from '../../store/user-process/selectors';
 
 const LoginScreen = () => {
   const dispatch = useAppDispatch();
-  const {authorizationStatus} = useAppSelector(getAuthStatus);
+  const authorizationStatus = useAppSelector(getAuthStatus);
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return (

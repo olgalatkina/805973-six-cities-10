@@ -24,7 +24,7 @@ import {
   fetchNeighbourhoodAction,
 } from '../../store/api-actions';
 import {ReviewsType} from '../../types/reviews';
-import BtnBookmark from "../../components/btn-bookmark/btn-bookmark";
+import BtnBookmark from '../../components/btn-bookmark/btn-bookmark';
 import {getAuthStatus} from '../../store/user-process/selectors';
 import {getActiveOffer, getIsOfferLoaded, getNeighbourhood} from '../../store/offers-data/selectors';
 import {getReviews} from '../../store/reviews-data/selectors';
@@ -80,10 +80,6 @@ const OfferScreen = (): JSX.Element => {
     host,
     description,
   } = currentOffer;
-
-  const btnBookmarkClassName = cn('property__bookmark-button button', {
-    'property__bookmark-button--active': isFavorite,
-  });
 
   const avatarWrapperClassName = cn('property__avatar-wrapper user__avatar-wrapper', {
     'property__avatar-wrapper--pro': host.isPro,

@@ -1,6 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {CITIES, NameSpace, SortOption} from '../../constants';
-import {AppProcess} from '../../types/state';
+
+type AppProcess = {
+  activeCity: string,
+  activeSortType: string,
+};
 
 const initialState: AppProcess = {
   activeCity: CITIES[0],

@@ -1,7 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../constants';
-import {FavoritesData} from '../../types/state';
-import {fetchFavoritesAction, changeFavoriteStatusAction}  from '../api-actions';
+import {fetchFavoritesAction, changeFavoriteStatusAction} from '../api-actions';
+import {OffersType} from '../../types/offers';
+
+type FavoritesData = {
+  favorites: OffersType,
+  isLoading: boolean,
+}
 
 const initialState: FavoritesData = {
   favorites: [],
@@ -28,6 +33,6 @@ export const favoritesData = createSlice({
         const updatedOffer = action.payload;
         const index = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
         state.offers[index].isFavorite = !state.offers[index].isFavorite;
-      })
+      });
   }
 });

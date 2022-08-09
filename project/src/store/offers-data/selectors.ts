@@ -1,5 +1,5 @@
 import {NameSpace} from '../../constants';
-import  {StateType} from '../../types/state';
+import {StateType} from '../../types/state';
 import {OffersType, OfferType} from '../../types/offers';
 
 export const getOffers = (state: StateType): OffersType => (

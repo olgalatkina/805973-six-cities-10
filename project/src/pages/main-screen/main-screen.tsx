@@ -12,7 +12,7 @@ import {OffersType} from '../../types/offers';
 import {getIsDataLoading, getOffers} from '../../store/offers-data/selectors';
 import {getActiveCity, getActiveSortType} from '../../store/app-process/selectors';
 import {fetchOffersAction} from '../../store/api-actions';
-// import Loading from '../../components/loading/loading';
+import Loading from '../../components/loading/loading';
 
 const sortByOption = (offers: OffersType, activeSortType: string) => {
   switch (activeSortType) {
@@ -44,11 +44,11 @@ const MainScreen = (): JSX.Element => {
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const currentOffers = sortByOption(filteredOffers, activeSortType);
 
-  // if (!isDataLoaded) {
-  //   return (
-  //     <Loading />
-  //   );
-  // }
+  if (!isDataLoaded) {
+    return (
+      <Loading />
+    );
+  }
 
   // if (status === OffersStatus.Loading || status === OffersStatus.Idle) {
   //   return (

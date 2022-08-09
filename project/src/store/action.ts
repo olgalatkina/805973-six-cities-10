@@ -1,11 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
-import {OffersType, OfferType} from '../types/offers';
-import {ReviewsType} from '../types/reviews';
-import {
-  AppRoute,
-  // AuthorizationStatus
-} from '../constants';
-import {UserType} from '../types/user';
+import {AppRoute} from '../constants';
 
 // export const changeActiveCity = createAction<string>('changeActiveCity');
 // export const setActiveSortType = createAction<string>('setActiveSortType');
