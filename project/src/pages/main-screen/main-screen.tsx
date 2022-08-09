@@ -9,7 +9,7 @@ import Places from '../../components/places/places';
 import Map from '../../components/map/map';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {OffersType} from '../../types/offers';
-import {getIsDataLoading, getOffers} from '../../store/offers-data/selectors';
+import {getFilteredOffers, getIsDataLoading, getOffers} from '../../store/offers-data/selectors';
 import {getActiveCity, getActiveSortType} from '../../store/app-process/selectors';
 import {fetchOffersAction} from '../../store/api-actions';
 import Loading from '../../components/loading/loading';
@@ -42,6 +42,7 @@ const MainScreen = (): JSX.Element => {
   const activeCity = useAppSelector(getActiveCity);
   const activeSortType = useAppSelector(getActiveSortType);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
+  // const filteredOffers = useAppSelector(getFilteredOffers);
   const currentOffers = sortByOption(filteredOffers, activeSortType);
 
   if (!isDataLoaded) {

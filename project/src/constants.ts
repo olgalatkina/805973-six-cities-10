@@ -50,6 +50,15 @@ export enum NameSpace {
   Favorites = 'FAVORITES',
 }
 
+export enum City {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
+
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 export const STARS_VALUES = ['5', '4', '3', '2', '1'];
 export const NUMBER_OF_NEIGHBOURHOOD = 3;
