@@ -43,11 +43,11 @@ export enum Type {
 }
 
 export enum NameSpace {
+  App = 'APP',
   User = 'USER',
   Offers = 'OFFERS',
   Reviews = 'REVIEWS',
   Favorites = 'FAVORITES',
-  App = 'APP'
 }
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

@@ -6,11 +6,8 @@ import HeaderNav from '../../components/header-nav/header-nav';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import Footer from '../../components/footer/footer';
 import FavoritesItem from '../../components/favorites-item/favorites-item';
-import {useAppSelector} from '../../hooks';
-import {store} from '../../store';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchFavoritesAction} from '../../store/api-actions';
-
-store.dispatch(fetchFavoritesAction());
 
 type OffersIndexType = {
   [key: string]: OffersType,
@@ -28,12 +25,13 @@ const indexOffersByCities = (offers: OffersType): OffersIndexType => (
 );
 
 const FavoritesScreen = (): JSX.Element => {
-  const offers = useAppSelector((state) => state.offers);
-
   const [isEmpty, setIsEmpty] = useState(true);
-  const favoritesOffers = offers.filter((offer) => offer.isFavorite);
+  const dispatch = useAppDispatch();
+  const favoritesOffers = useAppSelector((state) => state.favorites);
 
   useEffect(() => {
+    dispatch(fetchFavoritesAction());
+
     if (favoritesOffers.length !== 0) {
       setIsEmpty(false);
     }

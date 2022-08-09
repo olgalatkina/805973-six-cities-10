@@ -3,7 +3,7 @@ import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {getRoute} from '../../utils';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-// import {changeFavoriteStatusAction} from '../../store/api-actions';
+import {changeFavoriteStatusAction} from '../../store/api-actions';
 
 type BtnBookmarkProps = {
   isFavorite: boolean;
@@ -35,10 +35,10 @@ const BtnBookmark = ({isFavorite, offerID}: BtnBookmarkProps): JSX.Element => {
       return;
     }
 
-    // dispatch(changeFavoriteStatusAction({
-    //   id: offerID,
-    //   status: Number(!isFavorite)
-    // }));
+    dispatch(changeFavoriteStatusAction({
+      id: offerID,
+      status: Number(!isFavorite)
+    }));
   };
 
   return (

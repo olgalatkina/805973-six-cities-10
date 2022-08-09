@@ -14,7 +14,7 @@ import {
   requireAuthorization,
   setUser,
   loadFavorites,
-  // changeFavoriteStatus, // eslint-disable-line
+  changeFavoriteStatus,
   redirectToRoute,
 } from './action';
 import {saveToken, dropToken} from '../services/token';
@@ -96,8 +96,6 @@ export const fetchFavoritesAction = createAsyncThunk<void, undefined, {
   },
 );
 
-// POST /favorite/{hotelId}/{status}
-/*
 export const changeFavoriteStatusAction = createAsyncThunk<void, FavoriteDataType, {
   dispatch: AppDispatchType,
   state: StateType,
@@ -106,13 +104,9 @@ export const changeFavoriteStatusAction = createAsyncThunk<void, FavoriteDataTyp
   'data/postFavorite',
   async ({id, status}, {dispatch, extra: api}) => {
     const {data} = await api.post<OfferType>(`${APIRoute.Favorites}/${id}/${status}`);
-    // eslint-disable-next-line
-    console.log(data);
-    //  обновить общий список оферов? получить новый список оферов?
     dispatch(changeFavoriteStatus(data));
   }
 )
- */
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatchType,

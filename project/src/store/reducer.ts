@@ -11,7 +11,7 @@ import {
   requireAuthorization,
   setUser,
   loadFavorites,
-  // changeFavoriteStatus,
+  changeFavoriteStatus,
 } from './action';
 import {CITIES, SortOption, AuthorizationStatus} from '../constants';
 import {OffersType, OfferType} from '../types/offers';
@@ -81,9 +81,11 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadFavorites, (state, action) => {
       state.favorites = action.payload;
     })
-    // .addCase(changeFavoriteStatus, (state, action) => {
-    //   state.favorites = action.payload;
-    // });
+    .addCase(changeFavoriteStatus, (state, action) => {
+      const updatedOffer = action.payload;
+      const index = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
+      state.offers[index].isFavorite = !state.offers[index].isFavorite;
+    });
 });
 
 export {reducer};
