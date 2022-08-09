@@ -8,7 +8,7 @@ type TabItemProps = {
 }
 
 const TabItem = ({city}: TabItemProps): JSX.Element => {
-  const activeCity = useAppSelector((getActiveCity);
+  const activeCity = useAppSelector(getActiveCity);
   const dispatch = useAppDispatch();
 
   const linkClassName = cn('locations__item-link tabs__item', {

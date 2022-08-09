@@ -3,9 +3,11 @@ import {AppRoute} from '../../constants';
 import {useAppSelector} from '../../hooks';
 import cn from 'classnames';
 import styles from './styles.module.css';
+import {getUser} from "../../store/user-process/selectors";
 
 const UserInfo = (): JSX.Element => {
-  const {user, favorites} = useAppSelector((state) => state);
+  const user = useAppSelector(getUser);
+  const favorites = useAppSelector(getFavorites);
 
   return (
     <li className="header__nav-item user">

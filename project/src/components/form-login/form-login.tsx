@@ -6,6 +6,7 @@ import {loginAction} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../constants';
 import Loading from '../../components/loading/loading';
 import styles from './form-login.module.css';
+import {getAuthStatus} from "../../store/user-process/selectors";
 
 const formFields = {
   email: 'E-mail',
@@ -26,7 +27,7 @@ type FormStateProps = {
 
 const FormLogin = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const {authorizationStatus} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(getAuthStatus);
 
   const [formState, setFormState] = useState<FormStateProps>({
     email: {
