@@ -51,7 +51,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.activeCity = action.payload;
     })
     .addCase(setActiveSortType, (state, action) => {
-      state.activeSortType = action.payload.option;
+      state.activeSortType = action.payload;
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;

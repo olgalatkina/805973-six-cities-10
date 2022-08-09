@@ -42,6 +42,14 @@ export enum Type {
   hotel = 'Hotel',
 }
 
+export enum NameSpace {
+  User = 'USER',
+  Offers = 'OFFERS',
+  Reviews = 'REVIEWS',
+  Favorites = 'FAVORITES',
+  App = 'APP'
+}
+
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 export const STARS_VALUES = ['5', '4', '3', '2', '1'];
 export const NUMBER_OF_NEIGHBOURHOOD = 3;

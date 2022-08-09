@@ -43,7 +43,7 @@ const FormSorting = (): JSX.Element => {
             key={option}
             option={option}
             onOptionClick={() => {
-              dispatch(setActiveSortType({option: option}));
+              dispatch(setActiveSortType(option));
               handleOptionClick();
             }}
             isActive={option === activeSortType}
