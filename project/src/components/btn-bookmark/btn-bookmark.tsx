@@ -4,6 +4,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {getRoute} from '../../utils';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeFavoriteStatusAction} from '../../store/api-actions';
+import {getAuthStatus} from '../../store/user-process/selectors';
 
 type BtnBookmarkProps = {
   isFavorite: boolean;
@@ -11,7 +12,7 @@ type BtnBookmarkProps = {
 }
 
 const BtnBookmark = ({isFavorite, offerID}: BtnBookmarkProps): JSX.Element => {
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {pathname} = useLocation();

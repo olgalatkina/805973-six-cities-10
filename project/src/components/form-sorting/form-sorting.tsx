@@ -3,13 +3,14 @@ import cn from 'classnames';
 import {SortOption} from '../../constants';
 import OptionItem from '../option-item/option-item';
 import {useAppSelector, useAppDispatch} from '../../hooks/';
-import {setActiveSortType} from '../../store/action';
+import {setActiveSortType} from '../../store/app-process/app-process';
 import useOnEscPress from '../../hooks/useOnEscPress';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
+import {getActiveSortType} from '../../store/app-process/selectors';
 
 const FormSorting = (): JSX.Element => {
   const [isSelectOpen, setIsSelectOpen] = useState(false);
-  const activeSortType = useAppSelector((state) => state.activeSortType);
+  const activeSortType = useAppSelector(getActiveSortType);
   const dispatch = useAppDispatch();
 
   const handleOptionClick = () => setIsSelectOpen(!isSelectOpen);

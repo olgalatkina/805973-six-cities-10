@@ -1,13 +1,14 @@
 import cn from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks/';
-import {changeActiveCity} from '../../store/action';
+import {changeActiveCity} from '../../store/app-process/app-process';
+import {getActiveCity} from '../../store/app-process/selectors';
 
 type TabItemProps = {
   city: string;
 }
 
 const TabItem = ({city}: TabItemProps): JSX.Element => {
-  const activeCity = useAppSelector((state) => state.activeCity);
+  const activeCity = useAppSelector((getActiveCity);
   const dispatch = useAppDispatch();
 
   const linkClassName = cn('locations__item-link tabs__item', {

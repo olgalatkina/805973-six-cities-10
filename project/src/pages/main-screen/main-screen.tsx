@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {SortOption} from '../../constants';
 import cn from 'classnames';
 import Header from '../../components/header/header';
@@ -7,8 +7,11 @@ import TabsList from '../../components/tabs-list/tabs-list';
 import MainEmpty from '../../components/main-no-offers/main-empty';
 import Places from '../../components/places/places';
 import Map from '../../components/map/map';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {OffersType} from '../../types/offers';
+import {getIsDataLoading, getOffers} from '../../store/offers-data/selectors';
+import {getActiveCity, getActiveSortType} from '../../store/app-process/selectors';
+import {fetchOffersAction} from '../../store/api-actions';
 // import Loading from '../../components/loading/loading';
 
 const sortByOption = (offers: OffersType, activeSortType: string) => {
@@ -28,11 +31,16 @@ const sortByOption = (offers: OffersType, activeSortType: string) => {
 
 const MainScreen = (): JSX.Element => {
   const [activeOfferID, setActiveOfferID] = useState<number | null>(null);
+  const dispatch = useAppDispatch();
 
-  // const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
-  const offers = useAppSelector((state) => state.offers);
-  const activeCity = useAppSelector((state) => state.activeCity);
-  const activeSortType = useAppSelector((state) => state.activeSortType);
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, [dispatch]);
+
+  const isDataLoaded = useAppSelector(getIsDataLoading);
+  const offers = useAppSelector(getOffers);
+  const activeCity = useAppSelector(getActiveCity);
+  const activeSortType = useAppSelector(getActiveSortType);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const currentOffers = sortByOption(filteredOffers, activeSortType);
 

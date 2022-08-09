@@ -1,5 +1,5 @@
 import {generatePath, Link, Navigate } from 'react-router-dom';
-import {changeActiveCity} from '../../store/action';
+import {changeActiveCity} from '../../store/app-process/app-process';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {AppRoute, AuthorizationStatus, CITIES} from '../../constants';
 import Header from '../../components/header/header';

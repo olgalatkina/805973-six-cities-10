@@ -25,6 +25,9 @@ import {
 } from '../../store/api-actions';
 import {ReviewsType} from '../../types/reviews';
 import BtnBookmark from "../../components/btn-bookmark/btn-bookmark";
+import {getAuthStatus} from '../../store/user-process/selectors';
+import {getActiveOffer, getIsOfferLoaded, getNeighbourhood} from '../../store/offers-data/selectors';
+import {getReviews} from '../../store/reviews-data/selectors';
 
 // TODO: style for 'property__bookmark-button--active'
 
@@ -48,11 +51,11 @@ const OfferScreen = (): JSX.Element => {
     dispatch(fetchReviewsAction(offerID));
   }, [offerID, dispatch]);
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOfferLoaded = useAppSelector((state) => state.isOfferLoaded);
-  const currentOffer = useAppSelector((state) => state.activeOffer);
-  const reviews = useAppSelector((state) => state.reviews);
-  const neighbourhood = useAppSelector((state) => state.neighbourhood).slice(0, NUMBER_OF_NEIGHBOURHOOD);
+  const authorizationStatus = useAppSelector(getAuthStatus);
+  const isOfferLoaded = useAppSelector(getIsOfferLoaded);
+  const currentOffer = useAppSelector(getActiveOffer);
+  const reviews = useAppSelector(getReviews);
+  const neighbourhood = useAppSelector(getNeighbourhood).slice(0, NUMBER_OF_NEIGHBOURHOOD);
 
   if (currentOffer === null || isOfferLoaded) {
     return (

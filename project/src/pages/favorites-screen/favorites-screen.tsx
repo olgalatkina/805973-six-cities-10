@@ -27,7 +27,7 @@ const indexOffersByCities = (offers: OffersType): OffersIndexType => (
 const FavoritesScreen = (): JSX.Element => {
   const [isEmpty, setIsEmpty] = useState(true);
   const dispatch = useAppDispatch();
-  const favoritesOffers = useAppSelector((state) => state.favorites);
+  const favoritesOffers = useAppSelector(getFavorites);
 
   useEffect(() => {
     dispatch(fetchFavoritesAction());
