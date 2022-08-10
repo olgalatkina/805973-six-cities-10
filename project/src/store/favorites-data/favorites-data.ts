@@ -29,10 +29,14 @@ export const favoritesData = createSlice({
       .addCase(fetchFavoritesAction.rejected, (state) => {
         state.isLoading = false;
       })
+      .addCase(changeFavoriteStatusAction.pending, (state) => {
+      })
       .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
         const updatedOffer = action.payload;
         const index = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
         state.offers[index].isFavorite = !state.offers[index].isFavorite;
+      })
+      .addCase(changeFavoriteStatusAction.rejected, (state) => {
       });
   }
 });

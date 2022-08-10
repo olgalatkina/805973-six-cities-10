@@ -1,7 +1,7 @@
+import { createSelector } from '@reduxjs/toolkit';
 import {NameSpace} from '../../constants';
 import {StateType} from '../../types/state';
 import {OffersType, OfferType} from '../../types/offers';
-import createSelector from '@reduxjs/toolkit';
 import {getActiveCity} from '../app-process/selectors';
 import {City} from '../../constants';
 

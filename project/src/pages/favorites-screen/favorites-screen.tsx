@@ -8,6 +8,7 @@ import Footer from '../../components/footer/footer';
 import FavoritesItem from '../../components/favorites-item/favorites-item';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchFavoritesAction} from '../../store/api-actions';
+import {getFavorites} from '../../store/favorites-data/selectors';
 
 type OffersIndexType = {
   [key: string]: OffersType,

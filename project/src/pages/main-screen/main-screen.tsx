@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {SortOption} from '../../constants';
 import cn from 'classnames';
 import Header from '../../components/header/header';
@@ -11,7 +11,6 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {OffersType} from '../../types/offers';
 import {getFilteredOffers, getIsDataLoading, getOffers} from '../../store/offers-data/selectors';
 import {getActiveCity, getActiveSortType} from '../../store/app-process/selectors';
-import {fetchOffersAction} from '../../store/api-actions';
 import Loading from '../../components/loading/loading';
 
 const sortByOption = (offers: OffersType, activeSortType: string) => {
@@ -33,23 +32,19 @@ const MainScreen = (): JSX.Element => {
   const [activeOfferID, setActiveOfferID] = useState<number | null>(null);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(fetchOffersAction());
-  }, [dispatch]);
-
   const isDataLoaded = useAppSelector(getIsDataLoading);
   const offers = useAppSelector(getOffers);
   const activeCity = useAppSelector(getActiveCity);
   const activeSortType = useAppSelector(getActiveSortType);
-  const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
-  // const filteredOffers = useAppSelector(getFilteredOffers);
+  // const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
+  const filteredOffers = useAppSelector(getFilteredOffers);
   const currentOffers = sortByOption(filteredOffers, activeSortType);
 
-  if (!isDataLoaded) {
-    return (
-      <Loading />
-    );
-  }
+  // if (!isDataLoaded) {
+  //   return (
+  //     <Loading />
+  //   );
+  // }
 
   // if (status === OffersStatus.Loading || status === OffersStatus.Idle) {
   //   return (
