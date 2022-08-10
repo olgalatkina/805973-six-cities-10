@@ -4,7 +4,7 @@ import {useAppSelector} from '../../hooks';
 import cn from 'classnames';
 import styles from './styles.module.css';
 import {getUser} from '../../store/user-process/selectors';
-import {getFavorites} from  '../../store/favorites-data/selectors';
+import {getFavorites} from '../../store/favorites-data/selectors';
 
 const UserInfo = (): JSX.Element => {
   const user = useAppSelector(getUser);

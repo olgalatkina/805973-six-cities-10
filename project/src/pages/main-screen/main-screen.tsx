@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {SortOption} from '../../constants';
 import cn from 'classnames';
 import Header from '../../components/header/header';
 import HeaderNav from '../../components/header-nav/header-nav';
@@ -7,52 +6,31 @@ import TabsList from '../../components/tabs-list/tabs-list';
 import MainEmpty from '../../components/main-no-offers/main-empty';
 import Places from '../../components/places/places';
 import Map from '../../components/map/map';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {OffersType} from '../../types/offers';
-import {getFilteredOffers, getIsDataLoading, getOffers} from '../../store/offers-data/selectors';
-import {getActiveCity, getActiveSortType} from '../../store/app-process/selectors';
+import {useAppSelector} from '../../hooks';
+import {getIsDataLoading, getSortedOffers} from '../../store/offers-data/selectors';
+import {getActiveCity} from '../../store/app-process/selectors';
 import Loading from '../../components/loading/loading';
-
-const sortByOption = (offers: OffersType, activeSortType: string) => {
-  switch (activeSortType) {
-    case SortOption.Popular:
-      return offers;
-    case SortOption.LowToHigh:
-      return offers.sort((offerA, offerB) => offerA.price - offerB.price);
-    case SortOption.HighToLow:
-      return offers.sort((offerA, offerB) => offerB.price - offerA.price);
-    case SortOption.TopRatedFirst:
-      return offers.sort((offerA, offerB) => offerB.rating - offerA.rating);
-    default:
-      return offers;
-  }
-};
 
 const MainScreen = (): JSX.Element => {
   const [activeOfferID, setActiveOfferID] = useState<number | null>(null);
-  const dispatch = useAppDispatch();
 
   const isDataLoaded = useAppSelector(getIsDataLoading);
-  const offers = useAppSelector(getOffers);
   const activeCity = useAppSelector(getActiveCity);
-  const activeSortType = useAppSelector(getActiveSortType);
-  // const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
-  const filteredOffers = useAppSelector(getFilteredOffers);
-  const currentOffers = sortByOption(filteredOffers, activeSortType);
+  const currentOffers = useAppSelector(getSortedOffers);
 
-  // if (!isDataLoaded) {
-  //   return (
-  //     <Loading />
-  //   );
-  // }
+  if (isDataLoaded) {
+    return (
+      <Loading />
+    );
+  }
 
-  // if (status === OffersStatus.Loading || status === OffersStatus.Idle) {
+  // if (status === Status.Loading || status === Status.Idle) {
   //   return (
   //     <Loading />
   //   );
   // }
   //
-  // if (status === OffersStatus.Error) {
+  // if (status === Status.Error) {
   //   return (
   //     <SomethingWrong />
   //   );

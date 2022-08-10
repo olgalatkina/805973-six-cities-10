@@ -1,8 +1,8 @@
-import { createSelector } from '@reduxjs/toolkit';
-import {NameSpace} from '../../constants';
+import {createSelector} from '@reduxjs/toolkit';
+import {NameSpace, SortOption} from '../../constants';
 import {StateType} from '../../types/state';
 import {OffersType, OfferType} from '../../types/offers';
-import {getActiveCity} from '../app-process/selectors';
+import {getActiveCity, getActiveSortType} from '../app-process/selectors';
 import {City} from '../../constants';
 
 export const getOffers = (state: StateType): OffersType => (
@@ -23,22 +23,27 @@ export const getNeighbourhood = (state: StateType): OffersType => (
 
 export const getFilteredOffers = createSelector(
   [getOffers, getActiveCity],
-  (offers: OffersType, activeCity: string | City): OffersType => {
-    switch (activeCity) {
-      case City.Paris:
-        return offers.filter((offer) => offer.city.name === City.Paris);
-      case City.Cologne:
-        return offers.filter((offer) => offer.city.name === City.Cologne);
-      case City.Brussels:
-        return offers.filter((offer) => offer.city.name === City.Brussels);
-      case City.Amsterdam:
-        return offers.filter((offer) => offer.city.name === City.Amsterdam);
-      case City.Hamburg:
-        return offers.filter((offer) => offer.city.name === City.Hamburg);
-      case City.Dusseldorf:
-        return offers.filter((offer) => offer.city.name === City.Dusseldorf);
-      default:
-        return offers.filter((offer) => offer.city.name === City.Paris);
-    }
+  (offers: OffersType, activeCity: string | City): OffersType => (
+    offers.filter((offer) => offer.city.name === activeCity)
+  )
+);
+
+const sortByOption = (offers: OffersType, activeSortType: string) => {
+  switch (activeSortType) {
+    case SortOption.Popular:
+      return offers;
+    case SortOption.LowToHigh:
+      return offers.sort((offerA, offerB) => offerA.price - offerB.price);
+    case SortOption.HighToLow:
+      return offers.sort((offerA, offerB) => offerB.price - offerA.price);
+    case SortOption.TopRatedFirst:
+      return offers.sort((offerA, offerB) => offerB.rating - offerA.rating);
+    default:
+      return offers;
   }
+};
+
+export const getSortedOffers = createSelector(
+  [getFilteredOffers, getActiveSortType],
+  (offers: OffersType, activeSortType: string): OffersType => sortByOption(offers, activeSortType)
 );

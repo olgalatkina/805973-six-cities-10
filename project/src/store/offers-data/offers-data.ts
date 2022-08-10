@@ -1,10 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../constants';
-import { OffersType, OfferType } from '../../types/offers';
+import {createSlice} from '@reduxjs/toolkit';
+import {NameSpace} from '../../constants';
+import {OffersType, OfferType} from '../../types/offers';
 import {
   fetchNeighbourhoodAction,
   fetchActiveOfferAction,
-  fetchOffersAction
+  fetchOffersAction,
+  changeFavoriteStatusAction,
 } from '../api-actions';
 
 type OffersData = {
@@ -51,6 +52,11 @@ export const offersData = createSlice({
       })
       .addCase(fetchNeighbourhoodAction.fulfilled, (state, action) => {
         state.neighbourhood = action.payload;
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+        const updatedOffer = action.payload;
+        const index = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
+        state.offers[index].isFavorite = !state.offers[index].isFavorite;
       });
   }
 });

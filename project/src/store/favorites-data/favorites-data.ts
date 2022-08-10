@@ -1,7 +1,7 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace} from '../../constants';
-import {fetchFavoritesAction, changeFavoriteStatusAction} from '../api-actions';
-import {OffersType} from '../../types/offers';
+import { createSlice } from '@reduxjs/toolkit';
+import { NameSpace } from '../../constants';
+import { fetchFavoritesAction, changeFavoriteStatusAction } from '../api-actions';
+import { OffersType } from '../../types/offers';
 
 type FavoritesData = {
   favorites: OffersType,
@@ -30,13 +30,20 @@ export const favoritesData = createSlice({
         state.isLoading = false;
       })
       .addCase(changeFavoriteStatusAction.pending, (state) => {
+        state.isLoading = true;
       })
       .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
         const updatedOffer = action.payload;
-        const index = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
-        state.offers[index].isFavorite = !state.offers[index].isFavorite;
+        const index = state.favorites.findIndex((offer) => offer.id === updatedOffer.id);
+        if (index < 0) {
+          state.favorites.push(updatedOffer);
+        } else {
+          state.favorites = state.favorites.filter((offer) => offer.id !== updatedOffer.id);
+        }
+        state.isLoading = false;
       })
       .addCase(changeFavoriteStatusAction.rejected, (state) => {
+        state.isLoading = false;
       });
   }
 });

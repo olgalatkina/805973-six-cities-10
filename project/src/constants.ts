@@ -28,7 +28,7 @@ export enum SortOption {
   TopRatedFirst = 'Top rated first',
 }
 
-export enum OffersStatus {
+export enum Status {
   Idle = 'idle',
   Loading = 'loading',
   Success = 'success',
