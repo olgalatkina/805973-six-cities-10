@@ -7,12 +7,8 @@
   text-align: center;
 }
 
-.title {
-  color: inherit;
-}
-
-.link {
-  display: inline-block;
+.button {
+  display: block;
   padding: 9px 21px 6px 11px;
   font-size: 19px;
   line-height: 1.211;
@@ -28,11 +24,12 @@
   border: none;
   border-radius: 3px;
   margin: 40px auto;
+  cursor: pointer;
   transform: skew(-15deg);
   transition: background .3s,color .3s,text-shadow .3s;
   outline: 0;
 }
 
-.link:hover {
-  opacity: .8;
+.button:hover {
+  opacity: 0.8;
 }
