@@ -48,10 +48,6 @@ const BtnBookmark = ({isFavorite, offerID, isBig}: BtnBookmarkProps): JSX.Elemen
     >
       <svg
         className={svgClassName}
-        style={isFavorite ? {
-          stroke: '#4481c3',
-          fill: '#4481c3',
-        } : {}}
         width={isBig ? '31' : '18'}
         height={isBig ? '33' : '19'}
       >
