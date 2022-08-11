@@ -1,7 +1,6 @@
 import cn from 'classnames';
 import {AppRoute, AuthorizationStatus} from '../../constants';
-import {useLocation, useNavigate} from 'react-router-dom';
-import {getRoute} from '../../utils';
+import {useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeFavoriteStatusAction} from '../../store/api-actions';
 import {getAuthStatus} from '../../store/user-process/selectors';
@@ -9,25 +8,24 @@ import {getAuthStatus} from '../../store/user-process/selectors';
 type BtnBookmarkProps = {
   isFavorite: boolean;
   offerID: number,
+  isBig?: boolean,
 }
 
-const BtnBookmark = ({isFavorite, offerID}: BtnBookmarkProps): JSX.Element => {
+const BtnBookmark = ({isFavorite, offerID, isBig}: BtnBookmarkProps): JSX.Element => {
   const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const {pathname} = useLocation();
-  const route = getRoute(pathname);
 
   const btnClassName = cn('button', {
-    'place-card__bookmark-button': route !== getRoute(AppRoute.Offer),
-    'place-card__bookmark-button--active': isFavorite && route !== getRoute(AppRoute.Offer),
-    'property__bookmark-button': route === getRoute(AppRoute.Offer),
-    'property__bookmark-button--active': isFavorite && route === getRoute(AppRoute.Offer),
+    'place-card__bookmark-button': !isBig,
+    'place-card__bookmark-button--active': isFavorite && !isBig,
+    'property__bookmark-button': isBig,
+    'property__bookmark-button--active': isFavorite && isBig,
   });
 
   const svgClassName = cn({
-    'place-card__bookmark-icon': route !== getRoute(AppRoute.Offer),
-    'property__bookmark-icon': route === getRoute(AppRoute.Offer),
+    'place-card__bookmark-icon': !isBig,
+    'property__bookmark-icon': isBig,
   });
 
   const onFavoritesBtnClick = () => {
@@ -50,8 +48,12 @@ const BtnBookmark = ({isFavorite, offerID}: BtnBookmarkProps): JSX.Element => {
     >
       <svg
         className={svgClassName}
-        width={route === getRoute(AppRoute.Offer) ? '31' : '18'}
-        height={route === getRoute(AppRoute.Offer) ? '33' : '19'}
+        style={isFavorite ? {
+          stroke: '#4481c3',
+          fill: '#4481c3',
+        } : {}}
+        width={isBig ? '31' : '18'}
+        height={isBig ? '33' : '19'}
       >
         <use xlinkHref="#icon-bookmark"/>
       </svg>

@@ -1,6 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace} from '../../constants';
-import {OffersType, OfferType} from '../../types/offers';
+import { createSlice } from '@reduxjs/toolkit';
+import { NameSpace, Status } from '../../constants';
+import { OffersType, OfferType } from '../../types/offers';
 import {
   fetchNeighbourhoodAction,
   fetchActiveOfferAction,
@@ -10,18 +10,20 @@ import {
 
 type OffersData = {
   offers: OffersType,
-  isDataLoaded: boolean,
   activeOffer: OfferType | null,
-  isOfferLoaded: boolean,
   neighbourhood: OffersType,
+  statusAll: string,
+  statusOffer: string,
+  error: string
 };
 
 const initialState: OffersData = {
   offers: [],
-  isDataLoaded: false,
   activeOffer: null,
-  isOfferLoaded: false,
   neighbourhood: [],
+  statusAll: Status.Idle,
+  statusOffer: Status.Idle,
+  error: '',
 };
 
 export const offersData = createSlice({
@@ -31,24 +33,24 @@ export const offersData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
-        state.isDataLoaded = true;
+        state.statusAll = Status.Loading;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;
-        state.isDataLoaded = false;
+        state.statusAll = Status.Success;
       })
       .addCase(fetchOffersAction.rejected, (state) => {
-        state.isDataLoaded = false;
+        state.statusAll = Status.Error;
       })
       .addCase(fetchActiveOfferAction.pending, (state) => {
-        state.isOfferLoaded = true;
+        state.statusOffer = Status.Loading;
       })
       .addCase(fetchActiveOfferAction.fulfilled, (state, action) => {
         state.activeOffer = action.payload;
-        state.isOfferLoaded = false;
+        state.statusOffer = Status.Success;
       })
       .addCase(fetchActiveOfferAction.rejected, (state) => {
-        state.isOfferLoaded = false;
+        state.statusOffer = Status.Error;
       })
       .addCase(fetchNeighbourhoodAction.fulfilled, (state, action) => {
         state.neighbourhood = action.payload;
@@ -57,6 +59,16 @@ export const offersData = createSlice({
         const updatedOffer = action.payload;
         const index = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
         state.offers[index].isFavorite = !state.offers[index].isFavorite;
+
+        state.neighbourhood.forEach((offer) => {
+          if (offer.id === updatedOffer.id) {
+            offer.isFavorite = !offer.isFavorite;
+          }
+        });
+
+        if (state.activeOffer && state.activeOffer.id === updatedOffer.id) {
+          state.activeOffer.isFavorite = !state.activeOffer.isFavorite;
+        }
       });
   }
 });

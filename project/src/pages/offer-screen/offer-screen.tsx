@@ -1,6 +1,15 @@
-import {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import cn from 'classnames';
+import {
+  NUMBER_OF_NEIGHBOURHOOD,
+  NUMBER_OF_IMAGES,
+  NUMBER_OF_REVIEWS,
+  Type,
+  AuthorizationStatus,
+  Status,
+} from '../../constants';
+import { ReviewsType } from '../../types/reviews';
 import Header from '../../components/header/header';
 import HeaderNav from '../../components/header-nav/header-nav';
 import OfferImageWrapper from '../../components/offer-image-wrapper/offer-image-wrapper';
@@ -10,26 +19,17 @@ import Review from '../../components/review/review';
 import FormReview from '../../components/form-review/form-review';
 import Map from '../../components/map/map';
 import Loading from '../../components/loading/loading';
-import {
-  NUMBER_OF_NEIGHBOURHOOD,
-  NUMBER_OF_IMAGES,
-  NUMBER_OF_REVIEWS,
-  Type,
-  AuthorizationStatus,
-} from '../../constants';
-import {useAppSelector, useAppDispatch} from '../../hooks';
+import SomethingWrong from '../../components/something-wrong/something-wrong';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import {
   fetchActiveOfferAction,
   fetchReviewsAction,
   fetchNeighbourhoodAction,
 } from '../../store/api-actions';
-import {ReviewsType} from '../../types/reviews';
 import BtnBookmark from '../../components/btn-bookmark/btn-bookmark';
-import {getAuthStatus} from '../../store/user-process/selectors';
-import {getActiveOffer, getIsOfferLoaded, getNeighbourhood} from '../../store/offers-data/selectors';
-import {getReviews} from '../../store/reviews-data/selectors';
-
-// TODO: style for 'property__bookmark-button--active'
+import { getAuthStatus } from '../../store/user-process/selectors';
+import { getActiveOffer, getStatusOffer, getNeighbourhood } from '../../store/offers-data/selectors';
+import { getReviews } from '../../store/reviews-data/selectors';
 
 const prepareReviews = (reviews: ReviewsType) => {
   if (reviews.length <= 1) {
@@ -52,14 +52,20 @@ const OfferScreen = (): JSX.Element => {
   }, [offerID, dispatch]);
 
   const authorizationStatus = useAppSelector(getAuthStatus);
-  const isOfferLoaded = useAppSelector(getIsOfferLoaded);
+  const status = useAppSelector(getStatusOffer);
   const currentOffer = useAppSelector(getActiveOffer);
   const reviews = useAppSelector(getReviews);
   const neighbourhood = useAppSelector(getNeighbourhood).slice(0, NUMBER_OF_NEIGHBOURHOOD);
 
-  if (currentOffer === null || isOfferLoaded) {
+  if (currentOffer === null || status === Status.Idle || status === Status.Loading) {
     return (
       <Loading />
+    );
+  }
+
+  if (status === Status.Error) {
+    return (
+      <SomethingWrong />
     );
   }
 
@@ -95,7 +101,7 @@ const OfferScreen = (): JSX.Element => {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {images.slice(0, NUMBER_OF_IMAGES).map((src) => (
-                <OfferImageWrapper src={src} offer={currentOffer} key={src}/>
+                <OfferImageWrapper src={src} offer={currentOffer} key={src} />
               ))}
             </div>
           </div>
@@ -109,11 +115,11 @@ const OfferScreen = (): JSX.Element => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <BtnBookmark isFavorite={isFavorite} offerID={id} />
+                <BtnBookmark isFavorite={isFavorite} offerID={id} isBig />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${rating * 20}%`}}/>
+                  <span style={{ width: `${rating * 20}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
@@ -136,7 +142,7 @@ const OfferScreen = (): JSX.Element => {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((item) => <OfferInsideItem item={item} key={Math.random()}/>)}
+                  {goods.map((item) => <OfferInsideItem item={item} key={Math.random()} />)}
                 </ul>
               </div>
               <div className="property__host">
@@ -165,9 +171,9 @@ const OfferScreen = (): JSX.Element => {
                   <span className="reviews__amount">{reviews.length}</span>
                 </h2>
                 <ul className="reviews__list">
-                  {prepareReviews(reviews).map((review) => <Review review={review} key={review.id}/>)}
+                  {prepareReviews(reviews).map((review) => <Review review={review} key={review.id} />)}
                 </ul>
-                {isAuth && <FormReview offerID={offerID}/>}
+                {isAuth && <FormReview offerID={offerID} />}
               </section>
             </div>
           </div>

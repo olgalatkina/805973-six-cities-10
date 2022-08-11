@@ -1,16 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../constants';
+import { NameSpace, Status } from '../../constants';
 import { fetchFavoritesAction, changeFavoriteStatusAction } from '../api-actions';
 import { OffersType } from '../../types/offers';
 
 type FavoritesData = {
   favorites: OffersType,
-  isLoading: boolean,
+  statusAll: string,
+  statusChange: string,
+  error: string,
 }
 
 const initialState: FavoritesData = {
   favorites: [],
-  isLoading: false,
+  statusAll: Status.Idle,
+  statusChange: Status.Idle,
+  error: '',
 };
 
 export const favoritesData = createSlice({
@@ -20,30 +24,29 @@ export const favoritesData = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchFavoritesAction.pending, (state) => {
-        state.isLoading = true;
+        state.statusAll = Status.Loading;
       })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favorites = action.payload;
-        state.isLoading = false;
+        state.statusAll = Status.Success;
       })
       .addCase(fetchFavoritesAction.rejected, (state) => {
-        state.isLoading = false;
+        state.statusAll = Status.Error;
       })
       .addCase(changeFavoriteStatusAction.pending, (state) => {
-        state.isLoading = true;
+        state.statusChange = Status.Loading;
       })
       .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
         const updatedOffer = action.payload;
-        const index = state.favorites.findIndex((offer) => offer.id === updatedOffer.id);
-        if (index < 0) {
+        if (updatedOffer.isFavorite) {
           state.favorites.push(updatedOffer);
         } else {
           state.favorites = state.favorites.filter((offer) => offer.id !== updatedOffer.id);
         }
-        state.isLoading = false;
+        state.statusChange = Status.Success;
       })
       .addCase(changeFavoriteStatusAction.rejected, (state) => {
-        state.isLoading = false;
+        state.statusChange = Status.Error;
       });
   }
 });

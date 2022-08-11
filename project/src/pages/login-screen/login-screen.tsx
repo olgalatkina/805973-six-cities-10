@@ -1,10 +1,10 @@
-import {generatePath, Link, Navigate } from 'react-router-dom';
-import {changeActiveCity} from '../../store/app-process/app-process';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {AppRoute, AuthorizationStatus, CITIES} from '../../constants';
+import { generatePath, Link, Navigate } from 'react-router-dom';
+import { changeActiveCity } from '../../store/app-process/app-process';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute, AuthorizationStatus, CITIES } from '../../constants';
 import Header from '../../components/header/header';
 import FormLogin from '../../components/form-login/form-login';
-import {getAuthStatus} from '../../store/user-process/selectors';
+import { getAuthStatus } from '../../store/user-process/selectors';
 
 const LoginScreen = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ const LoginScreen = () => {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <FormLogin/>
+            <FormLogin />
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">

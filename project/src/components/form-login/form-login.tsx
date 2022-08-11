@@ -1,12 +1,12 @@
-import {ChangeEvent, FormEvent, useState} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import cn from 'classnames';
-import {AuthDataType} from '../../types/user';
-import {loginAction} from '../../store/api-actions';
-import {AuthorizationStatus} from '../../constants';
+import { AuthDataType } from '../../types/user';
+import { loginAction } from '../../store/api-actions';
 import Loading from '../../components/loading/loading';
 import styles from './form-login.module.css';
-import {getAuthStatus} from '../../store/user-process/selectors';
+import { getStatusLogin } from '../../store/user-process/selectors';
+import { Status } from '../../constants';
 
 const formFields = {
   email: 'E-mail',
@@ -27,7 +27,7 @@ type FormStateProps = {
 
 const FormLogin = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector(getAuthStatus);
+  const loginStatus = useAppSelector(getStatusLogin);
 
   const [formState, setFormState] = useState<FormStateProps>({
     email: {
@@ -59,8 +59,8 @@ const FormLogin = (): JSX.Element => {
     });
   };
 
-  const handleChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = target;
+  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = target;
     const rule = formState[name].regex;
     const isValid = rule.test(value);
     const hasValue = !!value.trim();
@@ -112,7 +112,7 @@ const FormLogin = (): JSX.Element => {
         type="submit"
         disabled={!(formState.email.isValid && formState.password.isValid)}
       >
-        {authorizationStatus === AuthorizationStatus.Unknown
+        {loginStatus === Status.Loading
           ? <Loading isButton />
           : 'Sign in'}
       </button>

@@ -1,13 +1,15 @@
-import {useState, useEffect} from 'react';
-import {OffersType} from '../../types/offers';
+import { OffersType } from '../../types/offers';
 import cn from 'classnames';
+import { Status } from '../../constants';
 import Header from '../../components/header/header';
 import HeaderNav from '../../components/header-nav/header-nav';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import Footer from '../../components/footer/footer';
 import FavoritesItem from '../../components/favorites-item/favorites-item';
-import {useAppSelector} from '../../hooks';
-import {getFavorites} from '../../store/favorites-data/selectors';
+import Loading from '../../components/loading/loading';
+import SomethingWrong from '../../components/something-wrong/something-wrong';
+import { useAppSelector } from '../../hooks';
+import { getFavorites, getStatusAll } from '../../store/favorites-data/selectors';
 
 type OffersIndexType = {
   [key: string]: OffersType,
@@ -25,18 +27,25 @@ const indexOffersByCities = (offers: OffersType): OffersIndexType => (
 );
 
 const FavoritesScreen = (): JSX.Element => {
-  const [isEmpty, setIsEmpty] = useState(true);
+  const status = useAppSelector(getStatusAll);
   const favoritesOffers = useAppSelector(getFavorites);
+  const isEmpty = favoritesOffers.length === 0;
 
-  useEffect(() => {
-    if (favoritesOffers.length !== 0) {
-      setIsEmpty(false);
-    }
-  }, [isEmpty, favoritesOffers]);
+  if (status === Status.Loading || status === Status.Idle) {
+    return (
+      <Loading />
+    );
+  }
+
+  if (status === Status.Error) {
+    return (
+      <SomethingWrong />
+    );
+  }
 
   const indexedOffers = indexOffersByCities(favoritesOffers);
 
-  const mainClasName = cn('page__main page__main--favorites', {
+  const mainClassName = cn('page__main page__main--favorites', {
     'page__main--favorites-empty': isEmpty,
   });
 
@@ -50,7 +59,7 @@ const FavoritesScreen = (): JSX.Element => {
       <Header>
         <HeaderNav />
       </Header>
-      <main className={mainClasName}>
+      <main className={mainClassName}>
         <div className="page__favorites-container container">
           <section className={`favorites ${isEmpty ? 'favorites--empty' : ''}`}>
             <h1 className={titleClassName}>Saved listing</h1>
@@ -60,13 +69,13 @@ const FavoritesScreen = (): JSX.Element => {
               <ul className="favorites__list">
                 {Object.entries(indexedOffers)
                   .map(([city, localOffers]) => (
-                    <FavoritesItem cityName={city} localOffers={localOffers} key={city}/>
+                    <FavoritesItem cityName={city} localOffers={localOffers} key={city} />
                   ))}
               </ul>}
           </section>
         </div>
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 };
