@@ -14,7 +14,7 @@ import Header from '../../components/header/header';
 import HeaderNav from '../../components/header-nav/header-nav';
 import OfferImageWrapper from '../../components/offer-image-wrapper/offer-image-wrapper';
 import OfferInsideItem from '../../components/offer-inside-item/offer-inside-item';
-import OfferCard from '../../components/offer-card/offer-card';
+import Near from '../../components/near/near';
 import Review from '../../components/review/review';
 import FormReview from '../../components/form-review/form-review';
 import Map from '../../components/map/map';
@@ -182,9 +182,7 @@ const OfferScreen = (): JSX.Element => {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {neighbourhood.map((offer) => <OfferCard offer={offer} key={offer.id} />)}
-            </div>
+            <Near neighbourhood={neighbourhood} />
           </section>
         </div>
       </main>
