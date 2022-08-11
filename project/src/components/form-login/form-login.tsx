@@ -110,7 +110,7 @@ const FormLogin = (): JSX.Element => {
       <button
         className="login__submit form__submit button"
         type="submit"
-        disabled={!(formState.email.isValid && formState.password.isValid)}
+        disabled={!(formState.email.isValid && formState.password.isValid) || loginStatus === Status.Loading || loginStatus === Status.Error}
       >
         {loginStatus === Status.Loading
           ? <Loading isButton />
