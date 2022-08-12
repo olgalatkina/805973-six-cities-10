@@ -27,17 +27,17 @@ const indexOffersByCities = (offers: OffersType): OffersIndexType => (
 );
 
 const FavoritesScreen = (): JSX.Element => {
-  const status = useAppSelector(getStatusAll);
+  const statusAll = useAppSelector(getStatusAll);
   const favoritesOffers = useAppSelector(getFavorites);
   const isEmpty = favoritesOffers.length === 0;
 
-  if (status === Status.Loading || status === Status.Idle) {
+  if (statusAll === Status.Loading || statusAll === Status.Idle) {
     return (
       <Loading />
     );
   }
 
-  if (status === Status.Error) {
+  if (statusAll === Status.Error) {
     return (
       <SomethingWrong />
     );

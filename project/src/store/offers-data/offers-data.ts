@@ -6,6 +6,7 @@ import {
   fetchActiveOfferAction,
   fetchOffersAction,
   changeFavoriteStatusAction,
+  logoutAction,
 } from '../api-actions';
 
 type OffersData = {
@@ -59,15 +60,24 @@ export const offersData = createSlice({
         const updatedOffer = action.payload;
         const index = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
         state.offers[index].isFavorite = !state.offers[index].isFavorite;
-
         state.neighbourhood.forEach((offer) => {
           if (offer.id === updatedOffer.id) {
             offer.isFavorite = !offer.isFavorite;
           }
         });
-
         if (state.activeOffer && state.activeOffer.id === updatedOffer.id) {
           state.activeOffer.isFavorite = !state.activeOffer.isFavorite;
+        }
+      })
+      .addCase(logoutAction.fulfilled, (state) => {
+        if (state.activeOffer && state.activeOffer.isFavorite) {
+          state.activeOffer.isFavorite = false;
+        }
+        if (state.offers) {
+          state.offers.forEach((offer) => offer.isFavorite = false);
+        }
+        if (state.neighbourhood) {
+          state.neighbourhood.forEach((offer) => offer.isFavorite = false);
         }
       });
   }
