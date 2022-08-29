@@ -1,10 +1,11 @@
 import {useState, ChangeEvent, FormEvent} from 'react';
-import {STARS_VALUES} from '../../constants';
+import {STARS_VALUES, Status} from '../../constants';
 import FormReviewInput from '../form-review-input/form-review-input';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {postReviewAction} from '../../store/api-actions';
 import {ReviewDataType} from '../../types/reviews';
-// import Loading from '../loading/loading';
+import {getStatusPost} from '../../store/reviews-data/selectors';
+import Loading from '../loading/loading';
 
 const MIN_REVIEW_LENGHT = 50;
 const MAX_REVIEW_LENGTH = 300;
@@ -20,6 +21,7 @@ const FormReview = ({offerID}: FormReviewProps): JSX.Element => {
     review: '',
     isValid: false,
   });
+  const statusPost = useAppSelector(getStatusPost);
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
@@ -60,7 +62,14 @@ const FormReview = ({offerID}: FormReviewProps): JSX.Element => {
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {STARS_VALUES.map((star) => <FormReviewInput rating={formData.rating} value={star} key={star} onChange={handleInputChange} />)}
+        {STARS_VALUES.map((star) => (
+          <FormReviewInput
+            currentRating={formData.rating}
+            value={star}
+            key={star}
+            onChange={handleInputChange}
+          />
+        ))}
       </div>
       <textarea
         className="reviews__textarea form__textarea"
@@ -78,9 +87,11 @@ const FormReview = ({offerID}: FormReviewProps): JSX.Element => {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!formData.review || !formData.rating || !formData.isValid}
+          disabled={!formData.rating || !formData.isValid || statusPost === Status.Loading || statusPost === Status.Error}
         >
-          Submit
+          {statusPost === Status.Loading
+            ? <Loading isButton />
+            : 'Submit'}
         </button>
       </div>
     </form>

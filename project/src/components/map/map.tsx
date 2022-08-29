@@ -3,6 +3,7 @@ import {Icon, Marker} from 'leaflet';
 import {CityType, OffersType} from '../../types/offers';
 import cn from 'classnames';
 import useMap from '../../hooks/useMap';
+import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useLocation} from 'react-router-dom';
 import {AppRoute} from '../../constants';
@@ -31,10 +32,10 @@ const Map = ({cityInfo, points, activeOfferID}: MapProps): JSX.Element => {
   const route = getRoute(pathname);
   const mapRef = useRef(null);
   const map = useMap(mapRef, cityInfo);
-  // eslint-disable-next-line
-  // console.log('cityInfo from map', cityInfo.name);
 
   useEffect(() => {
+    const markers = leaflet.layerGroup();
+
     if (map) {
       points.forEach((point) => {
         const marker = new Marker({
@@ -47,10 +48,17 @@ const Map = ({cityInfo, points, activeOfferID}: MapProps): JSX.Element => {
             activeOfferID && point.id === activeOfferID
               ? currentCustomIcon
               : defaultCustomIcon
-          )
-          .addTo(map);
+          );
+
+        marker.addTo(markers);
       });
+
+      markers.addTo(map);
     }
+
+    return (() => {
+      markers.clearLayers();
+    });
   }, [map, points, activeOfferID]);
 
   const mapClassName = cn('map', {
@@ -60,10 +68,6 @@ const Map = ({cityInfo, points, activeOfferID}: MapProps): JSX.Element => {
 
   return (
     <section
-      style={{
-        maxWidth: '1144px',
-        margin: '0 auto',
-      }}
       className={mapClassName}
       ref={mapRef}
     />

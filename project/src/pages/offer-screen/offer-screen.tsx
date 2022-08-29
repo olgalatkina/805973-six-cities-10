@@ -1,31 +1,35 @@
-import {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import cn from 'classnames';
-import Header from '../../components/header/header';
-import HeaderNav from '../../components/header-nav/header-nav';
-import OfferImageWrapper from '../../components/offer-image-wrapper/offer-image-wrapper';
-import OfferInsideItem from '../../components/offer-inside-item/offer-inside-item';
-import OfferCard from '../../components/offer-card/offer-card';
-import Review from '../../components/review/review';
-import FormReview from '../../components/form-review/form-review';
-import Map from '../../components/map/map';
-import Loading from '../../components/loading/loading';
 import {
   NUMBER_OF_NEIGHBOURHOOD,
   NUMBER_OF_IMAGES,
   NUMBER_OF_REVIEWS,
   Type,
   AuthorizationStatus,
+  Status,
 } from '../../constants';
-import {useAppSelector, useAppDispatch} from '../../hooks';
+import { ReviewsType } from '../../types/reviews';
+import Header from '../../components/header/header';
+import HeaderNav from '../../components/header-nav/header-nav';
+import OfferImageWrapper from '../../components/offer-image-wrapper/offer-image-wrapper';
+import OfferInsideItem from '../../components/offer-inside-item/offer-inside-item';
+import Near from '../../components/near/near';
+import Review from '../../components/review/review';
+import FormReview from '../../components/form-review/form-review';
+import Map from '../../components/map/map';
+import Loading from '../../components/loading/loading';
+import SomethingWrong from '../../components/something-wrong/something-wrong';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import {
   fetchActiveOfferAction,
   fetchReviewsAction,
   fetchNeighbourhoodAction,
 } from '../../store/api-actions';
-import {ReviewsType} from '../../types/reviews';
-
-// TODO: style for 'property__bookmark-button--active'
+import BtnBookmark from '../../components/btn-bookmark/btn-bookmark';
+import { getAuthStatus } from '../../store/user-process/selectors';
+import { getActiveOffer, getStatusOffer, getNeighbourhood } from '../../store/offers-data/selectors';
+import { getReviews } from '../../store/reviews-data/selectors';
 
 const prepareReviews = (reviews: ReviewsType) => {
   if (reviews.length <= 1) {
@@ -47,21 +51,28 @@ const OfferScreen = (): JSX.Element => {
     dispatch(fetchReviewsAction(offerID));
   }, [offerID, dispatch]);
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOfferLoaded = useAppSelector((state) => state.isOfferLoaded);
-  const currentOffer = useAppSelector((state) => state.activeOffer);
-  const reviews = useAppSelector((state) => state.reviews);
-  const neighbourhood = useAppSelector((state) => state.neighbourhood).slice(0, NUMBER_OF_NEIGHBOURHOOD);
+  const authorizationStatus = useAppSelector(getAuthStatus);
+  const status = useAppSelector(getStatusOffer);
+  const currentOffer = useAppSelector(getActiveOffer);
+  const reviews = useAppSelector(getReviews);
+  const neighbourhood = useAppSelector(getNeighbourhood).slice(0, NUMBER_OF_NEIGHBOURHOOD);
 
-  if (currentOffer === null || isOfferLoaded) {
+  if (currentOffer === null || status === Status.Idle || status === Status.Loading) {
     return (
       <Loading />
+    );
+  }
+
+  if (status === Status.Error) {
+    return (
+      <SomethingWrong />
     );
   }
 
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
   const {
+    id,
     images,
     title,
     isPremium,
@@ -75,10 +86,6 @@ const OfferScreen = (): JSX.Element => {
     host,
     description,
   } = currentOffer;
-
-  const btnBookmarkClassName = cn('property__bookmark-button button', {
-    'property__bookmark-button--active': isFavorite,
-  });
 
   const avatarWrapperClassName = cn('property__avatar-wrapper user__avatar-wrapper', {
     'property__avatar-wrapper--pro': host.isPro,
@@ -94,7 +101,7 @@ const OfferScreen = (): JSX.Element => {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {images.slice(0, NUMBER_OF_IMAGES).map((src) => (
-                <OfferImageWrapper src={src} offer={currentOffer} key={src}/>
+                <OfferImageWrapper src={src} offer={currentOffer} key={src} />
               ))}
             </div>
           </div>
@@ -108,19 +115,11 @@ const OfferScreen = (): JSX.Element => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button
-                  className={btnBookmarkClassName}
-                  type="button"
-                >
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"/>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <BtnBookmark isFavorite={isFavorite} offerID={id} isBig />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${rating * 20}%`}}/>
+                  <span style={{ width: `${rating * 20}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
@@ -143,7 +142,7 @@ const OfferScreen = (): JSX.Element => {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((item) => <OfferInsideItem item={item} key={Math.random()}/>)}
+                  {goods.map((item) => <OfferInsideItem item={item} key={Math.random()} />)}
                 </ul>
               </div>
               <div className="property__host">
@@ -172,9 +171,9 @@ const OfferScreen = (): JSX.Element => {
                   <span className="reviews__amount">{reviews.length}</span>
                 </h2>
                 <ul className="reviews__list">
-                  {prepareReviews(reviews).map((review) => <Review review={review} key={review.id}/>)}
+                  {prepareReviews(reviews).map((review) => <Review review={review} key={review.id} />)}
                 </ul>
-                {isAuth && <FormReview offerID={offerID}/>}
+                {isAuth && <FormReview offerID={offerID} />}
               </section>
             </div>
           </div>
@@ -183,9 +182,7 @@ const OfferScreen = (): JSX.Element => {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {neighbourhood.map((offer) => <OfferCard offer={offer} key={offer.id} />)}
-            </div>
+            <Near neighbourhood={neighbourhood} />
           </section>
         </div>
       </main>

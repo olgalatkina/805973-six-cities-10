@@ -28,7 +28,7 @@ export enum SortOption {
   TopRatedFirst = 'Top rated first',
 }
 
-export enum OffersStatus {
+export enum Status {
   Idle = 'idle',
   Loading = 'loading',
   Success = 'success',
@@ -37,9 +37,26 @@ export enum OffersStatus {
 
 export enum Type {
   apartment = 'Apartment',
-  room = 'Private Room',
+  room = 'Private room',
   house = 'House',
   hotel = 'Hotel',
+}
+
+export enum NameSpace {
+  App = 'APP',
+  User = 'USER',
+  Offers = 'OFFERS',
+  Reviews = 'REVIEWS',
+  Favorites = 'FAVORITES',
+}
+
+export enum City {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
 }
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

@@ -58,11 +58,11 @@ const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps)
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BtnBookmark isFavorite={isFavorite}/>
+          <BtnBookmark isFavorite={isFavorite} offerID={id} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${rating * 20}%`}}/>
+            <span style={{width: `${Math.round(rating) * 20}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

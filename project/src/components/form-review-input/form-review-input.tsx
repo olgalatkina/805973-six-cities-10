@@ -3,10 +3,10 @@ import {ChangeEvent} from 'react';
 type FormReviewInputProps = {
   value: string,
   onChange: (evt: ChangeEvent<HTMLInputElement>) => void,
-  rating: string,
+  currentRating: string,
 }
 
-const FormReviewInput = ({value, onChange, rating}: FormReviewInputProps): JSX.Element => (
+const FormReviewInput = ({value, onChange, currentRating}: FormReviewInputProps): JSX.Element => (
   <>
     <input
       className="form__rating-input visually-hidden"
@@ -15,7 +15,7 @@ const FormReviewInput = ({value, onChange, rating}: FormReviewInputProps): JSX.E
       id={`${value}-stars`}
       type="radio"
       onChange={onChange}
-      checked={rating === value}
+      checked={currentRating === value}
     />
     <label
       htmlFor={`${value}-stars`}

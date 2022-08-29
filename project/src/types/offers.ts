@@ -39,4 +39,9 @@ type OfferType = {
 
 type OffersType = OfferType[];
 
-export type {OffersType, OfferType, CityType, LocationType, HostType};
+type FavoriteDataType = {
+  id: number,
+  status: number,
+}
+
+export type {OffersType, OfferType, CityType, LocationType, HostType, FavoriteDataType};

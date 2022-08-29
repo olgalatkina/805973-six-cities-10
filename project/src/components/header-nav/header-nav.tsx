@@ -3,9 +3,10 @@ import {AppRoute, AuthorizationStatus} from '../../constants';
 import {logoutAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import UserInfo from '../user-info/user-info';
+import {getAuthStatus} from '../../store/user-process/selectors';
 
 const HeaderNav = (): JSX.Element => {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthStatus);
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
 
