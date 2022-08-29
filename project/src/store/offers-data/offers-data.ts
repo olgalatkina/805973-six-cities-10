@@ -74,10 +74,14 @@ export const offersData = createSlice({
           state.activeOffer.isFavorite = false;
         }
         if (state.offers) {
-          state.offers.forEach((offer) => offer.isFavorite = false);
+          state.offers.forEach((offer) => {
+            offer.isFavorite = false;
+          });
         }
         if (state.neighbourhood) {
-          state.neighbourhood.forEach((offer) => offer.isFavorite = false);
+          state.neighbourhood.forEach((offer) => {
+            offer.isFavorite = false;
+          });
         }
       });
   }
