@@ -7,7 +7,7 @@ import {ReviewDataType} from '../../types/reviews';
 import {getStatusPost} from '../../store/reviews-data/selectors';
 import Loading from '../loading/loading';
 
-const MIN_REVIEW_LENGHT = 50;
+const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 300;
 
 type FormReviewProps = {
@@ -25,7 +25,7 @@ const FormReview = ({offerID}: FormReviewProps): JSX.Element => {
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
-    const isValid = value.length >= MIN_REVIEW_LENGHT && value.length <= MAX_REVIEW_LENGTH;
+    const isValid = value.length >= MIN_REVIEW_LENGTH && value.length <= MAX_REVIEW_LENGTH;
 
     setFormData((prevState) => ({
       ...prevState,
