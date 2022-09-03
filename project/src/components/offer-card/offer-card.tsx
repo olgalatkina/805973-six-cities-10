@@ -1,7 +1,7 @@
 import {Link, generatePath} from 'react-router-dom';
 import {OfferType} from '../../types/offers';
 import cn from 'classnames';
-import BtnBookmark from '../btn-bookmark/btn-bookmark';
+import ButtonBookmark from '../button-bookmark/button-bookmark';
 import {AppRoute, Type} from '../../constants';
 import {useLocation} from 'react-router-dom';
 import {getRoute} from '../../utils';
@@ -58,7 +58,7 @@ const OfferCard = ({offer, onOfferMouseOver, onOfferMouseLeave}: OfferCardProps)
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BtnBookmark isFavorite={isFavorite} offerID={id} />
+          <ButtonBookmark isFavorite={isFavorite} offerID={id} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

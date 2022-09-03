@@ -26,7 +26,7 @@ import {
   fetchReviewsAction,
   fetchNeighbourhoodAction,
 } from '../../store/api-actions';
-import BtnBookmark from '../../components/btn-bookmark/btn-bookmark';
+import ButtonBookmark from '../../components/button-bookmark/button-bookmark';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import { getActiveOffer, getStatusOffer, getNeighbourhood } from '../../store/offers-data/selectors';
 import { getReviews } from '../../store/reviews-data/selectors';
@@ -115,7 +115,7 @@ const OfferScreen = (): JSX.Element => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <BtnBookmark isFavorite={isFavorite} offerID={id} isBig />
+                <ButtonBookmark isFavorite={isFavorite} offerID={id} isBig />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
