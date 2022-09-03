@@ -35,7 +35,7 @@ const FormLogin = (): JSX.Element => {
       hasValue: false,
       isValid: false,
       errorText: 'please enter a real email address',
-      regex: /^([A-Za-z0-9_-])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/,
+      regex: /[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/,
     },
     password: {
       value: '',
