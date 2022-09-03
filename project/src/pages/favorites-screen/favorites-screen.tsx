@@ -31,7 +31,7 @@ const FavoritesScreen = (): JSX.Element => {
   const favoritesOffers = useAppSelector(getFavorites);
   const isEmpty = favoritesOffers.length === 0;
 
-  if (statusAll === Status.Loading || statusAll === Status.Idle) {
+  if (statusAll === Status.Loading) {
     return (
       <Loading />
     );

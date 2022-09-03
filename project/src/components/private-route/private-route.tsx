@@ -2,7 +2,7 @@ import {Navigate} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus, Status} from '../../constants';
 import Loading from '../loading/loading';
 import {useAppSelector} from '../../hooks';
-import {getAuthStatus, getStatusCheckAuth} from '../../store/user-process/selectors';
+import {getAuthStatus, getStatusLogin} from '../../store/user-process/selectors';
 
 type PrivateRouteProps = {
   children: JSX.Element;
@@ -12,9 +12,9 @@ const isCheckedAuth = (authorizationStatus: string): boolean => authorizationSta
 
 const PrivateRoute = ({children}: PrivateRouteProps): JSX.Element => {
   const authorizationStatus = useAppSelector(getAuthStatus);
-  const status = useAppSelector(getStatusCheckAuth);
+  const loginStatus = useAppSelector(getStatusLogin);
 
-  if (status === Status.Loading || status === Status.Idle || isCheckedAuth(authorizationStatus)) {
+  if (loginStatus === Status.Loading || isCheckedAuth(authorizationStatus)) {
     return (
       <Loading />
     );
