@@ -25,6 +25,15 @@ const FormReview = ({offerID}: FormReviewProps): JSX.Element => {
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleTextAreaChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {name, value} = evt.target;
     const isValid = value.length >= MIN_REVIEW_LENGTH && value.length <= MAX_REVIEW_LENGTH;
 
     setFormData((prevState) => ({
@@ -76,7 +85,7 @@ const FormReview = ({offerID}: FormReviewProps): JSX.Element => {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleInputChange}
+        onChange={handleTextAreaChange}
         value={formData.review}
       />
       <div className="reviews__button-wrapper">
