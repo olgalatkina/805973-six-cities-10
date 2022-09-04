@@ -4,12 +4,10 @@ import cn from 'classnames';
 import {
   NUMBER_OF_NEIGHBOURHOOD,
   NUMBER_OF_IMAGES,
-  NUMBER_OF_REVIEWS,
   Type,
   AuthorizationStatus,
   Status,
 } from '../../constants';
-import { ReviewsType } from '../../types/reviews';
 import Header from '../../components/header/header';
 import HeaderNav from '../../components/header-nav/header-nav';
 import OfferImageWrapper from '../../components/offer-image-wrapper/offer-image-wrapper';
@@ -29,16 +27,7 @@ import {
 import ButtonBookmark from '../../components/button-bookmark/button-bookmark';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import { getActiveOffer, getStatusOffer, getNeighbourhood } from '../../store/offers-data/selectors';
-import { getReviews } from '../../store/reviews-data/selectors';
-
-const prepareReviews = (reviews: ReviewsType) => {
-  if (reviews.length <= 1) {
-    return reviews;
-  }
-  return [...reviews]
-    .sort((reviewA, reviewB) => Date.parse(reviewB.date) - Date.parse(reviewA.date))
-    .slice(0, NUMBER_OF_REVIEWS);
-};
+import { getSortedReviews } from '../../store/reviews-data/selectors';
 
 const OfferScreen = (): JSX.Element => {
   const params = useParams();
@@ -54,7 +43,7 @@ const OfferScreen = (): JSX.Element => {
   const authorizationStatus = useAppSelector(getAuthStatus);
   const status = useAppSelector(getStatusOffer);
   const currentOffer = useAppSelector(getActiveOffer);
-  const reviews = useAppSelector(getReviews);
+  const reviews = useAppSelector(getSortedReviews);
   const neighbourhood = useAppSelector(getNeighbourhood).slice(0, NUMBER_OF_NEIGHBOURHOOD);
 
   if (currentOffer === null || status === Status.Idle || status === Status.Loading) {
@@ -171,7 +160,7 @@ const OfferScreen = (): JSX.Element => {
                   <span className="reviews__amount">{reviews.length}</span>
                 </h2>
                 <ul className="reviews__list">
-                  {prepareReviews(reviews).map((review) => <Review review={review} key={review.id} />)}
+                  {reviews.map((review) => <Review review={review} key={review.id} />)}
                 </ul>
                 {isAuth && <FormReview offerID={offerID} />}
               </section>
