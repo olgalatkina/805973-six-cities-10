@@ -11,9 +11,3 @@ export const getUser = (state: StateType): UserType | null => (
 export const getStatusLogin = (state: StateType): string => (
   state[NameSpace.User].statusLogin
 );
-export const getStatusLogout = (state: StateType): string => (
-  state[NameSpace.User].statusLogout
-);
-export const getStatusCheckAuth = (state: StateType): string => (
-  state[NameSpace.User].statusCheckAuth
-);

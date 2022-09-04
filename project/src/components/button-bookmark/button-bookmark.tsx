@@ -5,13 +5,13 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeFavoriteStatusAction} from '../../store/api-actions';
 import {getAuthStatus} from '../../store/user-process/selectors';
 
-type BtnBookmarkProps = {
+type ButtonBookmarkProps = {
   isFavorite: boolean;
   offerID: number,
   isBig?: boolean,
 }
 
-const BtnBookmark = ({isFavorite, offerID, isBig}: BtnBookmarkProps): JSX.Element => {
+const ButtonBookmark = ({isFavorite, offerID, isBig}: ButtonBookmarkProps): JSX.Element => {
   const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -58,4 +58,4 @@ const BtnBookmark = ({isFavorite, offerID, isBig}: BtnBookmarkProps): JSX.Elemen
   );
 };
 
-export default BtnBookmark;
+export default ButtonBookmark;
