@@ -142,7 +142,7 @@ const OfferScreen = (): JSX.Element => {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((item) => <OfferInsideItem item={item} key={Math.random()} />)}
+                  {goods.map((item) => <OfferInsideItem item={item} key={item} />)}
                 </ul>
               </div>
               <div className="property__host">
